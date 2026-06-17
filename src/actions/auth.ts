@@ -42,7 +42,13 @@ export async function loginAction(formData: FormData) {
   }
 
   const { email, password, locale } = parsed.data;
-  const supabase = await createClient();
+
+  let supabase;
+  try {
+    supabase = await createClient();
+  } catch {
+    return { error: 'Server configuration error. Please contact support.' };
+  }
 
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 

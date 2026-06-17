@@ -2,7 +2,12 @@ import { createClient } from './supabase/server';
 import type { SessionUser } from '@/types';
 
 export async function getSessionUser(): Promise<SessionUser | null> {
-  const supabase = await createClient();
+  let supabase;
+  try {
+    supabase = await createClient();
+  } catch {
+    return null;
+  }
 
   const {
     data: { user },
