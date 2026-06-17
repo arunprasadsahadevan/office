@@ -20,6 +20,20 @@ export async function listServices(): Promise<Service[]> {
   return (data ?? []) as Service[];
 }
 
+export async function listAllServices(): Promise<Service[]> {
+  const user = await getSessionUser();
+  if (!user?.tenant) return [];
+
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('services')
+    .select('*')
+    .eq('tenant_id', user.tenant.id)
+    .order('name_en');
+
+  return (data ?? []) as Service[];
+}
+
 /**
  * Seed default services from the template table into a fresh tenant.
  * Called once after the tenant's first branch is created.
@@ -77,6 +91,44 @@ export async function createService(
   const { error } = await supabase
     .from('services')
     .insert({ ...parsed.data, tenant_id: user.tenant.id, is_active: true });
+
+  return { error: error?.message ?? null };
+}
+
+export async function updateService(
+  serviceId: string,
+  formData: FormData,
+): Promise<{ error: string | null }> {
+  const user = await getSessionUser();
+  if (!user?.tenant) return { error: 'Not authenticated' };
+
+  const raw = Object.fromEntries(formData.entries());
+  const parsed = ServiceSchema.safeParse(raw);
+  if (!parsed.success) return { error: parsed.error.errors[0].message };
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from('services')
+    .update(parsed.data)
+    .eq('id', serviceId)
+    .eq('tenant_id', user.tenant.id);
+
+  return { error: error?.message ?? null };
+}
+
+export async function toggleService(
+  serviceId: string,
+  isActive: boolean,
+): Promise<{ error: string | null }> {
+  const user = await getSessionUser();
+  if (!user?.tenant) return { error: 'Not authenticated' };
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from('services')
+    .update({ is_active: isActive })
+    .eq('id', serviceId)
+    .eq('tenant_id', user.tenant.id);
 
   return { error: error?.message ?? null };
 }

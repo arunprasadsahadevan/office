@@ -321,6 +321,19 @@ export interface DashboardKpis {
   lowStockItems: number;
 }
 
+// ─── Phase 4: API Keys ───────────────────────────────────────────────────────
+
+export interface ApiKey {
+  id: string;
+  tenant_id: string;
+  name: string;
+  key_prefix: string;
+  is_active: boolean;
+  last_used_at: string | null;
+  created_by: string | null;
+  created_at: string;
+}
+
 // ─── Auth context ─────────────────────────────────────────────────────────────
 
 export interface SessionUser {

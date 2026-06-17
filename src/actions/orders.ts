@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { getSessionUser } from '@/lib/auth';
 import type { Order, OrderItem, OrderStatus } from '@/types';
+import { getActiveSubscription, deductSubscriptionUsage } from './subscriptions';
 
 // ─── Schemas ─────────────────────────────────────────────────────────────────
 
@@ -145,6 +146,17 @@ export async function createOrder(
     entity_id: order.id,
     diff: { order_number: orderNumber, item_count: garments.length, total },
   });
+
+  // Deduct subscription usage if customer has an active subscription
+  const activeSub = await getActiveSubscription(customer_id);
+  if (activeSub) {
+    await deductSubscriptionUsage(activeSub.id, undefined, garments.length);
+    await supabase
+      .from('orders')
+      .update({ subscription_id: activeSub.id })
+      .eq('id', order.id)
+      .eq('tenant_id', tenantId);
+  }
 
   return { orderId: order.id, invoiceId: invoice.id, error: null };
 }
