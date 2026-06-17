@@ -96,6 +96,7 @@ export interface Tenant {
   brand_primary_color: string | null;
   status: TenantStatus;
   trial_ends_at: string | null;
+  tax_rate: number;
   created_at: string;
 }
 
