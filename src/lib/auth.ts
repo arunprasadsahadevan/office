@@ -5,7 +5,8 @@ export async function getSessionUser(): Promise<SessionUser | null> {
   let supabase;
   try {
     supabase = await createClient();
-  } catch {
+  } catch (e) {
+    console.error('[getSessionUser] createClient failed:', e);
     return null;
   }
 
@@ -14,15 +15,21 @@ export async function getSessionUser(): Promise<SessionUser | null> {
     error: userError,
   } = await supabase.auth.getUser();
 
-  if (userError || !user) return null;
+  if (userError || !user) {
+    console.log('[getSessionUser] no auth user:', userError?.message);
+    return null;
+  }
 
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('user_profiles')
     .select('*')
     .eq('id', user.id)
     .single();
 
-  if (!profile) return null;
+  if (!profile) {
+    console.log('[getSessionUser] no profile for user', user.id, profileError?.message);
+    return null;
+  }
 
   const { data: tenant } = profile.tenant_id
     ? await supabase

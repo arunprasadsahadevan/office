@@ -25,11 +25,12 @@ export async function createClient() {
         },
         setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
           try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options),
-            );
-          } catch {
-            // Called from a Server Component — cookies will be set by middleware.
+            cookiesToSet.forEach(({ name, value, options }) => {
+              console.log('[createClient] setAll setting cookie:', name);
+              cookieStore.set(name, value, options);
+            });
+          } catch (e) {
+            console.error('[createClient] setAll failed:', e);
           }
         },
       },
