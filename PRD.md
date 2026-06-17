@@ -412,3 +412,129 @@ Downloadable as PDF (server-rendered), printable, or on-screen view.
 3. Card data — never stored on LaundryOS; Tap hosted checkout only
 4. `tenant_id` — never hardcoded; always from authenticated session via RLS
 5. Tap / WhatsApp API shapes — never invented; only use documented request/response formats
+
+---
+
+## Infrastructure Setup — Claude Code Assisted
+
+All infrastructure provisioning and deployment configuration is managed with Claude Code assistance. The steps below are the authoritative setup runbook for this project.
+
+---
+
+### Supabase Setup
+
+**Claude Code helps with**:
+- Generating and reviewing all SQL migration files in order
+- Identifying missing columns, wrong constraints, or RLS gaps before running
+- Providing copy-ready SQL for the Supabase SQL Editor when the CLI is not available
+- Advising on RLS policy correctness and SECURITY DEFINER function usage
+- Debugging query errors and constraint violations from Supabase error messages
+
+**Migration order** (run in sequence in the Supabase SQL Editor):
+
+| File | Contents |
+|---|---|
+| `001_foundation.sql` | Tenants, branches, users, customers, services, orders, invoices, payments, subscriptions, audit log, RLS |
+| `002_phase1_seed.sql` | Default service templates, order/QR number generators, notifications log |
+| `003_phase2_operations.sql` | Inventory, equipment, maintenance, chart of accounts, expenses, cash reconciliation |
+| `004_phase3_delivery_subscriptions.sql` | Delivery runs, delivery stops, subscription plans and enrollments |
+| `005_phase4_api_keys.sql` | API key table with SHA-256 hashing, tax_rate on tenants |
+| `006_phase5_item_master.sql` | Garment categories, garment items, express columns on services and order_items, seed function |
+| `007_phase6_subscriptions.sql` | Subscription plan v2 (plan_type, bonus items, allowed categories, cancellation policy), customer wallets, wallet transactions, cancellation requests |
+| `008_phase7_payments.sql` | Payment allocations, credit notes, `allocate_payment_fifo()` SECURITY DEFINER function |
+
+**Required Supabase settings** (Dashboard → Authentication → Settings):
+- Site URL: `https://your-vercel-domain.vercel.app`
+- Redirect URLs: `https://your-vercel-domain.vercel.app/**`
+- Email confirmations: disabled for development; enable for production
+
+**Required environment variables** (from Supabase Dashboard → Project Settings → API):
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...   ← server-only, never expose to client
+```
+
+---
+
+### Vercel Deployment Setup
+
+**Claude Code helps with**:
+- Generating `vercel.json` framework configuration
+- Identifying missing environment variables causing build or runtime failures
+- Debugging Vercel build errors (TypeScript, missing output directory, etc.)
+- Reviewing and fixing Next.js configuration for Vercel compatibility
+- Advising on which env vars should be server-only vs `NEXT_PUBLIC_`
+
+**Deployment steps**:
+
+1. **Connect repo** — Vercel Dashboard → New Project → import from GitHub (`arunprasadsahadevan/office`)
+2. **Framework preset** — set to **Next.js** (or rely on `vercel.json` with `"framework": "nextjs"`)
+3. **Branch** — deploy from `main`; use `claude/new-session-*` branches for preview deployments
+4. **Root directory** — leave as `/` (Next.js app is at repo root)
+5. **Build command** — `npm run build` (default, do not override)
+6. **Output directory** — leave blank (Next.js auto-detects `.next`)
+
+**Required environment variables** (Vercel Dashboard → Project → Settings → Environment Variables):
+
+| Variable | Value | Environment |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | `https://xxxx.supabase.co` | All |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJ...` | All |
+| `SUPABASE_SERVICE_ROLE_KEY` | `eyJ...` | Production + Preview |
+| `NEXT_PUBLIC_APP_DOMAIN` | `https://your-app.vercel.app` | All |
+| `TAP_SECRET_KEY` | `sk_live_...` | Production only |
+| `TAP_SECRET_KEY` | `sk_test_...` | Preview + Development |
+| `WHATSAPP_API_TOKEN` | from Meta Business | Production only |
+| `WHATSAPP_PHONE_NUMBER_ID` | from Meta Business | Production only |
+
+**`vercel.json`** (already committed to repo):
+```json
+{
+  "framework": "nextjs"
+}
+```
+
+---
+
+### Local Development Setup
+
+```bash
+# 1. Clone
+git clone https://github.com/arunprasadsahadevan/office.git
+cd office
+
+# 2. Install dependencies
+npm install
+
+# 3. Copy env template and fill in values
+cp .env.example .env.local
+# Edit .env.local with your Supabase URL, anon key, and service role key
+
+# 4. Run migrations in Supabase SQL Editor (001 through 008 in order)
+
+# 5. Start dev server
+npm run dev
+```
+
+**`.env.local` template**:
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
+NEXT_PUBLIC_APP_DOMAIN=http://localhost:3000
+TAP_SECRET_KEY=sk_test_...
+```
+
+---
+
+### Ongoing Deployment Workflow
+
+```
+Feature branch  →  PR to main  →  Vercel Preview  →  test  →  merge  →  Vercel Production auto-deploy
+```
+
+- Claude Code develops on `claude/new-session-*` branches
+- Each push triggers a Vercel Preview deployment automatically
+- Migrations are run manually in Supabase SQL Editor before or after deploying the corresponding code
+- Environment variables are managed in Vercel dashboard (not committed to repo)
