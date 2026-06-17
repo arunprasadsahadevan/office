@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -26,6 +27,7 @@ interface Props {
 export default function LoginForm({ locale }: Props) {
   const t = useTranslations('auth');
   const tc = useTranslations('common');
+  const router = useRouter();
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -38,7 +40,11 @@ export default function LoginForm({ locale }: Props) {
 
     startTransition(async () => {
       const result = await loginAction(fd);
-      if (result?.error) setError(result.error);
+      if (result?.error) {
+        setError(result.error);
+      } else if (result?.redirectTo) {
+        router.push(result.redirectTo);
+      }
     });
   }
 

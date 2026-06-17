@@ -4,6 +4,8 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
+type ActionResult = { error: string; redirectTo?: never } | { redirectTo: string; error?: never };
+
 // ─── Schemas ─────────────────────────────────────────────────────────────────
 
 const LoginSchema = z.object({
@@ -56,7 +58,7 @@ export async function loginAction(formData: FormData) {
     return { error: error.message };
   }
 
-  redirect(`/${locale}/dashboard`);
+  return { redirectTo: `/${locale}/dashboard` };
 }
 
 export async function signupAction(formData: FormData) {
