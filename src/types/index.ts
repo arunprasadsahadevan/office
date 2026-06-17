@@ -241,6 +241,66 @@ export interface CashReconciliation {
   created_at: string;
 }
 
+// ─── Phase 3: Delivery ───────────────────────────────────────────────────────
+
+export type DeliveryRunStatus = 'planned' | 'in_progress' | 'completed' | 'cancelled';
+export type DeliveryStopStatus = 'pending' | 'arrived' | 'completed' | 'failed';
+export type DeliveryStopType = 'pickup' | 'dropoff';
+
+export interface DeliveryRun {
+  id: string;
+  tenant_id: string;
+  branch_id: string;
+  driver_id: string | null;
+  run_date: string;
+  status: DeliveryRunStatus;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface DeliveryStop {
+  id: string;
+  tenant_id: string;
+  run_id: string;
+  order_id: string;
+  sequence: number;
+  address: string | null;
+  stop_type: DeliveryStopType;
+  status: DeliveryStopStatus;
+  completed_at: string | null;
+  driver_note: string | null;
+  created_at: string;
+}
+
+// ─── Phase 3: Customer Subscriptions ─────────────────────────────────────────
+
+export interface CustomerSubscriptionPlan {
+  id: string;
+  tenant_id: string;
+  name_en: string;
+  name_ar: string;
+  billing_cycle: 'monthly' | 'quarterly' | 'annual';
+  price: number;
+  included_kg: number | null;
+  included_items: number | null;
+  perks: Record<string, unknown> | null;
+}
+
+export interface CustomerSubscription {
+  id: string;
+  tenant_id: string;
+  customer_id: string;
+  plan_id: string;
+  status: SubscriptionStatus;
+  current_period_start: string | null;
+  current_period_end: string | null;
+  used_kg: number;
+  used_items: number;
+  payment_method: 'tokenized_card' | 'knet_manual_renewal' | null;
+  tap_token_id: string | null;
+  created_at: string;
+}
+
 // ─── Phase 2: P&L ────────────────────────────────────────────────────────────
 
 export interface BranchPnl {

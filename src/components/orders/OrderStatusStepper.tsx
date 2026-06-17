@@ -9,6 +9,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { updateOrderStatus } from '@/actions/orders';
+import { notifyOrderReady } from '@/actions/notifications';
 import type { OrderStatus } from '@/types';
 
 const STATUSES: OrderStatus[] = [
@@ -41,6 +42,7 @@ export default function OrderStatusStepper({ orderId, currentStatus }: Props) {
 
   const [status, setStatus] = useState<OrderStatus>(currentStatus);
   const [error, setError] = useState<string | null>(null);
+  const [notified, setNotified] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const currentIndex = STATUSES.indexOf(status);
@@ -54,6 +56,11 @@ export default function OrderStatusStepper({ orderId, currentStatus }: Props) {
       const result = await updateOrderStatus(orderId, nextStatus);
       if (result.error) { setError(result.error); return; }
       setStatus(nextStatus);
+      // Auto-notify customer when order becomes ready
+      if (nextStatus === 'ready') {
+        await notifyOrderReady(orderId);
+        setNotified(true);
+      }
     });
   }
 
@@ -74,6 +81,11 @@ export default function OrderStatusStepper({ orderId, currentStatus }: Props) {
       </Stepper>
 
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      {notified && (
+        <Alert severity="success" sx={{ mb: 2 }}>
+          {ar ? 'تم إرسال إشعار واتساب للعميل ✓' : 'WhatsApp notification sent to customer ✓'}
+        </Alert>
+      )}
 
       {!isFinal && nextStatus && (
         <Button
