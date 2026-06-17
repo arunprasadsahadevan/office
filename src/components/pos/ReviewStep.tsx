@@ -40,7 +40,10 @@ export default function ReviewStep({ customer, garments, branchId, onBack, onOrd
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const subtotal = garments.reduce((sum, g) => sum + g.unit_price, 0);
+  const itemsTotal = garments.reduce((sum, g) => sum + g.unit_price, 0);
+  const expressTotal = garments.reduce((sum, g) => sum + g.express_surcharge, 0);
+  const subtotal = itemsTotal + expressTotal;
+  const expressCount = garments.filter((g) => g.is_express).length;
 
   async function handleConfirm() {
     setError(null);
@@ -53,7 +56,10 @@ export default function ReviewStep({ customer, garments, branchId, onBack, onOrd
         garments: garments.map((g) => ({
           garment_type: g.garment_type,
           service_id: g.service_id,
-          unit_price: g.unit_price,
+          unit_price: g.unit_price + g.express_surcharge,
+          is_express: g.is_express,
+          item_id: g.item_id ?? undefined,
+          express_surcharge: g.express_surcharge,
           special_instructions: g.special_instructions || undefined,
           pre_existing_condition: {
             stain: g.condition.stain,
@@ -119,14 +125,36 @@ export default function ReviewStep({ customer, garments, branchId, onBack, onOrd
           </Typography>
           <List disablePadding dense>
             {garments.map((g, i) => (
-              <ListItem key={g.id} disablePadding sx={{ py: 0.5 }}>
+              <ListItem
+                key={g.id}
+                disablePadding
+                sx={{
+                  py: 0.5,
+                  px: 1,
+                  borderRadius: 1,
+                  bgcolor: g.is_express ? 'warning.50' : 'transparent',
+                  mb: 0.25,
+                }}
+              >
                 <ListItemText
-                  primary={`${i + 1}. ${g.garment_type}`}
+                  primary={
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      {g.is_express && (
+                        <Typography component="span" sx={{ fontSize: 13 }}>⚡</Typography>
+                      )}
+                      <Typography variant="body2" component="span" fontWeight={500}>
+                        {i + 1}. {g.garment_type}
+                      </Typography>
+                    </Box>
+                  }
                   secondary={ar ? g.service_name_ar : g.service_name_en}
-                  slotProps={{ primary: { variant: 'body2', fontWeight: 500 } }}
                 />
-                <Typography variant="body2" fontWeight={600}>
-                  KD {g.unit_price.toFixed(3)}
+                <Typography
+                  variant="body2"
+                  fontWeight={600}
+                  color={g.is_express ? 'warning.dark' : 'text.primary'}
+                >
+                  KD {(g.unit_price + g.express_surcharge).toFixed(3)}
                 </Typography>
               </ListItem>
             ))}
@@ -136,8 +164,16 @@ export default function ReviewStep({ customer, garments, branchId, onBack, onOrd
             <Typography variant="body2" color="text.secondary">
               {ar ? 'المجموع الفرعي' : 'Subtotal'}
             </Typography>
-            <Typography variant="body2">KD {subtotal.toFixed(3)}</Typography>
+            <Typography variant="body2">KD {itemsTotal.toFixed(3)}</Typography>
           </Box>
+          {expressCount > 0 && (
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
+              <Typography variant="body2" color="warning.dark">
+                ⚡ {ar ? `رسوم العاجل (${expressCount})` : `Express surcharge (${expressCount})`}
+              </Typography>
+              <Typography variant="body2" color="warning.dark">+KD {expressTotal.toFixed(3)}</Typography>
+            </Box>
+          )}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
             <Typography variant="body2" color="text.secondary">
               {ar ? 'الضريبة (0%)' : 'Tax (0%)'}

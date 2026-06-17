@@ -45,6 +45,10 @@ function newGarment(): GarmentDraft {
     unit_price: 0,
     special_instructions: '',
     condition: { stain: false, tear: false, missing_button: false, faded: false, photo_urls: [] },
+    item_id: null,
+    category_name_en: '',
+    is_express: false,
+    express_surcharge: 0,
   };
 }
 

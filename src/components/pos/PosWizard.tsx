@@ -12,17 +12,21 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import CustomerStep from './CustomerStep';
-import GarmentStep from './GarmentStep';
+import ItemStep from './ItemStep';
 import ReviewStep from './ReviewStep';
-import type { Customer, Service } from '@/types';
+import type { Customer, GarmentCategory, GarmentItem, Service } from '@/types';
 
 export interface GarmentDraft {
-  id: string; // local draft id
+  id: string;
+  item_id: string | null;
   garment_type: string;
+  category_name_en: string;
   service_id: string;
   service_name_en: string;
   service_name_ar: string;
   unit_price: number;
+  is_express: boolean;
+  express_surcharge: number;
   special_instructions: string;
   condition: {
     stain: boolean;
@@ -35,12 +39,14 @@ export interface GarmentDraft {
 
 interface Props {
   services: Service[];
+  categories: GarmentCategory[];
+  items: GarmentItem[];
   branchId: string;
 }
 
-const STEPS = ['customer', 'garments', 'review'] as const;
+const STEPS = ['customer', 'items', 'review'] as const;
 
-export default function PosWizard({ services, branchId }: Props) {
+export default function PosWizard({ services, categories, items, branchId }: Props) {
   const locale = useLocale();
   const [step, setStep] = useState(0);
   const [customer, setCustomer] = useState<Customer | null>(null);
@@ -48,11 +54,11 @@ export default function PosWizard({ services, branchId }: Props) {
   const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
   const [createdInvoiceId, setCreatedInvoiceId] = useState<string | null>(null);
 
-  const stepIcons = [<PersonSearchIcon />, <CheckroomIcon />, <ReceiptIcon />];
+  const stepIcons = [<PersonSearchIcon key="p" />, <CheckroomIcon key="c" />, <ReceiptIcon key="r" />];
   const stepLabels =
     locale === 'ar'
-      ? ['العميل', 'الملابس', 'المراجعة']
-      : ['Customer', 'Garments', 'Review'];
+      ? ['العميل', 'القطع', 'المراجعة']
+      : ['Customer', 'Items', 'Review'];
 
   function handleBack() {
     setStep((s) => Math.max(0, s - 1));
@@ -63,7 +69,7 @@ export default function PosWizard({ services, branchId }: Props) {
     setStep(1);
   }
 
-  function handleGarmentsConfirmed(g: GarmentDraft[]) {
+  function handleItemsConfirmed(g: GarmentDraft[]) {
     setGarments(g);
     setStep(2);
   }
@@ -88,9 +94,7 @@ export default function PosWizard({ services, branchId }: Props) {
         <Stepper activeStep={step} sx={{ mb: 4 }}>
           {STEPS.map((_, i) => (
             <Step key={i} completed={i < step}>
-              <StepLabel
-                StepIconProps={{ icon: stepIcons[i] }}
-              >
+              <StepLabel StepIconProps={{ icon: stepIcons[i] }}>
                 {stepLabels[i]}
               </StepLabel>
             </Step>
@@ -103,11 +107,13 @@ export default function PosWizard({ services, branchId }: Props) {
       )}
 
       {step === 1 && customer && (
-        <GarmentStep
+        <ItemStep
           customer={customer}
           services={services}
+          categories={categories}
+          items={items}
           initial={garments}
-          onConfirm={handleGarmentsConfirmed}
+          onConfirm={handleItemsConfirmed}
           onBack={handleBack}
         />
       )}
@@ -125,9 +131,7 @@ export default function PosWizard({ services, branchId }: Props) {
       {step === 3 && createdOrderId && (
         <Box sx={{ textAlign: 'center', py: 4 }}>
           <Alert severity="success" sx={{ mb: 3, justifyContent: 'center' }}>
-            {locale === 'ar'
-              ? 'تم إنشاء الطلب بنجاح!'
-              : 'Order created successfully!'}
+            {locale === 'ar' ? 'تم إنشاء الطلب بنجاح!' : 'Order created successfully!'}
           </Alert>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button

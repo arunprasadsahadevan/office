@@ -32,7 +32,7 @@ const DRAWER_WIDTH = 240;
 const DRAWER_COLLAPSED = 68;
 
 // Only items with phase > CURRENT_PHASE are shown as "coming soon"
-const CURRENT_PHASE = 4;
+const CURRENT_PHASE = 8;
 
 interface NavItem {
   key: string;

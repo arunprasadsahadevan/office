@@ -10,6 +10,9 @@ export interface Service {
   base_price: string | number;
   turnaround_hours: number;
   is_active: boolean;
+  // Phase 5 additions
+  express_price: string | number | null;
+  express_turnaround_hours: number | null;
 }
 
 // ─── Customer ─────────────────────────────────────────────────────────────────
@@ -47,6 +50,9 @@ export interface OrderItem {
   qr_code: string | null;
   garment_type: string | null;
   service_id: string | null;
+  item_id: string | null;
+  is_express: boolean;
+  express_surcharge: number;
   special_instructions: string | null;
   pre_existing_condition: {
     stain?: boolean;
@@ -285,6 +291,21 @@ export interface CustomerSubscriptionPlan {
   included_kg: number | null;
   included_items: number | null;
   perks: Record<string, unknown> | null;
+  plan_type: SubscriptionPlanType;
+  credit_amount: number | null;
+  credit_validity_days: number | null;
+  bonus_items: number | null;
+  bonus_items_pct: number | null;
+  allowed_category_ids: string[] | null;
+  rollover_enabled: boolean;
+  rollover_cap: number | null;
+  overage_price_per_item: number | null;
+  overage_price_per_kg: number | null;
+  cancellation_policy: CancellationPolicy;
+  cancellation_fee: number;
+  description_en: string | null;
+  description_ar: string | null;
+  is_active: boolean;
 }
 
 export interface CustomerSubscription {
@@ -300,6 +321,13 @@ export interface CustomerSubscription {
   payment_method: 'tokenized_card' | 'knet_manual_renewal' | null;
   tap_token_id: string | null;
   created_at: string;
+  // Phase 6 additions
+  bonus_items_remaining: number;
+  wallet_credit_balance: number;
+  paused_at: string | null;
+  pause_until: string | null;
+  cancellation_reason: string | null;
+  rollover_items: number;
 }
 
 // ─── Phase 2: P&L ────────────────────────────────────────────────────────────
@@ -320,6 +348,103 @@ export interface DashboardKpis {
   pendingPickups: number;
   slaAtRisk: number;
   lowStockItems: number;
+}
+
+// ─── Phase 5: Garment Catalog ─────────────────────────────────────────────────
+
+export interface GarmentCategory {
+  id: string;
+  tenant_id: string;
+  name_en: string;
+  name_ar: string;
+  icon: string | null;
+  display_order: number;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface GarmentItem {
+  id: string;
+  tenant_id: string;
+  category_id: string;
+  name_en: string;
+  name_ar: string;
+  photo_url: string | null;
+  default_service_id: string | null;
+  allowed_service_categories: string[] | null;
+  is_subscription_eligible: boolean;
+  special_handling: Record<string, boolean> | null;
+  display_order: number;
+  is_active: boolean;
+  created_at: string;
+  category?: Pick<GarmentCategory, 'id' | 'name_en' | 'name_ar' | 'icon'>;
+}
+
+// ─── Phase 6: Enhanced Subscriptions + Wallet ─────────────────────────────────
+
+export type SubscriptionPlanType = 'credit' | 'item_bundle' | 'weight';
+export type CancellationPolicy =
+  | 'full_refund' | 'pro_rata' | 'no_refund' | 'credit_conversion' | 'cancellation_fee';
+
+export interface CustomerWallet {
+  id: string;
+  tenant_id: string;
+  customer_id: string;
+  balance: number;
+  updated_at: string;
+}
+
+export interface CustomerWalletTransaction {
+  id: string;
+  tenant_id: string;
+  customer_id: string;
+  wallet_id: string;
+  txn_type: 'credit' | 'debit';
+  amount: number;
+  description: string;
+  reference_id: string | null;
+  reference_type: 'invoice' | 'subscription' | 'manual' | 'credit_note' | 'refund' | null;
+  actor_id: string | null;
+  created_at: string;
+}
+
+export interface SubscriptionCancellationRequest {
+  id: string;
+  tenant_id: string;
+  subscription_id: string;
+  requested_by: string | null;
+  reason: string | null;
+  refund_amount: number;
+  refund_method: 'cash' | 'knet' | 'wallet_credit' | 'none' | null;
+  status: 'pending' | 'approved' | 'rejected' | 'completed';
+  approved_by: string | null;
+  notes: string | null;
+  created_at: string;
+  resolved_at: string | null;
+}
+
+// ─── Phase 7: Credit Notes & Payment Allocations ──────────────────────────────
+
+export interface CreditNote {
+  id: string;
+  tenant_id: string;
+  customer_id: string;
+  invoice_id: string | null;
+  amount: number;
+  reason: string;
+  status: 'open' | 'applied' | 'voided';
+  applied_to_invoice_id: string | null;
+  created_by: string | null;
+  created_at: string;
+}
+
+export interface PaymentAllocation {
+  id: string;
+  tenant_id: string;
+  payment_id: string;
+  invoice_id: string;
+  amount_allocated: number;
+  created_at: string;
 }
 
 // ─── Phase 4: API Keys ───────────────────────────────────────────────────────

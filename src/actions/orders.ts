@@ -12,6 +12,9 @@ const GarmentSchema = z.object({
   garment_type: z.string().min(1),
   service_id: z.string().uuid(),
   unit_price: z.coerce.number().nonnegative(),
+  is_express: z.boolean().default(false),
+  express_surcharge: z.coerce.number().nonnegative().default(0),
+  item_id: z.string().uuid().optional(),
   special_instructions: z.string().optional(),
   pre_existing_condition: z
     .object({
@@ -97,6 +100,9 @@ export async function createOrder(
         qr_code: (qrRow as string | null) ?? `LOS-${crypto.randomUUID().replace(/-/g, '').substring(0, 12).toUpperCase()}`,
         garment_type: g.garment_type,
         service_id: g.service_id,
+        item_id: g.item_id ?? null,
+        is_express: g.is_express ?? false,
+        express_surcharge: g.express_surcharge ?? 0,
         special_instructions: g.special_instructions ?? null,
         pre_existing_condition: g.pre_existing_condition ?? null,
         status: 'received',

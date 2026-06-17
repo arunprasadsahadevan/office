@@ -11,6 +11,7 @@ import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices
 import KeyIcon from '@mui/icons-material/Key';
 import StoreIcon from '@mui/icons-material/Store';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
+import CheckroomIcon from '@mui/icons-material/Checkroom';
 import { getSessionUser } from '@/lib/auth';
 
 export const metadata: Metadata = { title: 'Settings' };
@@ -67,6 +68,12 @@ export default async function SettingsPage({ params }: Props) {
       description: 'View your current plan and upgrade',
       href: `/${locale}/settings/billing`,
       icon: <CreditCardIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
+    },
+    {
+      label: 'Items Master',
+      description: 'Garment categories and items for touch-screen POS',
+      href: `/${locale}/settings/items`,
+      icon: <CheckroomIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
     },
   ];
 
