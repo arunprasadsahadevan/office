@@ -14,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import PeopleIcon from '@mui/icons-material/People';
 import InventoryIcon from '@mui/icons-material/Inventory2';
@@ -28,22 +29,28 @@ import LocalLaundryServiceIcon from '@mui/icons-material/LocalLaundryService';
 const DRAWER_WIDTH = 240;
 const DRAWER_COLLAPSED = 68;
 
+// Only items with phase > CURRENT_PHASE are shown as "coming soon"
+const CURRENT_PHASE = 1;
+
 interface NavItem {
   key: string;
+  label_en: string;
+  label_ar: string;
   icon: React.ReactNode;
   href: string;
-  phase?: number;
+  phase: number;
 }
 
 const navItems: NavItem[] = [
-  { key: 'dashboard',     icon: <DashboardIcon />,       href: '/dashboard' },
-  { key: 'orders',        icon: <ReceiptLongIcon />,      href: '/orders',       phase: 1 },
-  { key: 'customers',     icon: <PeopleIcon />,           href: '/customers',    phase: 1 },
-  { key: 'inventory',     icon: <InventoryIcon />,        href: '/inventory',    phase: 2 },
-  { key: 'accounting',    icon: <AccountBalanceIcon />,   href: '/accounting',   phase: 2 },
-  { key: 'delivery',      icon: <LocalShippingIcon />,    href: '/delivery',     phase: 3 },
-  { key: 'subscriptions', icon: <SubscriptionsIcon />,    href: '/subscriptions',phase: 3 },
-  { key: 'settings',      icon: <SettingsIcon />,         href: '/settings' },
+  { key: 'dashboard',     label_en: 'Dashboard',      label_ar: 'لوحة التحكم',   icon: <DashboardIcon />,      href: '/dashboard',      phase: 0 },
+  { key: 'pos',           label_en: 'Point of Sale',  label_ar: 'نقطة البيع',    icon: <PointOfSaleIcon />,    href: '/pos',            phase: 1 },
+  { key: 'orders',        label_en: 'Orders',         label_ar: 'الطلبات',        icon: <ReceiptLongIcon />,    href: '/orders',         phase: 1 },
+  { key: 'customers',     label_en: 'Customers',      label_ar: 'العملاء',        icon: <PeopleIcon />,         href: '/customers',      phase: 1 },
+  { key: 'inventory',     label_en: 'Inventory',      label_ar: 'المخزون',        icon: <InventoryIcon />,      href: '/inventory',      phase: 2 },
+  { key: 'accounting',    label_en: 'Accounting',     label_ar: 'المحاسبة',       icon: <AccountBalanceIcon />, href: '/accounting',     phase: 2 },
+  { key: 'delivery',      label_en: 'Delivery',       label_ar: 'التوصيل',        icon: <LocalShippingIcon />,  href: '/delivery',       phase: 3 },
+  { key: 'subscriptions', label_en: 'Subscriptions',  label_ar: 'الاشتراكات',    icon: <SubscriptionsIcon />,  href: '/subscriptions',  phase: 3 },
+  { key: 'settings',      label_en: 'Settings',       label_ar: 'الإعدادات',      icon: <SettingsIcon />,       href: '/settings',       phase: 0 },
 ];
 
 interface Props {
@@ -61,13 +68,13 @@ export default function AppSidebar({
   mobileOpen,
   onMobileClose,
 }: Props) {
-  const t = useTranslations('nav');
   const locale = useLocale();
+  const ar = locale === 'ar';
   const pathname = usePathname();
-  const isRtl = locale === 'ar';
+  const isRtl = ar;
 
   function isActive(href: string) {
-    return pathname.includes(href);
+    return pathname.endsWith(href) || pathname.includes(`${href}/`);
   }
 
   const drawerContent = (
@@ -110,7 +117,8 @@ export default function AppSidebar({
       <List sx={{ px: 1, py: 1.5, flex: 1 }}>
         {navItems.map((item) => {
           const active = isActive(item.href);
-          const comingSoon = item.phase != null && item.phase > 0;
+          const comingSoon = item.phase > CURRENT_PHASE;
+          const label = ar ? item.label_ar : item.label_en;
           const href = `/${locale}${item.href}`;
 
           const button = (
@@ -144,7 +152,7 @@ export default function AppSidebar({
               </ListItemIcon>
               {!collapsed && (
                 <ListItemText
-                  primary={t(item.key as any)}
+                  primary={label}
                   slotProps={{ primary: { variant: 'body2', fontWeight: active ? 700 : 500 } }}
                 />
               )}
@@ -153,7 +161,7 @@ export default function AppSidebar({
 
           if (collapsed) {
             return (
-              <Tooltip key={item.key} title={t(item.key as any)} placement={isRtl ? 'left' : 'right'}>
+              <Tooltip key={item.key} title={label} placement={isRtl ? 'left' : 'right'}>
                 <span>{button}</span>
               </Tooltip>
             );

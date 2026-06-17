@@ -1,4 +1,64 @@
 export type TenantStatus = 'trial' | 'active' | 'suspended' | 'cancelled';
+
+// ─── Service ──────────────────────────────────────────────────────────────────
+export interface Service {
+  id: string;
+  tenant_id: string;
+  name_en: string;
+  name_ar: string;
+  category: 'wash_fold' | 'dry_clean' | 'iron_only' | 'special_care';
+  base_price: string | number;
+  turnaround_hours: number;
+  is_active: boolean;
+}
+
+// ─── Customer ─────────────────────────────────────────────────────────────────
+export interface Customer {
+  id: string;
+  tenant_id: string;
+  full_name: string;
+  phone: string;
+  email: string | null;
+  preferred_locale: string;
+  customer_type: 'retail' | 'corporate';
+  credit_terms_days: number | null;
+  created_at: string;
+}
+
+// ─── Order & item ─────────────────────────────────────────────────────────────
+export interface Order {
+  id: string;
+  tenant_id: string;
+  branch_id: string;
+  customer_id: string;
+  order_number: string;
+  status: OrderStatus;
+  promised_at: string | null;
+  fulfillment_type: FulfillmentType;
+  subscription_id: string | null;
+  created_by: string | null;
+  created_at: string;
+}
+
+export interface OrderItem {
+  id: string;
+  order_id: string;
+  tenant_id: string;
+  qr_code: string | null;
+  garment_type: string | null;
+  service_id: string | null;
+  special_instructions: string | null;
+  pre_existing_condition: {
+    stain?: boolean;
+    tear?: boolean;
+    missing_button?: boolean;
+    faded?: boolean;
+    photo_urls?: string[];
+  } | null;
+  status: string;
+  unit_price: string | number | null;
+  created_at: string;
+}
 export type UserRole =
   | 'super_admin'
   | 'tenant_owner'

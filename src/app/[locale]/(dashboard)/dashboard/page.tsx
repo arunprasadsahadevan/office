@@ -14,7 +14,9 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { getSessionUser, getDaysLeftInTrial } from '@/lib/auth';
+import { getDashboardKpis } from '@/actions/orders';
 import KpiCard from '@/components/dashboard/KpiCard';
+
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('dashboard');
   return { title: t('title') };
@@ -27,7 +29,7 @@ interface Props {
 export default async function DashboardPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations('dashboard');
-  const user = await getSessionUser();
+  const [user, kpis] = await Promise.all([getSessionUser(), getDashboardKpis()]);
 
   if (!user) return null;
 
@@ -52,7 +54,8 @@ export default async function DashboardPage({ params }: Props) {
       )}
 
       {/* Welcome */}
-      <Box sx={{ mb: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3, flexWrap: 'wrap', gap: 2 }}>
+        <Box>
         <Typography variant="h4" fontWeight={700} gutterBottom>
           {t('welcome', { name: user.profile.full_name?.split(' ')[0] ?? 'there' })}
         </Typography>
@@ -61,12 +64,17 @@ export default async function DashboardPage({ params }: Props) {
             {user.tenant?.name}
           </Typography>
           <Chip
-            label={user.tenant ? t(`../tenant.${user.tenant.status}` as any) ?? user.tenant.status : '—'}
+            label={user.tenant?.status ?? '—'}
             size="small"
             color={user.tenant?.status === 'active' ? 'success' : 'default'}
             variant="outlined"
           />
         </Box>
+        </Box>
+        <Button variant="contained" size="large" href={`/${locale}/pos`}
+          startIcon={<ReceiptLongIcon />}>
+          {locale === 'ar' ? 'طلب جديد' : 'New Order'}
+        </Button>
       </Box>
 
       {/* KPI cards */}
@@ -74,7 +82,7 @@ export default async function DashboardPage({ params }: Props) {
         <Grid item xs={12} sm={6} lg={3}>
           <KpiCard
             title={t('todayOrders')}
-            value={0}
+            value={kpis.ordersToday}
             icon={<ReceiptLongIcon />}
             color="primary"
           />
@@ -82,7 +90,7 @@ export default async function DashboardPage({ params }: Props) {
         <Grid item xs={12} sm={6} lg={3}>
           <KpiCard
             title={t('todayRevenue')}
-            value="KD 0.000"
+            value={`KD ${kpis.revenueToday.toFixed(3)}`}
             icon={<AttachMoneyIcon />}
             color="success"
           />
@@ -90,7 +98,7 @@ export default async function DashboardPage({ params }: Props) {
         <Grid item xs={12} sm={6} lg={3}>
           <KpiCard
             title={t('pendingPickups')}
-            value={0}
+            value={kpis.pendingPickups}
             icon={<LocalShippingIcon />}
             color="warning"
           />
@@ -98,9 +106,9 @@ export default async function DashboardPage({ params }: Props) {
         <Grid item xs={12} sm={6} lg={3}>
           <KpiCard
             title={t('slaAtRisk')}
-            value={0}
+            value={kpis.slaAtRisk}
             icon={<WarningAmberIcon />}
-            color="error"
+            color={kpis.slaAtRisk > 0 ? 'error' : 'success'}
           />
         </Grid>
       </Grid>
