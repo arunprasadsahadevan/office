@@ -272,7 +272,7 @@ begin
   on conflict (id) do nothing;
 
   -- ── Payments for completed orders ────────────────────────────────────────
-  insert into payments (id, tenant_id, invoice_id, amount, method, collected_by, created_at) values
+  insert into payments (id, tenant_id, invoice_id, amount, method, collected_by, paid_at) values
     (gen_random_uuid(), v_tenant_id, v_inv11, 5.500, 'cash',  v_user_id, now() - interval '5d'),
     (gen_random_uuid(), v_tenant_id, v_inv12, 6.500, 'knet',  v_user_id, now() - interval '3d')
   on conflict (id) do nothing;
