@@ -26,12 +26,13 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import LocalLaundryServiceIcon from '@mui/icons-material/LocalLaundryService';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 
 const DRAWER_WIDTH = 240;
 const DRAWER_COLLAPSED = 68;
 
 // Only items with phase > CURRENT_PHASE are shown as "coming soon"
-const CURRENT_PHASE = 3;
+const CURRENT_PHASE = 4;
 
 interface NavItem {
   key: string;
@@ -51,8 +52,9 @@ const navItems: NavItem[] = [
   { key: 'accounting',    label_en: 'Accounting',     label_ar: 'المحاسبة',       icon: <AccountBalanceIcon />, href: '/accounting',     phase: 2 },
   { key: 'reports',       label_en: 'Reports',        label_ar: 'التقارير',        icon: <AssessmentIcon />,     href: '/reports',        phase: 2 },
   { key: 'delivery',      label_en: 'Delivery',       label_ar: 'التوصيل',        icon: <LocalShippingIcon />,  href: '/delivery',       phase: 3 },
-  { key: 'subscriptions', label_en: 'Subscriptions',  label_ar: 'الاشتراكات',    icon: <SubscriptionsIcon />,  href: '/subscriptions',  phase: 3 },
-  { key: 'settings',      label_en: 'Settings',       label_ar: 'الإعدادات',      icon: <SettingsIcon />,       href: '/settings',       phase: 0 },
+  { key: 'subscriptions', label_en: 'Subscriptions',  label_ar: 'الاشتراكات',    icon: <SubscriptionsIcon />,    href: '/subscriptions',  phase: 3 },
+  { key: 'scan',          label_en: 'QR Scan',        label_ar: 'مسح رمز QR',    icon: <QrCodeScannerIcon />,    href: '/scan',           phase: 4 },
+  { key: 'settings',      label_en: 'Settings',       label_ar: 'الإعدادات',      icon: <SettingsIcon />,         href: '/settings',       phase: 0 },
 ];
 
 interface Props {
