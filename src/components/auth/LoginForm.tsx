@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -27,7 +26,6 @@ interface Props {
 export default function LoginForm({ locale }: Props) {
   const t = useTranslations('auth');
   const tc = useTranslations('common');
-  const router = useRouter();
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -44,7 +42,7 @@ export default function LoginForm({ locale }: Props) {
         if (result?.error) {
           setError(result.error);
         } else if (result?.redirectTo) {
-          router.push(result.redirectTo);
+          window.location.href = result.redirectTo;
         } else {
           setError('Unexpected response from server. Please try again.');
         }
