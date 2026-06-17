@@ -13,6 +13,7 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import InventoryIcon from '@mui/icons-material/Inventory2';
 import { getSessionUser, getDaysLeftInTrial } from '@/lib/auth';
 import { getDashboardKpis } from '@/actions/orders';
 import KpiCard from '@/components/dashboard/KpiCard';
@@ -109,6 +110,14 @@ export default async function DashboardPage({ params }: Props) {
             value={kpis.slaAtRisk}
             icon={<WarningAmberIcon />}
             color={kpis.slaAtRisk > 0 ? 'error' : 'success'}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={3}>
+          <KpiCard
+            title={t('lowStock')}
+            value={kpis.lowStockItems}
+            icon={<InventoryIcon />}
+            color={kpis.lowStockItems > 0 ? 'warning' : 'success'}
           />
         </Grid>
       </Grid>

@@ -140,6 +140,117 @@ export interface PlatformSubscription {
   created_at: string;
 }
 
+// ─── Phase 2: Inventory ───────────────────────────────────────────────────────
+
+export type InventoryUnit = 'pcs' | 'kg' | 'litre' | 'box' | 'roll';
+export type InventoryTxnType = 'restock' | 'usage' | 'adjustment' | 'waste';
+export type EquipmentType = 'washer' | 'dryer' | 'ironer' | 'dry_clean' | 'other';
+
+export interface InventoryItem {
+  id: string;
+  tenant_id: string;
+  branch_id: string | null;
+  name: string;
+  unit: InventoryUnit;
+  current_qty: number;
+  reorder_threshold: number;
+  cost_per_unit: number | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface InventoryTransaction {
+  id: string;
+  tenant_id: string;
+  item_id: string;
+  txn_type: InventoryTxnType;
+  qty_delta: number;
+  note: string | null;
+  reference_id: string | null;
+  actor_id: string | null;
+  created_at: string;
+}
+
+export interface Equipment {
+  id: string;
+  tenant_id: string;
+  branch_id: string;
+  name: string;
+  eq_type: EquipmentType;
+  model: string | null;
+  serial_number: string | null;
+  purchased_at: string | null;
+  next_service: string | null;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface MaintenanceLog {
+  id: string;
+  tenant_id: string;
+  equipment_id: string;
+  serviced_at: string;
+  description: string | null;
+  cost: number;
+  next_service: string | null;
+  actor_id: string | null;
+  created_at: string;
+}
+
+// ─── Phase 2: Accounting ──────────────────────────────────────────────────────
+
+export type AccountType = 'revenue' | 'expense' | 'asset' | 'liability' | 'equity';
+
+export interface ChartOfAccount {
+  id: string;
+  tenant_id: string;
+  code: string;
+  name_en: string;
+  name_ar: string;
+  account_type: AccountType;
+  parent_id: string | null;
+  is_system: boolean;
+  created_at: string;
+}
+
+export interface Expense {
+  id: string;
+  tenant_id: string;
+  branch_id: string | null;
+  account_id: string | null;
+  amount: number;
+  description: string;
+  expense_date: string;
+  receipt_url: string | null;
+  recorded_by: string | null;
+  created_at: string;
+}
+
+export interface CashReconciliation {
+  id: string;
+  tenant_id: string;
+  branch_id: string;
+  reconciliation_date: string;
+  shift: 'day' | 'night';
+  expected_cash: number;
+  counted_cash: number;
+  variance: number;
+  note: string | null;
+  reconciled_by: string | null;
+  created_at: string;
+}
+
+// ─── Phase 2: P&L ────────────────────────────────────────────────────────────
+
+export interface BranchPnl {
+  branch_id: string;
+  branch_name: string;
+  revenue: number;
+  expenses: number;
+  gross_profit: number;
+}
+
 // ─── Dashboard KPIs ──────────────────────────────────────────────────────────
 
 export interface DashboardKpis {
@@ -147,6 +258,7 @@ export interface DashboardKpis {
   revenueToday: number;
   pendingPickups: number;
   slaAtRisk: number;
+  lowStockItems: number;
 }
 
 // ─── Auth context ─────────────────────────────────────────────────────────────

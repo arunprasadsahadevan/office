@@ -52,6 +52,7 @@
     "todayRevenue": "Revenue Today",
     "pendingPickups": "Pending Pickups",
     "slaAtRisk": "SLA at Risk",
+    "lowStock": "Low Stock Items",
     "recentOrders": "Recent Orders",
     "noOrders": "No orders yet — create your first order from the POS.",
     "trialBanner": "You are on a 14-day free trial. {daysLeft} days remaining.",

@@ -309,14 +309,14 @@ export async function recordCashPayment(
 
 export async function getDashboardKpis() {
   const user = await getSessionUser();
-  if (!user?.tenant) return { ordersToday: 0, revenueToday: 0, pendingPickups: 0, slaAtRisk: 0 };
+  if (!user?.tenant) return { ordersToday: 0, revenueToday: 0, pendingPickups: 0, slaAtRisk: 0, lowStockItems: 0 };
 
   const supabase = await createClient();
   const tenantId = user.tenant.id;
   const todayStart = new Date();
   todayStart.setHours(0, 0, 0, 0);
 
-  const [ordersRes, revenueRes, pickupsRes, slaRes] = await Promise.all([
+  const [ordersRes, revenueRes, pickupsRes, slaRes, inventoryRes] = await Promise.all([
     supabase
       .from('orders')
       .select('id', { count: 'exact', head: true })
@@ -343,6 +343,11 @@ export async function getDashboardKpis() {
       .eq('tenant_id', tenantId)
       .not('status', 'in', '(completed,cancelled)')
       .lt('promised_at', new Date().toISOString()),
+
+    supabase
+      .from('inventory_items')
+      .select('id,current_qty,reorder_threshold')
+      .eq('tenant_id', tenantId),
   ]);
 
   const revenueToday = (revenueRes.data ?? []).reduce(
@@ -350,10 +355,15 @@ export async function getDashboardKpis() {
     0,
   );
 
+  const lowStockItems = (inventoryRes.data ?? []).filter(
+    (item) => Number(item.current_qty) <= Number(item.reorder_threshold),
+  ).length;
+
   return {
     ordersToday: ordersRes.count ?? 0,
     revenueToday,
     pendingPickups: pickupsRes.count ?? 0,
     slaAtRisk: slaRes.count ?? 0,
+    lowStockItems,
   };
 }
