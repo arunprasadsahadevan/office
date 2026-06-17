@@ -55,9 +55,11 @@ export async function loginAction(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
+    console.error('[loginAction] signInWithPassword error:', error.message, error.status);
     return { error: error.message };
   }
 
+  console.log('[loginAction] login success, redirecting to dashboard');
   return { redirectTo: `/${locale}/dashboard` };
 }
 

@@ -39,11 +39,18 @@ export default function LoginForm({ locale }: Props) {
     fd.set('locale', locale);
 
     startTransition(async () => {
-      const result = await loginAction(fd);
-      if (result?.error) {
-        setError(result.error);
-      } else if (result?.redirectTo) {
-        router.push(result.redirectTo);
+      try {
+        const result = await loginAction(fd);
+        if (result?.error) {
+          setError(result.error);
+        } else if (result?.redirectTo) {
+          router.push(result.redirectTo);
+        } else {
+          setError('Unexpected response from server. Please try again.');
+        }
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        setError(`Login failed: ${msg}`);
       }
     });
   }
