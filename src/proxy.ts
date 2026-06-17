@@ -1,7 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 import { routing } from '@/i18n/routing';
 import { createServerClient } from '@supabase/ssr';
-import { type NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -14,17 +14,16 @@ function extractTenantSlug(host: string): string | null {
   return slug && !slug.includes('.') ? slug : null;
 }
 
-export async function middleware(request: NextRequest) {
-  // Inject x-tenant-slug header for subdomain-based tenants.
+export async function proxy(request: NextRequest) {
   const host = request.headers.get('host') ?? request.nextUrl.hostname;
   const slug = extractTenantSlug(host);
+
   if (slug) {
     const headers = new Headers(request.headers);
     headers.set('x-tenant-slug', slug);
     request = new NextRequest(request.url, { headers, method: request.method });
   }
 
-  // API and public tracking routes skip locale routing.
   if (
     request.nextUrl.pathname.startsWith('/api/') ||
     request.nextUrl.pathname.startsWith('/track/')
@@ -32,7 +31,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next({ request });
   }
 
-  // Refresh Supabase session so auth cookies don't expire mid-session.
   let response = intlMiddleware(request);
 
   if (
