@@ -1,0 +1,21 @@
+# Next.js
+.next/
+out/
+.vercel/
+
+# Dependencies
+node_modules/
+
+# Env files — .example is safe to commit, the real ones are not
+.env
+.env.local
+.env.*.local
+!.env.local.example
+
+# Build artifacts
+*.tsbuildinfo
+next-env.d.ts
+
+# Misc
+.DS_Store
+*.pem

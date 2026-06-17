@@ -1,0 +1,72 @@
+{
+  "common": {
+    "appName": "LaundryOS",
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "confirm": "Confirm",
+    "or": "or",
+    "required": "Required",
+    "optional": "Optional"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "orders": "Orders",
+    "customers": "Customers",
+    "inventory": "Inventory",
+    "accounting": "Accounting",
+    "delivery": "Delivery",
+    "settings": "Settings",
+    "subscriptions": "Subscriptions"
+  },
+  "auth": {
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "signup": "Create Account",
+    "email": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "fullName": "Full name",
+    "businessName": "Business name",
+    "businessNameHelp": "This will be your workspace name on LaundryOS",
+    "alreadyHaveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "forgotPassword": "Forgot password?",
+    "loginSubtitle": "Sign in to your LaundryOS workspace",
+    "signupSubtitle": "Start your 14-day free trial — no credit card required",
+    "passwordMismatch": "Passwords do not match",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "emailInvalid": "Enter a valid email address",
+    "slugTaken": "This business name is already taken — try a variation",
+    "signupSuccess": "Account created! Redirecting to your dashboard…",
+    "termsAgreement": "By creating an account you agree to our Terms of Service and Privacy Policy."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, {name}",
+    "todayOrders": "Orders Today",
+    "todayRevenue": "Revenue Today",
+    "pendingPickups": "Pending Pickups",
+    "slaAtRisk": "SLA at Risk",
+    "recentOrders": "Recent Orders",
+    "noOrders": "No orders yet — create your first order from the POS.",
+    "trialBanner": "You are on a 14-day free trial. {daysLeft} days remaining.",
+    "upgradePlan": "Upgrade Plan"
+  },
+  "tenant": {
+    "trial": "Trial",
+    "active": "Active",
+    "suspended": "Suspended",
+    "cancelled": "Cancelled"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "unauthorized": "You are not authorised to perform this action.",
+    "notFound": "The requested resource was not found.",
+    "networkError": "Network error — please check your connection."
+  }
+}
