@@ -662,7 +662,505 @@ const ROLES = {
     }
 };
 
-// Nav items: icon, label, route key, allowed roles (null = all roles)
+// ── DATA SEED ─────────────────────────────────────────────────
+
+const CYCLE = {
+    id: 'cycle-2026',
+    name: '2026 KFH Capital Innovation Competition',
+    year: 2026,
+    status: 'active',
+    currentStage: 'screening',
+    stages: [
+        { id: 'awareness',    label: 'Awareness',    start: '2026-07-15', end: '2026-07-31', state: 'done'     },
+        { id: 'submission',   label: 'Submission',   start: '2026-08-01', end: '2026-08-31', state: 'done'     },
+        { id: 'screening',    label: 'Screening',    start: '2026-09-01', end: '2026-09-14', state: 'active'   },
+        { id: 'coaching',     label: 'Coaching',     start: '2026-09-15', end: '2026-09-21', state: 'upcoming' },
+        { id: 'excom',        label: 'ExCom Review', start: '2026-09-22', end: '2026-09-28', state: 'upcoming' },
+        { id: 'announcement', label: 'Announcement', start: '2026-10-01', end: '2026-10-01', state: 'upcoming' },
+    ],
+    scoringWeights: {
+        businessImpact:      0.30,
+        feasibility:         0.25,
+        innovation:          0.25,
+        strategicAlignment:  0.10,
+        scalability:         0.05,
+        presentationClarity: 0.05,
+    },
+    shortlistThreshold: 3.50,
+    prizes: {
+        first:  { label: '1st Place', amount: 5000, currency: 'KWD' },
+        second: { label: '2nd Place', amount: 3000, currency: 'KWD' },
+        third:  { label: '3rd Place', amount: 1500, currency: 'KWD' },
+    },
+    resultsLocked: false,
+};
+
+const CATEGORIES = [
+    'Operational Efficiency',
+    'Digital Transformation',
+    'Cost Optimization',
+    'Workforce Productivity',
+    'Customer Service Improvement',
+    'Vendor & Third-Party Optimization',
+    'Risk & Compliance Efficiency',
+    'Sustainability & ESG',
+    'Revenue Leakage Prevention',
+];
+
+const USERS = [
+    { id: 'u01', name: 'Fatima Al-Rashidi',  email: 'f.alrashidi@kfhcapital.com',   role: 'participant',      dept: 'Operations',        avatar: 'FA' },
+    { id: 'u02', name: 'Ahmad Al-Mutairi',    email: 'a.almutairi@kfhcapital.com',   role: 'participant',      dept: 'IT & Digital',      avatar: 'AA' },
+    { id: 'u03', name: 'Nasser Al-Matrouk',   email: 'n.almatrouk@kfhcapital.com',   role: 'participant',      dept: 'Finance',           avatar: 'NA' },
+    { id: 'u04', name: 'Sara Al-Osaimi',      email: 's.alosaimi@kfhcapital.com',    role: 'team_lead',        dept: 'Finance',           avatar: 'SO' },
+    { id: 'u05', name: 'Khalid Al-Hajri',     email: 'k.alhajri@kfhcapital.com',     role: 'team_lead',        dept: 'Investment',        avatar: 'KH' },
+    { id: 'u06', name: 'Mohammed Al-Shamari', email: 'm.alshamari@kfhcapital.com',   role: 'screener',         dept: 'Risk & Compliance', avatar: 'MS' },
+    { id: 'u07', name: 'Dana Al-Qattan',      email: 'd.alqattan@kfhcapital.com',    role: 'screener',         dept: 'Operations',        avatar: 'DQ' },
+    { id: 'u08', name: 'Noura Al-Kandari',    email: 'n.alkandari@kfhcapital.com',   role: 'coach',            dept: 'HR & Learning',     avatar: 'NK' },
+    { id: 'u09', name: 'Yousef Al-Enezi',     email: 'y.alenezi@kfhcapital.com',     role: 'judge',            dept: 'Operations',        avatar: 'YE' },
+    { id: 'u10', name: 'Hessa Al-Failakawi',  email: 'h.alfailakawi@kfhcapital.com', role: 'judge',            dept: 'Finance',           avatar: 'HF' },
+    { id: 'u11', name: 'Bader Al-Ajmi',       email: 'b.alajmi@kfhcapital.com',      role: 'panel_chair',      dept: 'Investment',        avatar: 'BA' },
+    { id: 'u12', name: 'Lulwa Al-Sabah',      email: 'l.alsabah@kfhcapital.com',     role: 'excom_member',     dept: 'Executive Office',  avatar: 'LS' },
+    { id: 'u13', name: 'Tariq Al-Refai',      email: 't.alrefai@kfhcapital.com',     role: 'innovation_admin', dept: 'Strategy & PMO',    avatar: 'TR' },
+    { id: 'u14', name: 'Mariam Al-Baghli',    email: 'm.albaghli@kfhcapital.com',    role: 'auditor',          dept: 'Risk & Compliance', avatar: 'MB' },
+];
+
+// Role → default logged-in user (for simulation)
+const ROLE_USER_MAP = {
+    participant:      'u01',
+    team_lead:        'u04',
+    screener:         'u06',
+    coach:            'u08',
+    judge:            'u09',
+    panel_chair:      'u11',
+    excom_member:     'u12',
+    innovation_admin: 'u13',
+    auditor:          'u14',
+};
+
+const TEAMS = [
+    {
+        id: 'team-01', name: 'Digital Pioneers',
+        leadId: 'u04', members: ['u04','u01','u02'],
+        prizeSplit: { u04: 40, u01: 35, u02: 25 },
+        formedAt: '2026-07-20',
+    },
+    {
+        id: 'team-02', name: 'OpEx Champions',
+        leadId: 'u05', members: ['u05','u03'],
+        prizeSplit: { u05: 60, u03: 40 },
+        formedAt: '2026-07-22',
+    },
+    {
+        id: 'team-03', name: 'Risk Vanguard',
+        leadId: 'u04', members: ['u04'],
+        prizeSplit: { u04: 100 },
+        formedAt: '2026-07-26',
+    },
+];
+
+// Each idea has 11 submission fields + metadata
+const IDEAS = [
+    {
+        refCode: 'KFHC-2026-0001', status: 'draft',
+        submittedBy: 'u02', teamId: null,
+        submittedAt: null, updatedAt: '2026-08-05T10:30:00',
+        title: 'Automated Murabaha Document Validation via OCR',
+        category: 'Operational Efficiency',
+        problemStatement: 'Murabaha financing applications require manual review of 12–18 supporting documents per transaction, averaging 2.5 hours per case with a 15% document-error rate.',
+        proposedSolution: 'Deploy an OCR-based validation engine that extracts key fields from uploaded PDFs, cross-validates against a completeness checklist, and flags missing data before the operations officer reviews the case.',
+        expectedBenefits: 'Reduce document review time from 2.5 hours to under 20 minutes; eliminate manual data-entry errors; free 3 FTEs for higher-value tasks.',
+        baselineMetric: '2.5 hrs average processing time per application; 15% error/rework rate.',
+        improvementTarget: '≤20 min processing; <2% error rate by Q2 2027.',
+        implementationApproach: 'Phase 1: Pilot OCR on 50 historical cases. Phase 2: Integrate with existing DMS. Phase 3: Full rollout with staff training.',
+        resourcesRequired: '1 IT developer; OCR software licence (est. KWD 8,000/yr); 3-month timeline.',
+        riskAndMitigation: 'Low OCR accuracy on handwritten Arabic. Mitigation: image pre-processing + human-in-the-loop for flagged cases.',
+        successMetrics: 'Processing ≤20 min; error rate <2%; staff adoption >90% within 3 months.',
+        supportingEvidence: 'Internal audit Q1 2026 citing document rework as top delay driver in Retail Finance.',
+        ipAcknowledged: false,
+        screeningNotes: null, screenedBy: null, screenedAt: null,
+    },
+    {
+        refCode: 'KFHC-2026-0002', status: 'draft',
+        submittedBy: 'u01', teamId: 'team-01',
+        submittedAt: null, updatedAt: '2026-08-12T14:20:00',
+        title: 'Mobile-First Islamic Finance Self-Service Portal',
+        category: 'Digital Transformation',
+        problemStatement: 'Clients visit branches or call the contact centre for routine requests — Murabaha balance enquiries, profit-rate certificates, early-settlement quotes — driving high branch traffic and low NPS.',
+        proposedSolution: 'Build a mobile-responsive self-service portal for financing schedules, profit certificates, early-settlement quotes, and service requests — eliminating branch dependency for routine tasks.',
+        expectedBenefits: 'Deflect 40% of branch/call-centre transactions; improve NPS by 15 points; reduce per-transaction cost from KWD 4.20 to KWD 0.40.',
+        baselineMetric: 'Self-service adoption: 22%; branch transaction cost: KWD 4.20/txn.',
+        improvementTarget: '60% self-service adoption by end 2027; cost ≤KWD 0.40/txn.',
+        implementationApproach: 'UX sprint → API integration with Temenos TC core banking → mobile portal build → UAT → phased rollout.',
+        resourcesRequired: '2 developers, 1 UX designer, 4 months.',
+        riskAndMitigation: 'Client adoption resistance. Mitigation: in-branch digital ambassador programme and targeted SMS campaign.',
+        successMetrics: 'Self-service adoption >60%; NPS ≥75; support ticket volume down ≥30%.',
+        supportingEvidence: 'Customer satisfaction survey H1 2026 — 68% prefer digital for routine queries.',
+        ipAcknowledged: false,
+        screeningNotes: null, screenedBy: null, screenedAt: null,
+    },
+    {
+        refCode: 'KFHC-2026-0003', status: 'submitted',
+        submittedBy: 'u03', teamId: 'team-02',
+        submittedAt: '2026-08-18T09:45:00', updatedAt: '2026-08-18T09:45:00',
+        title: 'STP Engine for Incoming Payment Fee Recovery',
+        category: 'Revenue Leakage Prevention',
+        problemStatement: '8–12% of incoming SWIFT payments with SHA/BEN fee-sharing instructions are manually re-routed, causing fee leakage estimated at KWD 180,000 annually due to incorrect correspondent bank charge application.',
+        proposedSolution: 'Implement an STP rules engine that reads payment fee instructions, validates correspondent agreements in real time, and auto-applies the correct fee split — eliminating manual override by treasury operations staff.',
+        expectedBenefits: 'Recover KWD 150,000–180,000 annual fee leakage; reduce manual payment interventions 85%; improve STP rate from 72% to 95%.',
+        baselineMetric: 'STP rate: 72%; annual fee leakage: ~KWD 180,000; 320 manual interventions/month.',
+        improvementTarget: 'STP rate ≥95%; leakage ≤KWD 20,000/yr; manual interventions ≤50/month.',
+        implementationApproach: 'Map all correspondent fee agreements → build rules in SWIFT Alliance → 4-week shadow test → parallel run → go live.',
+        resourcesRequired: '1 Treasury IT specialist, 1 Operations analyst, 3 months.',
+        riskAndMitigation: 'Incorrect rules cause fee disputes. Mitigation: parallel-run period with daily reconciliation.',
+        successMetrics: 'STP ≥95%; leakage ≤KWD 1,700/month; dispute rate <0.1%.',
+        supportingEvidence: 'Treasury reconciliation report Aug 2026 identifying SHA/BEN mismatches as primary leakage source.',
+        ipAcknowledged: true,
+        screeningNotes: null, screenedBy: null, screenedAt: null,
+    },
+    {
+        refCode: 'KFHC-2026-0004', status: 'ineligible',
+        submittedBy: 'u02', teamId: null,
+        submittedAt: '2026-08-14T11:00:00', updatedAt: '2026-09-03T16:20:00',
+        title: 'Universal Flexible Work Arrangement Policy Framework',
+        category: 'Workforce Productivity',
+        problemStatement: 'Absence of a formalised hybrid/remote policy leads to inconsistent manager decisions and declining engagement scores (62%).',
+        proposedSolution: 'Introduce a structured flexible work framework with eligibility criteria, performance KPIs, and a digital request/approval workflow integrated with HR systems.',
+        expectedBenefits: 'Improve engagement from 62% to 78%; reduce voluntary turnover by 20%; lower real estate costs KWD 45,000/yr.',
+        baselineMetric: 'Engagement: 62%; voluntary turnover: 18%; office utilisation: 95%.',
+        improvementTarget: 'Engagement ≥78%; turnover ≤15%; utilisation ≤80%.',
+        implementationApproach: 'Policy drafting → HR system integration → pilot with 2 departments → full rollout.',
+        resourcesRequired: '1 HR business partner, 2 months, no capex.',
+        riskAndMitigation: 'Manager resistance. Mitigation: change management workshops.',
+        successMetrics: 'Engagement ≥78%; turnover ≤15%; hybrid adoption ≥40% eligible staff.',
+        supportingEvidence: 'HR engagement survey Q2 2026.',
+        ipAcknowledged: true,
+        screeningNotes: 'Relates to HR policy change, not a process or technology innovation. Does not meet competition scope. Resubmit focusing on the digital workflow tool only.',
+        screenedBy: 'u06', screenedAt: '2026-09-03T16:20:00',
+    },
+    {
+        refCode: 'KFHC-2026-0005', status: 'needs_review',
+        submittedBy: 'u04', teamId: 'team-01',
+        submittedAt: '2026-08-22T13:30:00', updatedAt: '2026-09-05T10:10:00',
+        title: 'ESG Carbon Footprint Tracker for Investment Portfolio',
+        category: 'Sustainability & ESG',
+        problemStatement: 'KFH Capital has no centralised tool to measure or report the carbon footprint of its investment portfolio, making it difficult to meet evolving CBK ESG disclosure requirements.',
+        proposedSolution: 'Build a portfolio-level ESG carbon intensity dashboard ingesting emission data from investee companies mapped to MSCI ESG methodology, auto-generating quarterly CBK disclosure reports.',
+        expectedBenefits: 'Meet CBK ESG requirements 6 months ahead; reduce report prep from 3 weeks to 2 days; attract ESG-mandated institutional investors.',
+        baselineMetric: 'ESG data collection: 100% manual; report prep: 3 weeks/quarter.',
+        improvementTarget: 'Automated ingestion ≥80% of portfolio; report prep ≤2 days.',
+        implementationApproach: 'Vendor evaluation → Bloomberg ESG feed integration → dashboard build → CBK template mapping.',
+        resourcesRequired: 'Bloomberg ESG licence (KWD 22,000/yr), 1 data analyst, 5 months.',
+        riskAndMitigation: 'Investee data gaps. Mitigation: MSCI estimated proxies for non-reporting companies.',
+        successMetrics: 'Data coverage ≥80%; report prep ≤2 days; regulator sign-off on disclosure format.',
+        supportingEvidence: 'CBK Sustainability Framework 2025; client RFP for ESG mandate Q1 2026.',
+        ipAcknowledged: true,
+        screeningNotes: 'Significant vendor dependency and budget exceeds threshold. Refer to Finance for cost validation before advancing.',
+        screenedBy: 'u07', screenedAt: '2026-09-05T10:10:00',
+    },
+    {
+        refCode: 'KFHC-2026-0006', status: 'eligible',
+        submittedBy: 'u05', teamId: 'team-02',
+        submittedAt: '2026-08-20T08:55:00', updatedAt: '2026-09-06T14:00:00',
+        title: 'RPA Bot for Vendor Invoice Auto-Reconciliation',
+        category: 'Vendor & Third-Party Optimization',
+        problemStatement: 'Finance processes ~400 vendor invoices/month manually, each requiring 3-way matching (PO, GRN, invoice) averaging 45 minutes per invoice, with a 6% error rate and KWD 12,000/yr in late payment penalties.',
+        proposedSolution: 'Deploy an RPA bot to perform automatic 3-way matching, post matched invoices to Oracle Financials, and route exceptions to a human reviewer — eliminating manual effort for the 80% of clean invoices.',
+        expectedBenefits: 'Save 240 staff hours/month; reduce error rate 6%→<1%; eliminate KWD 12,000/yr in late payment penalties.',
+        baselineMetric: '45 min/invoice; 6% error; KWD 12,000 penalties/yr; 400 invoices/month.',
+        improvementTarget: '<5 min clean invoice; error <1%; zero late penalties within 6 months.',
+        implementationApproach: 'Process mapping → UiPath bot build → test on 60 historical invoices → exception workflow → go live.',
+        resourcesRequired: 'UiPath licence (existing), 1 RPA developer, 2 months.',
+        riskAndMitigation: 'Unstructured invoice formats. Mitigation: train bot on top-20 vendor templates covering 85% of volume.',
+        successMetrics: 'STP rate ≥80%; error <1%; late penalties KWD 0/month.',
+        supportingEvidence: 'AP time-and-motion study Jul 2026; Oracle Financials integration confirmed by IT.',
+        ipAcknowledged: true,
+        screeningNotes: 'Well-scoped with clear ROI. Marked eligible. Recommend for shortlisting.',
+        screenedBy: 'u06', screenedAt: '2026-09-06T14:00:00',
+    },
+    {
+        refCode: 'KFHC-2026-0007', status: 'shortlisted',
+        submittedBy: 'u01', teamId: 'team-01',
+        submittedAt: '2026-08-16T10:15:00', updatedAt: '2026-09-08T09:30:00',
+        title: 'RPA-Driven KYC Periodic Refresh Automation',
+        category: 'Risk & Compliance Efficiency',
+        problemStatement: 'KYC periodic reviews for ~3,200 retail clients are conducted manually across 4 systems, averaging 6 hours per review. The compliance team is consistently 3 months behind schedule.',
+        proposedSolution: 'Deploy an RPA workflow auto-triggering KYC refresh requests 60 days before expiry, chasing clients via SMS/email, pre-populating review forms from existing data, and flagging only materially changed records for officer attention.',
+        expectedBenefits: 'Reduce per-review effort 6 hrs → 45 min; eliminate KYC backlog within 2 months; reduce regulatory breach risk.',
+        baselineMetric: '6 hrs/review; 3-month backlog; 4 manual system lookups per case.',
+        improvementTarget: '≤45 min/review; zero backlog in 2 months; 1 system touchpoint per case.',
+        implementationApproach: 'RPA design → CRM/core banking/document portal integration → automated notifications → compliance officer queue → pilot on 200 clients.',
+        resourcesRequired: '1 RPA developer, 1 compliance analyst, UiPath licence (existing), 3 months.',
+        riskAndMitigation: 'Client non-response. Mitigation: escalation to relationship managers after 2 failed automated attempts.',
+        successMetrics: 'Backlog cleared in 60 days; per-review ≤45 min; on-time renewal ≥95%.',
+        supportingEvidence: 'CBK examination finding Q4 2025 citing KYC delays; internal dashboard showing 3-month average delay.',
+        ipAcknowledged: true,
+        screeningNotes: 'Strong compliance alignment. Clear RPA use case. Shortlisted for coaching phase.',
+        screenedBy: 'u06', screenedAt: '2026-09-07T11:00:00',
+    },
+    {
+        refCode: 'KFHC-2026-0008', status: 'finalist',
+        submittedBy: 'u04', teamId: 'team-01',
+        submittedAt: '2026-08-25T15:45:00', updatedAt: '2026-09-12T10:00:00',
+        title: 'Digital Sukuk Issuance Workflow with Smart Checklists',
+        category: 'Digital Transformation',
+        problemStatement: 'Sukuk issuance involves 40+ sequential approval steps tracked entirely in email and Excel. Average timeline is 18 weeks; delays cost deal opportunities estimated at KWD 250,000 per lost mandate.',
+        proposedSolution: 'Implement a digital deal-room workflow with auto-assigned smart checklists, parallel-approval routing, e-signature integration, and a real-time milestone tracker visible to all deal stakeholders.',
+        expectedBenefits: 'Reduce issuance from 18 to 11 weeks; eliminate documentation gaps; improve deal team NPS 58 → 80.',
+        baselineMetric: '18-week issuance; 40+ email-tracked steps; deal NPS 58.',
+        improvementTarget: '≤11-week issuance; all steps tracked digitally; deal NPS ≥80.',
+        implementationApproach: 'Process workshop → workflow mapping → Power Automate build → DocuSign e-signature → pilot on 2 live deals.',
+        resourcesRequired: 'Power Automate (existing M365), DocuSign upgrade KWD 3,500/yr, 1 project coordinator, 4 months.',
+        riskAndMitigation: 'Legal team reluctance. Mitigation: shadow-run alongside email for first 2 deals to demonstrate time savings.',
+        successMetrics: '≤11-week issuance; zero missed checklist items; deal NPS ≥80.',
+        supportingEvidence: 'IB deal debrief Q2 2026; lost mandate post-mortem citing slow internal approvals.',
+        ipAcknowledged: true,
+        screeningNotes: 'High strategic value. Shortlisted then advanced to finalist.',
+        screenedBy: 'u07', screenedAt: '2026-09-09T10:00:00',
+    },
+    {
+        refCode: 'KFHC-2026-0009', status: 'finalist',
+        submittedBy: 'u03', teamId: 'team-02',
+        submittedAt: '2026-08-19T12:00:00', updatedAt: '2026-09-12T16:00:00',
+        title: 'Smart Treasury Cash Flow Forecasting Engine',
+        category: 'Operational Efficiency',
+        problemStatement: 'Treasury prepares daily liquidity forecasts manually in Excel, aggregating from 7 source systems in 4 hours each morning. Forecast horizon is only 3 days — insufficient for proactive LCR management.',
+        proposedSolution: 'Build a Python forecasting engine that auto-ingests from all 7 treasury systems via APIs, applies ML-enhanced cash flow modelling, and delivers a 30-day rolling liquidity forecast with LCR stress-test scenarios by 7:30 AM daily.',
+        expectedBenefits: 'Reduce morning prep 4 hrs → 15 min; extend horizon 3 → 30 days; eliminate LCR threshold breaches.',
+        baselineMetric: '4-hour daily prep; 3-day horizon; 3 LCR threshold warnings in 2025.',
+        improvementTarget: '≤15 min prep; 30-day horizon; zero LCR warnings.',
+        implementationApproach: 'API mapping for 7 systems → Python model build → Power BI dashboard → UAT with Treasury → go live.',
+        resourcesRequired: '1 data engineer, 1 treasury analyst, 5 months, Power BI Pro (existing).',
+        riskAndMitigation: 'API unavailability from legacy core banking. Mitigation: daily flat-file fallback as backup source.',
+        successMetrics: 'Forecast by 7:30 AM; 30-day horizon; LCR compliance 100%.',
+        supportingEvidence: 'CBK ILAAP Q1 2026 citing manual forecast as operational risk; Treasury SLA report 85% on-time only.',
+        ipAcknowledged: true,
+        screeningNotes: 'Excellent ILAAP alignment. Strong evidence base. Advanced to finalist.',
+        screenedBy: 'u06', screenedAt: '2026-09-10T09:00:00',
+    },
+    {
+        refCode: 'KFHC-2026-0010', status: 'finalist',
+        submittedBy: 'u02', teamId: null,
+        submittedAt: '2026-08-21T14:30:00', updatedAt: '2026-09-12T17:00:00',
+        title: 'AI-Powered SME Credit Scoring Enhancement',
+        category: 'Cost Optimization',
+        problemStatement: 'SME credit decisions use a 2019 rules-based scorecard without real-time transactional data. Average decision time is 8 days; SME NPL rate is 4.2%, above peer benchmarks.',
+        proposedSolution: 'Augment the scorecard with an ML layer trained on 36 months of transactional history and third-party bureau data, targeting a 2-day decision cycle and >85% NPL prediction accuracy.',
+        expectedBenefits: 'Reduce decision 8 → 2 days; cut NPL 4.2% → <2.8%; save KWD 380,000/yr in provisioning costs.',
+        baselineMetric: '8-day decision; NPL 4.2%; annual provisioning KWD 1.2M.',
+        improvementTarget: '≤2-day decisions; NPL ≤2.8%; provisioning savings KWD 380,000/yr.',
+        implementationApproach: 'Feature engineering → XGBoost model training → 90-day shadow scoring → CBK approval → phased rollout.',
+        resourcesRequired: '2 data scientists, AWS compute (KWD 15,000/yr), 6 months, CBK approval pathway.',
+        riskAndMitigation: 'CBK model validation requirements. Mitigation: engage CBK early; prepare full explainability documentation.',
+        successMetrics: 'Model AUC ≥0.82; decision ≤2 days; NPL ≤2.8% within 12 months.',
+        supportingEvidence: 'Credit risk review Q1 2026; GCC peer benchmark — top-quartile SME lenders using ML achieve NPL <2.5%.',
+        ipAcknowledged: true,
+        screeningNotes: 'High-impact, well-evidenced. Advanced to finalist.',
+        screenedBy: 'u07', screenedAt: '2026-09-10T11:30:00',
+    },
+    {
+        refCode: 'KFHC-2026-0011', status: 'finalist',
+        submittedBy: 'u05', teamId: 'team-02',
+        submittedAt: '2026-08-23T09:20:00', updatedAt: '2026-09-13T10:00:00',
+        title: 'Real-Time Trade Finance Limit Breach Alert System',
+        category: 'Risk & Compliance Efficiency',
+        problemStatement: 'Trade finance limit utilisation is monitored via overnight batch, meaning intra-day breaches go undetected up to 18 hours. H1 2026 saw 14 intra-day breaches requiring retrospective regulatory notifications.',
+        proposedSolution: 'Build a real-time limit monitoring micro-service subscribing to the trade finance transaction feed, evaluating utilisation on every transaction, and pushing instant alerts to relationship managers and risk officers.',
+        expectedBenefits: 'Reduce breach detection lag 18 hrs → <2 min; eliminate post-breach regulatory notifications; save KWD 95,000/yr in compliance remediation.',
+        baselineMetric: '18-hour detection lag; 14 breaches H1 2026; 14 regulatory notifications filed.',
+        improvementTarget: '<2-min detection; zero regulatory notifications for intra-day breaches.',
+        implementationApproach: 'Event-driven microservice → trade system webhook → alert rules engine → SMS/email delivery → UAT with risk team → go live.',
+        resourcesRequired: '2 developers, 1 risk analyst, 3 months, existing alert infrastructure.',
+        riskAndMitigation: 'False positives causing alert fatigue. Mitigation: configurable thresholds (80/90/100%) with separate severity channels.',
+        successMetrics: 'Detection lag <2 min; false positive rate <5%; zero post-breach notifications in first 6 months.',
+        supportingEvidence: 'Risk breach log H1 2026; CBK circular on intra-day limit management Mar 2026.',
+        ipAcknowledged: true,
+        screeningNotes: 'Directly addresses a regulatory finding. Advanced to finalist.',
+        screenedBy: 'u06', screenedAt: '2026-09-11T09:45:00',
+    },
+    {
+        refCode: 'KFHC-2026-0012', status: 'finalist',
+        submittedBy: 'u04', teamId: 'team-01',
+        submittedAt: '2026-08-28T16:00:00', updatedAt: '2026-09-13T11:30:00',
+        title: 'Paperless ESG Client Onboarding with Biometric e-Signature',
+        category: 'Sustainability & ESG',
+        problemStatement: 'Institutional client onboarding is entirely paper-based, generating an average of 48 physical documents per client. Annual paper, printing, and courier costs total KWD 67,000; onboarding takes 22 business days average.',
+        proposedSolution: 'Redesign institutional onboarding as a digital workflow with biometric e-signature (Kuwait e-Signature Law compliant), pre-populated document templates, and digital ID verification via MOI API integration.',
+        expectedBenefits: 'Eliminate KWD 67,000/yr paper costs; reduce onboarding 22 → 5 business days; 100% paper elimination for new clients; support KFH Group ESG targets.',
+        baselineMetric: '22 days onboarding; 48 paper documents/client; KWD 67,000/yr paper costs.',
+        improvementTarget: '≤5 days; zero paper documents; KWD 0 paper costs for new clients.',
+        implementationApproach: 'Legal compliance review → MOI API integration → document template build → DocuSign integration → pilot 5 clients → full rollout.',
+        resourcesRequired: '1 developer, 1 legal reviewer, DocuSign (KWD 3,500/yr), MOI API access, 5 months.',
+        riskAndMitigation: 'Client resistance to digital-only. Mitigation: hybrid option for first 6 months with digital concierge support.',
+        successMetrics: 'Onboarding ≤5 days; 100% paper elimination; e-signature adoption ≥85% within 6 months.',
+        supportingEvidence: 'Operations cost breakdown FY2025; KFH Group ESG Report 2025 paperless target; Kuwait e-Signature Law No. 20/2014.',
+        ipAcknowledged: true,
+        screeningNotes: 'High ESG and efficiency impact. Well-structured. Advanced to finalist.',
+        screenedBy: 'u07', screenedAt: '2026-09-13T11:30:00',
+    },
+];
+
+// ── SCORING ENGINE ─────────────────────────────────────────────
+// Judge scores: 1–5 per criterion; weighted total max 5.00
+const SCORES = [
+    // KFHC-2026-0008 — Digital Sukuk Workflow
+    { id:'sc-001', ideaId:'KFHC-2026-0008', judgeId:'u09', submittedAt:'2026-09-23T10:30:00',
+      businessImpact:4, feasibility:4, innovation:3, strategicAlignment:4, scalability:3, presentationClarity:4,
+      notes:'Well-scoped digital transformation with clear business value.' },
+    { id:'sc-002', ideaId:'KFHC-2026-0008', judgeId:'u10', submittedAt:'2026-09-23T14:15:00',
+      businessImpact:4, feasibility:3, innovation:4, strategicAlignment:5, scalability:3, presentationClarity:3,
+      notes:'Strong strategic fit; feasibility concerns around Legal team adoption.' },
+
+    // KFHC-2026-0009 — Smart Treasury Forecasting
+    { id:'sc-003', ideaId:'KFHC-2026-0009', judgeId:'u09', submittedAt:'2026-09-23T14:15:00',
+      businessImpact:5, feasibility:4, innovation:4, strategicAlignment:5, scalability:4, presentationClarity:5,
+      notes:'Strongest submission. Directly addresses ILAAP findings with measurable outcomes.' },
+    { id:'sc-004', ideaId:'KFHC-2026-0009', judgeId:'u10', submittedAt:'2026-09-23T16:00:00',
+      businessImpact:5, feasibility:4, innovation:3, strategicAlignment:4, scalability:4, presentationClarity:4,
+      notes:'Excellent impact. Innovation modest — similar tools exist in market.' },
+    { id:'sc-005', ideaId:'KFHC-2026-0009', judgeId:'u11', submittedAt:'2026-09-24T09:00:00',
+      businessImpact:4, feasibility:4, innovation:4, strategicAlignment:4, scalability:3, presentationClarity:4,
+      notes:'Solid across the board. Scalability limited to Treasury; could expand to group.' },
+
+    // KFHC-2026-0010 — AI SME Credit Scoring
+    { id:'sc-006', ideaId:'KFHC-2026-0010', judgeId:'u09', submittedAt:'2026-09-23T11:00:00',
+      businessImpact:5, feasibility:3, innovation:5, strategicAlignment:4, scalability:5, presentationClarity:4,
+      notes:'Highly innovative. Feasibility concern: 6-month timeline with CBK approval is optimistic.' },
+    { id:'sc-007', ideaId:'KFHC-2026-0010', judgeId:'u10', submittedAt:'2026-09-23T15:30:00',
+      businessImpact:4, feasibility:3, innovation:4, strategicAlignment:4, scalability:4, presentationClarity:3,
+      notes:'Good potential. ML model needs explainability detail for regulatory review.' },
+
+    // KFHC-2026-0011 — Trade Finance Alerts (u10 RECUSED — CoI)
+    { id:'sc-008', ideaId:'KFHC-2026-0011', judgeId:'u09', submittedAt:'2026-09-23T13:00:00',
+      businessImpact:4, feasibility:5, innovation:3, strategicAlignment:5, scalability:3, presentationClarity:4,
+      notes:'Operationally feasible and directly addresses a regulatory breach. Innovation is incremental.' },
+    { id:'sc-009', ideaId:'KFHC-2026-0011', judgeId:'u11', submittedAt:'2026-09-24T10:00:00',
+      businessImpact:4, feasibility:4, innovation:3, strategicAlignment:5, scalability:4, presentationClarity:4,
+      notes:'Strong regulatory alignment. Alert fatigue risk well-mitigated in the proposal.' },
+
+    // KFHC-2026-0012 — Paperless ESG Onboarding
+    { id:'sc-010', ideaId:'KFHC-2026-0012', judgeId:'u09', submittedAt:'2026-09-23T12:30:00',
+      businessImpact:4, feasibility:4, innovation:4, strategicAlignment:5, scalability:4, presentationClarity:4,
+      notes:'Well-rounded. ESG angle is differentiating. Legal compliance analysis thorough.' },
+    { id:'sc-011', ideaId:'KFHC-2026-0012', judgeId:'u10', submittedAt:'2026-09-23T15:00:00',
+      businessImpact:5, feasibility:4, innovation:4, strategicAlignment:5, scalability:4, presentationClarity:5,
+      notes:'Best ESG narrative of all submissions. DocuSign compliance detail impressive.' },
+    { id:'sc-012', ideaId:'KFHC-2026-0012', judgeId:'u11', submittedAt:'2026-09-24T11:00:00',
+      businessImpact:4, feasibility:4, innovation:5, strategicAlignment:4, scalability:4, presentationClarity:4,
+      notes:'Innovative use of biometric e-signature in Gulf banking context. Strong ESG story.' },
+];
+
+// Conflict-of-interest recusals — judge excluded from scoring that idea
+const COI_RECUSALS = [
+    {
+        id: 'coi-01', judgeId: 'u10', ideaId: 'KFHC-2026-0011',
+        reason: 'My department (Finance) is a named stakeholder in this proposal and I provided informal input to the submitter during development. I declare a conflict of interest and recuse from scoring this idea.',
+        declaredAt: '2026-09-22T08:30:00',
+    },
+];
+
+const COACHING_SESSIONS = [
+    {
+        id: 'cs-01', ideaId: 'KFHC-2026-0007', coachId: 'u08',
+        sessionDate: '2026-09-16', durationMins: 60,
+        notes: 'Reviewed RPA exception-handling workflow. Recommended adding a manual override screen for complex cases. Submitter to update implementation approach.',
+        nextSteps: 'Fatima to revise implementation plan and share updated version by 18 Sep.',
+    },
+    {
+        id: 'cs-02', ideaId: 'KFHC-2026-0008', coachId: 'u08',
+        sessionDate: '2026-09-17', durationMins: 45,
+        notes: 'Reviewed change management plan for the Sukuk workflow. Advised Sara to add a detailed stakeholder engagement timeline and identify a Legal department champion.',
+        nextSteps: 'Sara to add stakeholder engagement plan and secure Legal champion by 20 Sep.',
+    },
+    {
+        id: 'cs-03', ideaId: 'KFHC-2026-0007', coachId: 'u08',
+        sessionDate: '2026-09-18', durationMins: 30,
+        notes: 'Follow-up. Revised implementation plan is strong. Discussed scoring panel presentation structure.',
+        nextSteps: 'No further sessions required. Idea ready for finalist evaluation.',
+    },
+];
+
+// ── AUDIT LOG ─────────────────────────────────────────────────
+const AUDIT_LOG = [
+    { id:'aud-01', ts:'2026-08-14T11:00:00', actor:'u02', action:'IDEA_SUBMITTED',          entity:'KFHC-2026-0004', detail:'Idea submitted to competition.' },
+    { id:'aud-02', ts:'2026-08-16T10:15:00', actor:'u01', action:'IDEA_SUBMITTED',          entity:'KFHC-2026-0007', detail:'Idea submitted to competition.' },
+    { id:'aud-03', ts:'2026-08-18T09:45:00', actor:'u03', action:'IDEA_SUBMITTED',          entity:'KFHC-2026-0003', detail:'Idea submitted to competition.' },
+    { id:'aud-04', ts:'2026-08-19T12:00:00', actor:'u03', action:'IDEA_SUBMITTED',          entity:'KFHC-2026-0009', detail:'Idea submitted to competition.' },
+    { id:'aud-05', ts:'2026-08-20T08:55:00', actor:'u05', action:'IDEA_SUBMITTED',          entity:'KFHC-2026-0006', detail:'Idea submitted to competition.' },
+    { id:'aud-06', ts:'2026-08-21T14:30:00', actor:'u02', action:'IDEA_SUBMITTED',          entity:'KFHC-2026-0010', detail:'Idea submitted to competition.' },
+    { id:'aud-07', ts:'2026-08-25T15:45:00', actor:'u04', action:'IDEA_SUBMITTED',          entity:'KFHC-2026-0008', detail:'Idea submitted to competition.' },
+    { id:'aud-08', ts:'2026-09-03T16:20:00', actor:'u06', action:'IDEA_SCREENED',           entity:'KFHC-2026-0004', detail:'Marked Ineligible — outside competition scope.' },
+    { id:'aud-09', ts:'2026-09-05T10:10:00', actor:'u07', action:'IDEA_SCREENED',           entity:'KFHC-2026-0005', detail:'Marked Needs Review — cost validation required.' },
+    { id:'aud-10', ts:'2026-09-06T14:00:00', actor:'u06', action:'IDEA_SCREENED',           entity:'KFHC-2026-0006', detail:'Marked Eligible — strong ROI case.' },
+    { id:'aud-11', ts:'2026-09-07T11:00:00', actor:'u06', action:'IDEA_SHORTLISTED',        entity:'KFHC-2026-0007', detail:'Advanced to Shortlisted.' },
+    { id:'aud-12', ts:'2026-09-13T11:30:00', actor:'u13', action:'IDEA_ADVANCED_FINALIST',  entity:'KFHC-2026-0012', detail:'Advanced to Finalist by Admin.' },
+    { id:'aud-13', ts:'2026-09-16T10:00:00', actor:'u08', action:'COACHING_SESSION_LOGGED', entity:'KFHC-2026-0007', detail:'Session 1: RPA exception-handling review. 60 minutes.' },
+    { id:'aud-14', ts:'2026-09-22T08:30:00', actor:'u10', action:'COI_DECLARED',            entity:'KFHC-2026-0011', detail:'Hessa Al-Failakawi declared conflict of interest and recused from scoring KFHC-2026-0011.' },
+    { id:'aud-15', ts:'2026-09-23T14:15:00', actor:'u09', action:'IDEA_SCORED',             entity:'KFHC-2026-0009', detail:'Score submitted. Weighted total: 4.45/5.00.' },
+];
+
+// ── SCORING ENGINE helpers ────────────────────────────────────
+function computeWeightedScore(s) {
+    const w = CYCLE.scoringWeights;
+    return +(s.businessImpact*w.businessImpact + s.feasibility*w.feasibility +
+             s.innovation*w.innovation + s.strategicAlignment*w.strategicAlignment +
+             s.scalability*w.scalability + s.presentationClarity*w.presentationClarity).toFixed(4);
+}
+
+function computeIdeaScore(ideaId) {
+    const recused = COI_RECUSALS.filter(r => r.ideaId === ideaId).map(r => r.judgeId);
+    const valid   = SCORES.filter(s => s.ideaId === ideaId && !recused.includes(s.judgeId));
+    if (!valid.length) return null;
+    const mean = valid.map(computeWeightedScore).reduce((a,b) => a+b, 0) / valid.length;
+    return +mean.toFixed(2);
+}
+
+function avgCriterion(ideaId, field) {
+    const recused = COI_RECUSALS.filter(r => r.ideaId === ideaId).map(r => r.judgeId);
+    const valid   = SCORES.filter(s => s.ideaId === ideaId && !recused.includes(s.judgeId));
+    if (!valid.length) return 0;
+    return valid.reduce((a,b) => a + b[field], 0) / valid.length;
+}
+
+function getIdeaRankings() {
+    return IDEAS.filter(i => i.status === 'finalist')
+        .map(i => ({ ...i, avgScore: computeIdeaScore(i.refCode) }))
+        .filter(i => i.avgScore !== null)
+        .sort((a, b) => {
+            if (b.avgScore !== a.avgScore) return b.avgScore - a.avgScore;
+            const bBI = avgCriterion(b.refCode, 'businessImpact');
+            const aBI = avgCriterion(a.refCode, 'businessImpact');
+            if (bBI !== aBI) return bBI - aBI;
+            return avgCriterion(b.refCode, 'innovation') - avgCriterion(a.refCode, 'innovation');
+        });
+}
+
+// Current logged-in user based on active role
+function currentUser() {
+    return USERS.find(u => u.id === ROLE_USER_MAP[currentRole]) || USERS[0];
+}
+
+// ── DATA RESET ────────────────────────────────────────────────
+// Deep-cloned originals stored at init time for the Admin reset button
+let _origIdeas, _origScores, _origCOI, _origCoaching, _origAudit;
+function snapshotSeed() {
+    _origIdeas    = JSON.parse(JSON.stringify(IDEAS));
+    _origScores   = JSON.parse(JSON.stringify(SCORES));
+    _origCOI      = JSON.parse(JSON.stringify(COI_RECUSALS));
+    _origCoaching = JSON.parse(JSON.stringify(COACHING_SESSIONS));
+    _origAudit    = JSON.parse(JSON.stringify(AUDIT_LOG));
+}
+function resetToSeed() {
+    IDEAS.length = 0;            IDEAS.push(...JSON.parse(JSON.stringify(_origIdeas)));
+    SCORES.length = 0;           SCORES.push(...JSON.parse(JSON.stringify(_origScores)));
+    COI_RECUSALS.length = 0;     COI_RECUSALS.push(...JSON.parse(JSON.stringify(_origCOI)));
+    COACHING_SESSIONS.length = 0; COACHING_SESSIONS.push(...JSON.parse(JSON.stringify(_origCoaching)));
+    AUDIT_LOG.length = 0;        AUDIT_LOG.push(...JSON.parse(JSON.stringify(_origAudit)));
+    CYCLE.resultsLocked = false;
+    renderPage();
+    showToast('Data reset to seed state.', 'warning');
+}
+
+// ── Nav items: icon, label, route key, allowed roles (null = all roles)
 const NAV_ITEMS = [
     { icon: '◈', label: 'Dashboard',       page: 'dashboard',   roles: null },
     { icon: '✦', label: 'Submit Idea',     page: 'submit',      roles: ['participant','team_lead','innovation_admin'] },
@@ -782,16 +1280,27 @@ function renderDashboard() {
         </div>`;
     }).join('');
 
+    // Live stats from seed data
+    const me = currentUser();
+    const myIdeas       = IDEAS.filter(i => i.submittedBy === me.id || (i.teamId && TEAMS.find(t => t.id === i.teamId && t.members.includes(me.id))));
+    const submitted     = IDEAS.filter(i => i.status !== 'draft').length;
+    const eligible      = IDEAS.filter(i => ['eligible','shortlisted','finalist','winner'].includes(i.status)).length;
+    const finalists     = IDEAS.filter(i => i.status === 'finalist' || i.status === 'winner').length;
+    const pendingScreen = IDEAS.filter(i => i.status === 'submitted').length;
+    const scoredCount   = new Set(SCORES.map(s => s.ideaId)).size;
+    const toScore       = finalists - scoredCount;
+    const participants  = USERS.filter(u => ['participant','team_lead'].includes(u.role)).length;
+
     const roleWidgets = {
-        participant:      `<div class="chip chip-submitted">0 ideas submitted</div>`,
-        team_lead:        `<div class="chip chip-submitted">0 team ideas submitted</div>`,
-        screener:         `<div class="chip chip-review">4 ideas awaiting screening</div>`,
-        coach:            `<div class="chip chip-shortlisted">2 ideas assigned to you</div>`,
-        judge:            `<div class="chip chip-finalist">5 ideas left to score</div>`,
-        panel_chair:      `<div class="chip chip-finalist">Scoring active — 5 finalists</div>`,
-        excom_member:     `<div class="chip chip-shortlisted">Top-5 packets ready for review</div>`,
-        innovation_admin: `<div class="chip chip-review">Screening stage active</div>`,
-        auditor:          `<div class="chip chip-screened">Read-only view</div>`,
+        participant:      `<div class="chip chip-submitted">${myIdeas.length} idea${myIdeas.length!==1?'s':''} submitted</div>`,
+        team_lead:        `<div class="chip chip-submitted">${myIdeas.length} team idea${myIdeas.length!==1?'s':''}</div>`,
+        screener:         `<div class="chip chip-review">${pendingScreen} idea${pendingScreen!==1?'s':''} awaiting screening</div>`,
+        coach:            `<div class="chip chip-shortlisted">${COACHING_SESSIONS.length} coaching sessions logged</div>`,
+        judge:            `<div class="chip chip-finalist">${finalists} finalist${finalists!==1?'s':''} to score</div>`,
+        panel_chair:      `<div class="chip chip-finalist">${finalists} finalist${finalists!==1?'s':''} — scoring active</div>`,
+        excom_member:     `<div class="chip chip-shortlisted">Top-${Math.min(finalists,5)} packets ready</div>`,
+        innovation_admin: `<div class="chip chip-review">Screening stage active — ${pendingScreen} pending</div>`,
+        auditor:          `<div class="chip chip-screened">Read-only view — ${IDEAS.length} total ideas</div>`,
     };
 
     return `
@@ -814,26 +1323,26 @@ function renderDashboard() {
         <div class="stat-card">
             <div class="stat-icon">📋</div>
             <div class="stat-label">Total Submissions</div>
-            <div class="stat-value">12</div>
-            <div class="stat-sub">Across 9 categories</div>
+            <div class="stat-value">${submitted}</div>
+            <div class="stat-sub">Across ${new Set(IDEAS.filter(i=>i.status!=='draft').map(i=>i.category)).size} categories</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon">✅</div>
             <div class="stat-label">Eligible / Screened</div>
-            <div class="stat-value">8</div>
-            <div class="stat-sub">4 pending review</div>
+            <div class="stat-value">${eligible}</div>
+            <div class="stat-sub">${pendingScreen} pending screening</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon">🏆</div>
             <div class="stat-label">Finalists</div>
-            <div class="stat-value">5</div>
-            <div class="stat-sub">Scoring in progress</div>
+            <div class="stat-value">${finalists}</div>
+            <div class="stat-sub">${scoredCount} scored so far</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon">👥</div>
             <div class="stat-label">Participants</div>
-            <div class="stat-value">14</div>
-            <div class="stat-sub">Across 3 teams</div>
+            <div class="stat-value">${participants}</div>
+            <div class="stat-sub">Across ${TEAMS.length} teams</div>
         </div>
     </div>
 
@@ -906,6 +1415,7 @@ function closeSidebar() {
 
 // ── INIT ──────────────────────────────────────────────────────
 (function init() {
+    snapshotSeed();
     document.getElementById('role-select').value = currentRole;
     renderRoleBadge();
     renderNav();
