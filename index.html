@@ -819,6 +819,77 @@
         .score-actions { display: flex; gap: var(--sp-sm); align-items: center; justify-content: flex-end; margin-top: var(--sp-md); flex-wrap: wrap; }
         .locked-banner { background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); padding: var(--sp-sm) var(--sp-md); color: #dc2626; font-size: var(--fs-sm); font-weight: 600; margin-bottom: var(--sp-lg); }
 
+        /* ── PHASE 8 · LEADERBOARD & EXCOM ── */
+        /* Podium */
+        .podium-wrap { display: flex; align-items: flex-end; justify-content: center; gap: var(--sp-md); margin-bottom: var(--sp-xl); }
+        .podium-col { display: flex; flex-direction: column; align-items: center; gap: var(--sp-sm); flex: 1; max-width: 220px; }
+        .podium-idea-card { background: #fff; border: 2px solid var(--clr-border); border-radius: var(--radius); padding: var(--sp-sm) var(--sp-md); width: 100%; text-align: center; }
+        .podium-col.first .podium-idea-card { border-color: var(--clr-accent); }
+        .podium-col.second .podium-idea-card { border-color: #94a3b8; }
+        .podium-col.third .podium-idea-card { border-color: #92400e; }
+        .podium-medal { font-size: 1.6rem; line-height: 1; }
+        .podium-score { font-size: 1.1rem; font-weight: 800; color: var(--clr-primary); margin: 2px 0; }
+        .podium-title { font-size: 11px; font-weight: 600; color: var(--clr-text); line-height: 1.3; }
+        .podium-sub { font-size: 10px; color: var(--clr-muted); margin-top: 2px; }
+        .podium-base { border-radius: 6px 6px 0 0; width: 100%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; color: rgba(255,255,255,.9); }
+        .podium-col.first .podium-base { height: 80px; background: linear-gradient(135deg,var(--clr-accent),#d4a853); }
+        .podium-col.second .podium-base { height: 56px; background: linear-gradient(135deg,#64748b,#94a3b8); }
+        .podium-col.third .podium-base { height: 40px; background: linear-gradient(135deg,#92400e,#b45309); }
+
+        /* Leaderboard table */
+        .lb-full-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+        .lb-full-table th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .05em; border-bottom: 2px solid var(--clr-border); white-space: nowrap; }
+        .lb-full-table td { padding: 10px 12px; border-bottom: 1px solid var(--clr-border); vertical-align: middle; }
+        .lb-full-table tr:last-child td { border-bottom: none; }
+        .lb-full-table tr:hover td { background: var(--clr-bg); }
+        .lb-rank-badge { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: var(--fs-sm); flex-shrink: 0; }
+        .lb-rank-badge.r1 { background: var(--clr-accent); color: #fff; }
+        .lb-rank-badge.r2 { background: #64748b; color: #fff; }
+        .lb-rank-badge.r3 { background: #92400e; color: #fff; }
+        .lb-rank-badge.rn { background: var(--clr-bg); color: var(--clr-muted); border: 1px solid var(--clr-border); }
+        .crit-bar-wrap { display: flex; flex-direction: column; gap: 2px; min-width: 80px; }
+        .crit-mini-row { display: flex; align-items: center; gap: 4px; }
+        .crit-mini-label { font-size: 9px; color: var(--clr-muted); width: 18px; flex-shrink: 0; }
+        .crit-mini-bar { flex: 1; height: 4px; background: var(--clr-border); border-radius: 2px; overflow: hidden; }
+        .crit-mini-fill { height: 100%; background: var(--clr-primary); border-radius: 2px; }
+        .crit-mini-val { font-size: 9px; color: var(--clr-muted); width: 20px; text-align: right; flex-shrink: 0; }
+        .threshold-line { border-top: 2px dashed #fcd34d; }
+        .threshold-label-row td { padding: 4px 12px; font-size: 11px; color: #d97706; font-weight: 700; background: #fffbeb; }
+
+        /* ExCom */
+        .excom-packet { border: 1px solid var(--clr-border); border-radius: var(--radius); background: #fff; margin-bottom: var(--sp-md); overflow: hidden; }
+        .excom-packet-header { display: flex; align-items: center; gap: var(--sp-sm); padding: var(--sp-md) var(--sp-lg); cursor: pointer; user-select: none; }
+        .excom-packet-header:hover { background: var(--clr-bg); }
+        .excom-packet.open .excom-packet-header { background: var(--clr-bg); }
+        .excom-rank-badge { width: 36px; height: 36px; border-radius: 50%; font-size: var(--fs-base); font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .excom-packet-title { flex: 1; font-size: var(--fs-sm); font-weight: 600; color: var(--clr-text); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .excom-packet-score { font-size: var(--fs-base); font-weight: 800; flex-shrink: 0; }
+        .excom-packet-chevron { color: var(--clr-muted); font-size: 12px; flex-shrink: 0; transition: transform .2s; }
+        .excom-packet.open .excom-packet-chevron { transform: rotate(90deg); }
+        .excom-packet-body { display: none; padding: var(--sp-md) var(--sp-lg) var(--sp-lg); border-top: 1px solid var(--clr-border); }
+        .excom-packet.open .excom-packet-body { display: block; }
+        .excom-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md); margin-bottom: var(--sp-md); }
+        @media (max-width:640px) { .excom-summary-grid { grid-template-columns: 1fr; } }
+        .excom-field { font-size: var(--fs-sm); }
+        .excom-field-label { font-size: 11px; font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 2px; }
+        .vote-section { border-top: 1px dashed var(--clr-border); margin-top: var(--sp-md); padding-top: var(--sp-md); }
+        .vote-section-title { font-size: var(--fs-sm); font-weight: 700; color: var(--clr-primary); margin-bottom: var(--sp-sm); }
+        .placement-btns { display: flex; gap: var(--sp-sm); flex-wrap: wrap; margin-bottom: var(--sp-sm); }
+        .placement-btn { padding: 6px 16px; border-radius: 999px; border: 2px solid; font-size: var(--fs-sm); font-weight: 700; cursor: pointer; transition: all .15s; }
+        .placement-btn.p1 { border-color: var(--clr-accent); color: var(--clr-accent); background: #fff; }
+        .placement-btn.p1:hover, .placement-btn.p1.active { background: var(--clr-accent); color: #fff; }
+        .placement-btn.p2 { border-color: #64748b; color: #64748b; background: #fff; }
+        .placement-btn.p2:hover, .placement-btn.p2.active { background: #64748b; color: #fff; }
+        .placement-btn.p3 { border-color: #92400e; color: #92400e; background: #fff; }
+        .placement-btn.p3.active, .placement-btn.p3:hover { background: #92400e; color: #fff; }
+        .my-vote-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+        .my-vote-badge.p1 { background: #fef3c7; color: #b45309; border: 1px solid var(--clr-accent); }
+        .my-vote-badge.p2 { background: #f1f5f9; color: #64748b; border: 1px solid #94a3b8; }
+        .my-vote-badge.p3 { background: #fff7ed; color: #92400e; border: 1px solid #d97706; }
+        .excom-confirm-bar { background: var(--clr-bg); border: 1px solid var(--clr-border); border-radius: var(--radius); padding: var(--sp-md) var(--sp-lg); display: flex; align-items: center; gap: var(--sp-md); flex-wrap: wrap; margin-bottom: var(--sp-lg); }
+        .winner-banner { background: linear-gradient(135deg,#fef3c7,#fffbeb); border: 2px solid var(--clr-accent); border-radius: var(--radius); padding: var(--sp-lg); text-align: center; margin-bottom: var(--sp-lg); }
+        .winner-banner-title { font-size: 1.2rem; font-weight: 800; color: var(--clr-accent); margin-bottom: var(--sp-sm); }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -1457,15 +1528,18 @@ function currentUser() {
     return USERS.find(u => u.id === ROLE_USER_MAP[currentRole]) || USERS[0];
 }
 
+// ExCom votes — { id, voterId, ideaId, placement:1|2|3, notes, votedAt }
+const EXCOM_VOTES = [];
+
 // ── DATA RESET ────────────────────────────────────────────────
-// Deep-cloned originals stored at init time for the Admin reset button
-let _origIdeas, _origScores, _origCOI, _origCoaching, _origAudit;
+let _origIdeas, _origScores, _origCOI, _origCoaching, _origAudit, _origExcom;
 function snapshotSeed() {
     _origIdeas    = JSON.parse(JSON.stringify(IDEAS));
     _origScores   = JSON.parse(JSON.stringify(SCORES));
     _origCOI      = JSON.parse(JSON.stringify(COI_RECUSALS));
     _origCoaching = JSON.parse(JSON.stringify(COACHING_SESSIONS));
     _origAudit    = JSON.parse(JSON.stringify(AUDIT_LOG));
+    _origExcom    = JSON.parse(JSON.stringify(EXCOM_VOTES));
 }
 function resetToSeed() {
     IDEAS.length = 0;            IDEAS.push(...JSON.parse(JSON.stringify(_origIdeas)));
@@ -1473,6 +1547,7 @@ function resetToSeed() {
     COI_RECUSALS.length = 0;     COI_RECUSALS.push(...JSON.parse(JSON.stringify(_origCOI)));
     COACHING_SESSIONS.length = 0; COACHING_SESSIONS.push(...JSON.parse(JSON.stringify(_origCoaching)));
     AUDIT_LOG.length = 0;        AUDIT_LOG.push(...JSON.parse(JSON.stringify(_origAudit)));
+    EXCOM_VOTES.length = 0;      EXCOM_VOTES.push(...JSON.parse(JSON.stringify(_origExcom)));
     CYCLE.resultsLocked = false;
     renderPage();
     showToast('Data reset to seed state.', 'warning');
@@ -1653,8 +1728,6 @@ function renderPage() {
     }
 
     const placeholderPages = {
-        leaderboard: ['Leaderboard',       '▲', 'Phase 8'],
-        excom:       ['ExCom Selection',   '◆', 'Phase 8'],
         admin:       ['Admin Console',     '⚙', 'Phase 9'],
         audit_log:   ['Audit Log',         '⌖', 'Phase 9'],
     };
@@ -1673,6 +1746,10 @@ function renderPage() {
         main.innerHTML = ctx + renderManageTeam();
     } else if (currentPage === 'scoring') {
         main.innerHTML = ctx + renderScoring();
+    } else if (currentPage === 'leaderboard') {
+        main.innerHTML = ctx + renderLeaderboard();
+    } else if (currentPage === 'excom') {
+        main.innerHTML = ctx + renderExcom();
     } else if (placeholderPages[currentPage]) {
         const [title, icon, phase] = placeholderPages[currentPage];
         main.innerHTML = ctx + renderPlaceholder(title, icon, phase);
@@ -3281,6 +3358,342 @@ function toggleResultsLock() {
         CYCLE.resultsLocked ? 'Scoring results locked by Panel Chair.' : 'Scoring results unlocked.'
     );
     renderPage();
+}
+
+// ── PAGE: Leaderboard ─────────────────────────────────────────
+function renderCritBars(ideaId) {
+    const miniCriteria = [
+        { key: 'businessImpact', abbr: 'BI' },
+        { key: 'feasibility',    abbr: 'Fe' },
+        { key: 'innovation',     abbr: 'In' },
+        { key: 'strategicAlignment', abbr: 'SA' },
+        { key: 'scalability',    abbr: 'Sc' },
+        { key: 'presentationClarity', abbr: 'PC' },
+    ];
+    return `<div class="crit-bar-wrap">${miniCriteria.map(c => {
+        const avg = avgCriterion(ideaId, c.key);
+        const pct = (avg / 5) * 100;
+        return `<div class="crit-mini-row">
+            <span class="crit-mini-label">${c.abbr}</span>
+            <div class="crit-mini-bar"><div class="crit-mini-fill" style="width:${pct}%"></div></div>
+            <span class="crit-mini-val">${avg.toFixed(1)}</span>
+        </div>`;
+    }).join('')}</div>`;
+}
+
+function renderPodium(rankings) {
+    if (!rankings.length) return '';
+    const order = [rankings[1], rankings[0], rankings[2]].filter(Boolean);
+    const posClass = ['second', 'first', 'third'];
+    const medals   = ['🥈', '🥇', '🥉'];
+    const nums     = ['2', '1', '3'];
+
+    const cols = order.map((r, i) => {
+        const cls = posClass[i];
+        const numOfJudges = SCORES.filter(s => s.ideaId === r.refCode && !COI_RECUSALS.some(c => c.judgeId === s.judgeId && c.ideaId === r.refCode)).length;
+        const teamObj = r.teamId ? TEAMS.find(t => t.id === r.teamId) : null;
+        return `
+        <div class="podium-col ${cls}">
+            <div class="podium-idea-card">
+                <div class="podium-medal">${medals[i]}</div>
+                <div class="podium-score">${r.avgScore.toFixed(2)}</div>
+                <div class="podium-title">${r.title}</div>
+                <div class="podium-sub">${r.refCode} · ${numOfJudges} judge${numOfJudges!==1?'s':''}</div>
+                ${teamObj ? `<div class="podium-sub">${teamObj.name}</div>` : ''}
+            </div>
+            <div class="podium-base">${nums[i]}</div>
+        </div>`;
+    });
+
+    return `<div class="podium-wrap">${cols.join('')}</div>`;
+}
+
+function renderLeaderboard() {
+    const rankings = getIdeaRankings();
+    const threshold = CYCLE.shortlistThreshold;
+    const above = rankings.filter(r => r.avgScore >= threshold);
+    const below  = rankings.filter(r => r.avgScore < threshold);
+
+    const rankBadgeCls = n => n === 1 ? 'r1' : n === 2 ? 'r2' : n === 3 ? 'r3' : 'rn';
+
+    const buildRows = (list, startRank) => list.map((r, idx) => {
+        const rank    = startRank + idx;
+        const numJudges = SCORES.filter(s => s.ideaId === r.refCode && !COI_RECUSALS.some(c => c.judgeId === s.judgeId && c.ideaId === r.refCode)).length;
+        const teamObj   = r.teamId ? TEAMS.find(t => t.id === r.teamId) : null;
+        const passClass = r.avgScore >= threshold ? 'pass' : 'fail';
+        return `<tr>
+            <td><span class="lb-rank-badge ${rankBadgeCls(rank)}">${rank}</span></td>
+            <td>
+                <div style="font-weight:600;font-size:var(--fs-sm)">${r.title}</div>
+                <div style="font-size:11px;color:var(--clr-muted)">${r.refCode} · ${r.category}</div>
+                ${teamObj ? `<div style="font-size:11px;color:var(--clr-muted)">${teamObj.name}</div>` : ''}
+            </td>
+            <td style="font-size:11px;color:var(--clr-muted)">${userName(r.submittedBy)}</td>
+            <td><span class="score-pill ${passClass}" style="font-size:var(--fs-sm);padding:4px 12px">${r.avgScore.toFixed(2)}</span></td>
+            <td style="font-size:11px;color:var(--clr-muted)">${numJudges}</td>
+            <td>${renderCritBars(r.refCode)}</td>
+        </tr>`;
+    }).join('');
+
+    const belowSeparator = below.length ? `
+        <tr class="threshold-line"><td colspan="6"></td></tr>
+        <tr class="threshold-label-row"><td colspan="6">Below shortlist threshold (${threshold}) — ${below.length} idea${below.length!==1?'s':''}</td></tr>
+    ` : '';
+
+    const tableHtml = rankings.length ? `
+        <div style="overflow-x:auto">
+            <table class="lb-full-table">
+                <thead><tr>
+                    <th>#</th><th>Idea</th><th>Submitter</th><th>Score</th><th>Judges</th><th>Criteria</th>
+                </tr></thead>
+                <tbody>
+                    ${buildRows(above, 1)}
+                    ${belowSeparator}
+                    ${buildRows(below, above.length + 1)}
+                </tbody>
+            </table>
+        </div>` : `<p class="text-muted">No finalist ideas have been scored yet.</p>`;
+
+    const unscored = IDEAS.filter(i => i.status === 'finalist' && computeIdeaScore(i.refCode) === null);
+
+    return `
+    <div class="page-header">
+        <div>
+            <h1>Leaderboard</h1>
+            <p class="page-sub">${rankings.length} ranked · ${unscored.length} unscored finalist${unscored.length!==1?'s':''}</p>
+        </div>
+    </div>
+
+    <div class="card-grid grid-4" style="margin-bottom:var(--sp-lg)">
+        ${statCard('Ranked',          '▲', rankings.length,       '', 'var(--clr-primary)')}
+        ${statCard('Above Threshold', '✓', above.length,          '', 'var(--clr-eligible)')}
+        ${statCard('Below Threshold', '✗', below.length,          '', 'var(--clr-ineligible)')}
+        ${statCard('Unscored',        '◌', unscored.length,       '', 'var(--clr-muted)')}
+    </div>
+
+    ${rankings.length >= 1 ? `
+    <div class="card" style="margin-bottom:var(--sp-lg)">
+        <div class="card-title">Top ${Math.min(rankings.length, 3)}</div>
+        ${renderPodium(rankings)}
+    </div>` : ''}
+
+    <div class="card">
+        <div class="card-title" style="margin-bottom:var(--sp-md)">Full Rankings</div>
+        <div style="font-size:11px;color:var(--clr-muted);margin-bottom:var(--sp-md)">
+            Criteria columns: BI = Business Impact (30%), Fe = Feasibility (25%), In = Innovation (25%), SA = Strategic Alignment (10%), Sc = Scalability (5%), PC = Presentation Clarity (5%)
+        </div>
+        ${tableHtml}
+    </div>`;
+}
+
+// ── PAGE: ExCom Selection ──────────────────────────────────────
+function toggleExcomPacket(refCode) {
+    const el = document.getElementById('excom-pkt-' + refCode);
+    if (el) el.classList.toggle('open');
+}
+
+function castExcomVote(ideaId, placement) {
+    if (!can('castExcomVote')) return;
+    const me   = currentUser();
+    const notes = (document.getElementById('excom-note-' + ideaId)?.value || '').trim();
+    const now  = new Date(PROTO_NOW).toISOString();
+
+    // Remove any existing vote by this member for same placement or same idea
+    const remove = EXCOM_VOTES.filter(v =>
+        v.voterId === me.id && (v.placement === placement || v.ideaId === ideaId)
+    );
+    remove.forEach(v => {
+        const idx = EXCOM_VOTES.indexOf(v);
+        if (idx > -1) EXCOM_VOTES.splice(idx, 1);
+    });
+
+    EXCOM_VOTES.push({
+        id:        'ev-' + String(EXCOM_VOTES.length + 1).padStart(2, '0'),
+        voterId:   me.id,
+        ideaId,
+        placement,
+        notes,
+        votedAt:   now,
+    });
+    appendAudit('EXCOM_VOTE_CAST', ideaId, `${me.name} placed idea at position ${placement}.`);
+    renderPage();
+}
+
+function clearExcomVote(ideaId) {
+    const me = currentUser();
+    const idx = EXCOM_VOTES.findIndex(v => v.voterId === me.id && v.ideaId === ideaId);
+    if (idx > -1) { EXCOM_VOTES.splice(idx, 1); renderPage(); }
+}
+
+function confirmWinners() {
+    if (!can('lockResults')) return;
+    // Tally votes: 1st=3pts, 2nd=2pts, 3rd=1pt
+    const tally = {};
+    for (const v of EXCOM_VOTES) {
+        const pts = v.placement === 1 ? 3 : v.placement === 2 ? 2 : 1;
+        tally[v.ideaId] = (tally[v.ideaId] || 0) + pts;
+    }
+    const sorted  = Object.entries(tally).sort((a, b) => b[1] - a[1]);
+    const topIds  = sorted.slice(0, 3).map(([id]) => id);
+    const me      = currentUser();
+    const now     = new Date(PROTO_NOW).toISOString();
+
+    for (const id of topIds) {
+        const idea = IDEAS.find(i => i.refCode === id);
+        if (idea) {
+            idea.status    = 'winner';
+            idea.updatedAt = now;
+            appendAudit('IDEA_WINNER_CONFIRMED', id, `ExCom confirmed ${id} as winner.`);
+        }
+    }
+    CYCLE.resultsLocked = true;
+    appendAudit('RESULTS_LOCKED', 'CYCLE-2026', 'Winners confirmed and results locked by ExCom/Admin.');
+    renderPage();
+}
+
+function renderExcomPacket(idea, rank) {
+    const me       = currentUser();
+    const myVote   = EXCOM_VOTES.find(v => v.voterId === me.id && v.ideaId === idea.refCode);
+    const rankCls  = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : 'rn';
+    const pScore   = computeIdeaScore(idea.refCode);
+    const passClass = pScore !== null && pScore >= CYCLE.shortlistThreshold ? 'pass' : 'fail';
+    const teamObj   = idea.teamId ? TEAMS.find(t => t.id === idea.teamId) : null;
+    const numJudges = SCORES.filter(s => s.ideaId === idea.refCode && !COI_RECUSALS.some(c => c.judgeId === s.judgeId && c.ideaId === idea.refCode)).length;
+    const coiCount  = COI_RECUSALS.filter(r => r.ideaId === idea.refCode).length;
+
+    const placementLabel = p => p === 1 ? '🥇 1st Place' : p === 2 ? '🥈 2nd Place' : '🥉 3rd Place';
+
+    const voteBadge = myVote
+        ? `<span class="my-vote-badge p${myVote.placement}">${placementLabel(myVote.placement)}</span>` : '';
+
+    const voteSection = can('castExcomVote') && !CYCLE.resultsLocked ? `
+        <div class="vote-section">
+            <div class="vote-section-title">Cast Your Vote</div>
+            ${myVote ? `<div style="margin-bottom:var(--sp-sm);font-size:var(--fs-sm);color:var(--clr-muted)">Current selection: ${placementLabel(myVote.placement)}
+                <button class="btn btn-ghost btn-sm" style="margin-left:8px" onclick="clearExcomVote('${idea.refCode}')">Clear</button></div>` : ''}
+            <div class="placement-btns">
+                <button class="placement-btn p1${myVote?.placement===1?' active':''}" onclick="castExcomVote('${idea.refCode}',1)">🥇 1st Place</button>
+                <button class="placement-btn p2${myVote?.placement===2?' active':''}" onclick="castExcomVote('${idea.refCode}',2)">🥈 2nd Place</button>
+                <button class="placement-btn p3${myVote?.placement===3?' active':''}" onclick="castExcomVote('${idea.refCode}',3)">🥉 3rd Place</button>
+            </div>
+            <div class="form-group" style="margin-top:var(--sp-sm)">
+                <label style="font-size:11px;font-weight:600;color:var(--clr-muted)">Rationale (optional)</label>
+                <textarea id="excom-note-${idea.refCode}" class="form-textarea" rows="2"
+                    placeholder="Brief justification for your placement decision…">${myVote?.notes||''}</textarea>
+            </div>
+        </div>` : '';
+
+    const viewAllVotes = can('viewAllScores') ? (() => {
+        const votes = EXCOM_VOTES.filter(v => v.ideaId === idea.refCode);
+        if (!votes.length) return '';
+        return `<div style="margin-top:var(--sp-sm);font-size:11px;color:var(--clr-muted)">
+            Votes received: ${votes.map(v => `${userName(v.voterId)}: ${placementLabel(v.placement)}`).join(' · ')}
+        </div>`;
+    })() : '';
+
+    return `
+    <div class="excom-packet" id="excom-pkt-${idea.refCode}">
+        <div class="excom-packet-header" onclick="toggleExcomPacket('${idea.refCode}')">
+            <span class="lb-rank-badge ${rankCls}" style="width:36px;height:36px;font-size:var(--fs-base)">${rank}</span>
+            <span class="excom-packet-title">${idea.title}</span>
+            <span class="status-badge status-finalist">${idea.category}</span>
+            ${pScore !== null ? `<span class="score-pill ${passClass}" style="flex-shrink:0">${pScore.toFixed(2)}</span>` : ''}
+            ${voteBadge}
+            ${coiCount ? `<span class="coi-badge" style="flex-shrink:0">⚠ ${coiCount} CoI</span>` : ''}
+            <span class="excom-packet-chevron">&#9658;</span>
+        </div>
+        <div class="excom-packet-body">
+            <div class="excom-summary-grid">
+                <div class="excom-field">
+                    <div class="excom-field-label">Problem Statement</div>
+                    <div style="font-size:var(--fs-sm)">${idea.problemStatement || '—'}</div>
+                </div>
+                <div class="excom-field">
+                    <div class="excom-field-label">Expected Benefits</div>
+                    <div style="font-size:var(--fs-sm)">${idea.expectedBenefits || '—'}</div>
+                </div>
+                <div class="excom-field">
+                    <div class="excom-field-label">Proposed Solution</div>
+                    <div style="font-size:var(--fs-sm)">${idea.proposedSolution || '—'}</div>
+                </div>
+                <div class="excom-field">
+                    <div class="excom-field-label">Submitter / Team</div>
+                    <div style="font-size:var(--fs-sm)">${userName(idea.submittedBy)}${teamObj ? ` · ${teamObj.name}` : ''}<br>
+                    <span style="font-size:11px;color:var(--clr-muted)">${numJudges} judge score${numJudges!==1?'s':''} · Panel avg: ${pScore!==null?pScore.toFixed(2):'—'}</span>
+                    </div>
+                </div>
+            </div>
+            ${renderCritBars(idea.refCode)}
+            ${viewAllVotes}
+            ${voteSection}
+        </div>
+    </div>`;
+}
+
+function renderExcom() {
+    const rankings = getIdeaRankings();
+    const me       = currentUser();
+    const myVotes  = EXCOM_VOTES.filter(v => v.voterId === me.id);
+    const winners  = IDEAS.filter(i => i.status === 'winner');
+    const hasConfirmedWinners = winners.length > 0;
+
+    // All excom voters and their selections
+    const excomVoters = USERS.filter(u => u.role === 'excom_member');
+    const voteStatus  = excomVoters.map(u => {
+        const votes = EXCOM_VOTES.filter(v => v.voterId === u.id);
+        return `${u.name}: ${votes.length ? votes.sort((a,b)=>a.placement-b.placement).map(v=>`${['🥇','🥈','🥉'][v.placement-1]} ${v.ideaId}`).join(', ') : 'No votes yet'}`;
+    }).join(' · ');
+
+    const winnerBanner = hasConfirmedWinners ? `
+        <div class="winner-banner">
+            <div class="winner-banner-title">🏆 Winners Confirmed</div>
+            <div style="font-size:var(--fs-sm);color:var(--clr-text)">
+                ${winners.map((w,i) => `${['🥇','🥈','🥉'][i]||'·'} <strong>${w.title}</strong> (${w.refCode})`).join('<br>')}
+            </div>
+        </div>` : '';
+
+    const confirmBar = can('lockResults') && !hasConfirmedWinners && EXCOM_VOTES.length > 0 ? `
+        <div class="excom-confirm-bar">
+            <div style="flex:1">
+                <div style="font-size:var(--fs-sm);font-weight:700">Confirm Winners</div>
+                <div style="font-size:11px;color:var(--clr-muted)">Ideas with the highest vote-weighted scores (1st=3pts, 2nd=2pts, 3rd=1pt) will be promoted to Winner status and results locked.</div>
+            </div>
+            <button class="btn btn-primary" onclick="confirmWinners()">Confirm & Lock Winners</button>
+        </div>` : '';
+
+    const packetsHtml = rankings.length
+        ? rankings.map((r, idx) => renderExcomPacket(r, idx + 1)).join('')
+        : `<div class="empty-state" style="text-align:center;padding:var(--sp-xl);color:var(--clr-muted)">
+               <div style="font-size:2rem;margin-bottom:var(--sp-sm)">◆</div>
+               <p>No ranked finalist ideas available yet.</p>
+           </div>`;
+
+    return `
+    <div class="page-header">
+        <div>
+            <h1>ExCom Selection</h1>
+            <p class="page-sub">${rankings.length} finalist idea${rankings.length!==1?'s':''} · ${myVotes.length} of 3 placements assigned</p>
+        </div>
+    </div>
+
+    <div class="card-grid grid-4" style="margin-bottom:var(--sp-lg)">
+        ${statCard('Finalists',        '◆', rankings.length,         '', 'var(--clr-primary)')}
+        ${statCard('My Votes Cast',    '✓', myVotes.length,          '', 'var(--clr-eligible)')}
+        ${statCard('Total Votes',      '◈', EXCOM_VOTES.length,      '', 'var(--clr-accent)')}
+        ${statCard('Winners Confirmed','🏆', winners.length,          '', winners.length ? '#b45309' : 'var(--clr-muted)')}
+    </div>
+
+    ${winnerBanner}
+    ${confirmBar}
+
+    <div style="font-size:11px;color:var(--clr-muted);margin-bottom:var(--sp-md)">${voteStatus}</div>
+
+    ${can('castExcomVote') && !CYCLE.resultsLocked && myVotes.length < 3 ? `
+        <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:var(--radius);padding:var(--sp-sm) var(--sp-md);margin-bottom:var(--sp-md);font-size:var(--fs-sm);color:#1e40af">
+            Assign 1st, 2nd, and 3rd place to three different ideas. Open each information packet below to cast your placement.
+        </div>` : ''}
+
+    ${packetsHtml}`;
 }
 
 // ── PAGE: placeholder ─────────────────────────────────────────
