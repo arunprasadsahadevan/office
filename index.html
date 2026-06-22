@@ -528,6 +528,59 @@
             .appbar-cycle { display: none; }
         }
 
+        /* ── USER CHIP (appbar) ── */
+        .user-chip {
+            display: flex; align-items: center; gap: var(--sp-sm);
+            padding: 5px 10px;
+            border-radius: var(--radius-md);
+            background: rgba(255,255,255,.10);
+            border: 1px solid rgba(255,255,255,.18);
+            min-width: 0; overflow: hidden;
+        }
+        .user-avatar {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--clr-accent); color: white;
+            font-size: 10px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; letter-spacing: .02em;
+        }
+        .user-info { display: flex; flex-direction: column; line-height: 1.2; overflow: hidden; }
+        .user-name { font-size: 11px; font-weight: 600; color: white; white-space: nowrap; }
+        .user-dept { font-size: 10px; color: rgba(255,255,255,.6); white-space: nowrap; }
+        @media (max-width: 900px) { .user-chip { display: none; } }
+
+        /* ── ROLE CONTEXT BAR (per-page) ── */
+        .role-ctx-bar {
+            display: flex; align-items: center; gap: var(--sp-sm);
+            padding: 8px var(--sp-md);
+            background: var(--clr-surface-tint);
+            border: 1px solid var(--clr-border);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--sp-lg);
+            font-size: var(--fs-xs);
+            flex-wrap: wrap;
+        }
+        .role-ctx-bar .ctx-avatar {
+            width: 24px; height: 24px; border-radius: 50%;
+            color: white; font-size: 9px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .role-ctx-bar .ctx-name  { font-weight: 600; color: var(--clr-text); }
+        .role-ctx-bar .ctx-role  { color: var(--clr-muted); }
+        .role-ctx-bar .ctx-cap   { color: var(--clr-muted); }
+        .role-ctx-bar--readonly  { background: #FEF3C7; border-color: #FDE68A; }
+        .role-ctx-bar--readonly .ctx-cap { color: var(--clr-review); font-weight: 600; }
+        .ctx-spacer { flex: 1; }
+
+        /* ── NAV SECTION LABELS ── */
+        .nav-section-label {
+            font-size: 10px; font-weight: 700; color: var(--clr-muted);
+            text-transform: uppercase; letter-spacing: .08em;
+            padding: 12px var(--sp-md) 4px;
+        }
+        .nav-section-label:first-child { padding-top: var(--sp-sm); }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -552,6 +605,15 @@
         <span class="appbar-cycle">2026 Innovation Competition</span>
 
         <div class="appbar-spacer"></div>
+
+        <!-- USER CHIP -->
+        <div class="user-chip" id="user-chip">
+            <div class="user-avatar" id="user-avatar-chip">TR</div>
+            <div class="user-info">
+                <span class="user-name" id="user-name-chip">Tariq Al-Refai</span>
+                <span class="user-dept" id="user-dept-chip">Strategy &amp; PMO</span>
+            </div>
+        </div>
 
         <!-- ROLE SWITCHER -->
         <div class="role-switcher">
@@ -600,7 +662,10 @@
 
 <script>
 /* ============================================================
-   KFH Capital InnovationHub — Phase 1: Shell & Design System
+   KFH Capital InnovationHub
+   Phase 1: Shell & Design System
+   Phase 2: Data Seed
+   Phase 3: RBAC Engine & Navigation
    ============================================================ */
 
 // ── RBAC ──────────────────────────────────────────────────────
@@ -660,6 +725,21 @@ const ROLES = {
         pages: ['dashboard','leaderboard','audit_log'],
         color: '#374151'
     }
+};
+
+// ── PERMISSIONS ───────────────────────────────────────────────
+// Action-level RBAC — use can('action') anywhere in render logic
+const PERMISSIONS = {
+    //                       submit  ownOnly  screen  coach   score  allScores lock   excom  users  team   audit  readOnly
+    participant:      { submitIdea:true,  viewOwnOnly:true,  screenIdeas:false, logCoaching:false, scoreIdeas:false, viewAllScores:false, lockResults:false, castExcomVote:false, manageUsers:false, manageTeam:false, viewAuditLog:false, readOnly:false },
+    team_lead:        { submitIdea:true,  viewOwnOnly:true,  screenIdeas:false, logCoaching:false, scoreIdeas:false, viewAllScores:false, lockResults:false, castExcomVote:false, manageUsers:false, manageTeam:true,  viewAuditLog:false, readOnly:false },
+    screener:         { submitIdea:false, viewOwnOnly:false, screenIdeas:true,  logCoaching:false, scoreIdeas:false, viewAllScores:false, lockResults:false, castExcomVote:false, manageUsers:false, manageTeam:false, viewAuditLog:false, readOnly:false },
+    coach:            { submitIdea:false, viewOwnOnly:false, screenIdeas:false, logCoaching:true,  scoreIdeas:false, viewAllScores:false, lockResults:false, castExcomVote:false, manageUsers:false, manageTeam:false, viewAuditLog:false, readOnly:false },
+    judge:            { submitIdea:false, viewOwnOnly:false, screenIdeas:false, logCoaching:false, scoreIdeas:true,  viewAllScores:false, lockResults:false, castExcomVote:false, manageUsers:false, manageTeam:false, viewAuditLog:false, readOnly:false },
+    panel_chair:      { submitIdea:false, viewOwnOnly:false, screenIdeas:false, logCoaching:false, scoreIdeas:true,  viewAllScores:true,  lockResults:true,  castExcomVote:false, manageUsers:false, manageTeam:false, viewAuditLog:true,  readOnly:false },
+    excom_member:     { submitIdea:false, viewOwnOnly:false, screenIdeas:false, logCoaching:false, scoreIdeas:false, viewAllScores:true,  lockResults:false, castExcomVote:true,  manageUsers:false, manageTeam:false, viewAuditLog:false, readOnly:false },
+    innovation_admin: { submitIdea:true,  viewOwnOnly:false, screenIdeas:true,  logCoaching:true,  scoreIdeas:true,  viewAllScores:true,  lockResults:true,  castExcomVote:false, manageUsers:true,  manageTeam:true,  viewAuditLog:true,  readOnly:false },
+    auditor:          { submitIdea:false, viewOwnOnly:false, screenIdeas:false, logCoaching:false, scoreIdeas:false, viewAllScores:true,  lockResults:false, castExcomVote:false, manageUsers:false, manageTeam:false, viewAuditLog:true,  readOnly:true  },
 };
 
 // ── DATA SEED ─────────────────────────────────────────────────
@@ -1175,6 +1255,13 @@ const NAV_ITEMS = [
     { icon: '⌖', label: 'Audit Log',       page: 'audit_log',   roles: ['panel_chair','innovation_admin','auditor'] },
 ];
 
+// Nav sections — groups nav items into labelled sections
+const NAV_SECTIONS = [
+    { label: 'My Workspace',     pages: ['dashboard','submit','my_ideas','manage_team'] },
+    { label: 'Competition Flow', pages: ['screening','coaching','scoring','leaderboard','excom'] },
+    { label: 'Administration',   pages: ['admin','audit_log'] },
+];
+
 // Build a quick lookup: page → allowed roles
 const PAGE_ACCESS = {};
 NAV_ITEMS.forEach(n => { PAGE_ACCESS[n.page] = n.roles; });
@@ -1187,6 +1274,55 @@ let currentPage = 'dashboard';
 function canAccess(role, page) {
     const allowed = PAGE_ACCESS[page];
     return !allowed || allowed.includes(role);
+}
+
+// Action-level permission check — use throughout all render functions
+function can(action) {
+    return !!(PERMISSIONS[currentRole]?.[action]);
+}
+
+// Data-level filter: participants only see their own ideas
+function getVisibleIdeas() {
+    if (!can('viewOwnOnly')) return IDEAS;
+    const me = currentUser();
+    return IDEAS.filter(i => {
+        if (i.submittedBy === me.id) return true;
+        const t = TEAMS.find(t => t.id === i.teamId);
+        return t && t.members.includes(me.id);
+    });
+}
+
+// Live badge counts for nav items
+function getNavBadge(page) {
+    const me = currentUser();
+    if (page === 'screening') {
+        const n = IDEAS.filter(i => i.status === 'submitted').length;
+        return n > 0 ? n : null;
+    }
+    if (page === 'scoring') {
+        const myScored = new Set(SCORES.filter(s => s.judgeId === me.id).map(s => s.ideaId));
+        const recused  = new Set(COI_RECUSALS.filter(r => r.judgeId === me.id).map(r => r.ideaId));
+        const n = IDEAS.filter(i => i.status === 'finalist' && !myScored.has(i.refCode) && !recused.has(i.refCode)).length;
+        return n > 0 ? n : null;
+    }
+    if (page === 'my_ideas') {
+        const n = getVisibleIdeas().filter(i => i.status !== 'draft').length;
+        return n > 0 ? n : null;
+    }
+    return null;
+}
+
+// Append an event to the in-memory audit log
+function appendAudit(action, entity, detail) {
+    const me = currentUser();
+    AUDIT_LOG.push({
+        id:     `aud-${Date.now()}`,
+        ts:     new Date().toISOString(),
+        actor:  me.id,
+        action,
+        entity,
+        detail,
+    });
 }
 
 // ── ROUTER ────────────────────────────────────────────────────
@@ -1207,34 +1343,74 @@ function switchRole(role) {
     showToast(`Switched to <strong>${ROLES[role].label}</strong>`, 'info');
 }
 
-// ── RENDER: role badge ────────────────────────────────────────
+// ── RENDER: role badge + user chip ───────────────────────────
 function renderRoleBadge() {
-    const r = ROLES[currentRole];
+    const r  = ROLES[currentRole];
+    const me = currentUser();
+    // Sidebar badge
     document.getElementById('role-chip-name').textContent = r.label;
     document.getElementById('role-cap-text').textContent  = r.capability;
     document.getElementById('role-chip').style.background = r.color;
+    // Appbar user chip
+    const av = document.getElementById('user-avatar-chip');
+    const nm = document.getElementById('user-name-chip');
+    const dt = document.getElementById('user-dept-chip');
+    if (av) { av.textContent = me.avatar; av.style.background = r.color; }
+    if (nm) nm.textContent = me.name;
+    if (dt) dt.textContent = me.dept;
 }
 
-// ── RENDER: sidebar nav ───────────────────────────────────────
+// ── RENDER: sidebar nav (with sections + live badges) ────────
 function renderNav() {
     const nav = document.getElementById('sidebar-nav');
-    nav.innerHTML = NAV_ITEMS
-        .filter(n => !n.roles || n.roles.includes(currentRole))
-        .map(n => {
-            const active = currentPage === n.page ? 'active' : '';
-            return `<div class="nav-item ${active}" onclick="navigate('${n.page}')">
-                        <span class="nav-icon">${n.icon}</span>${n.label}
-                    </div>`;
-        }).join('');
+    let html = '';
+
+    NAV_SECTIONS.forEach(section => {
+        const items = NAV_ITEMS.filter(n =>
+            section.pages.includes(n.page) &&
+            (!n.roles || n.roles.includes(currentRole))
+        );
+        if (!items.length) return;
+
+        html += `<div class="nav-section-label">${section.label}</div>`;
+        items.forEach(n => {
+            const active    = currentPage === n.page ? 'active' : '';
+            const badge     = getNavBadge(n.page);
+            const badgeHtml = badge != null ? `<span class="nav-badge">${badge}</span>` : '';
+            html += `<div class="nav-item ${active}" onclick="navigate('${n.page}')">
+                         <span class="nav-icon">${n.icon}</span>${n.label}${badgeHtml}
+                     </div>`;
+        });
+    });
+
+    nav.innerHTML = html;
+}
+
+// ── RENDER: role context bar (top of every page) ─────────────
+function renderRoleCtxBar() {
+    const r    = ROLES[currentRole];
+    const me   = currentUser();
+    const isRO = can('readOnly');
+    const roWarning = isRO
+        ? `<span class="chip chip-review" style="flex-shrink:0;margin-left:auto">🔒 Read-only — all write actions disabled</span>`
+        : '';
+    return `<div class="role-ctx-bar${isRO ? ' role-ctx-bar--readonly' : ''}">
+        <div class="ctx-avatar" style="background:${r.color}">${me.avatar}</div>
+        <span class="ctx-name">${me.name}</span>
+        <span class="ctx-role">&nbsp;·&nbsp;${r.label}</span>
+        <span class="ctx-cap">&nbsp;·&nbsp;${r.capability}</span>
+        ${roWarning}
+    </div>`;
 }
 
 // ── RENDER: page ──────────────────────────────────────────────
 function renderPage() {
     const main = document.getElementById('main-content');
+    const ctx  = renderRoleCtxBar();
 
     if (!canAccess(currentRole, currentPage)) {
         const allowedLabels = (PAGE_ACCESS[currentPage] || []).map(r => ROLES[r]?.label || r);
-        main.innerHTML = renderAccessDenied(currentPage, allowedLabels);
+        main.innerHTML = ctx + renderAccessDenied(currentPage, allowedLabels);
         return;
     }
 
@@ -1252,12 +1428,12 @@ function renderPage() {
     };
 
     if (currentPage === 'dashboard') {
-        main.innerHTML = renderDashboard();
+        main.innerHTML = ctx + renderDashboard();
     } else if (placeholderPages[currentPage]) {
         const [title, icon, phase] = placeholderPages[currentPage];
-        main.innerHTML = renderPlaceholder(title, icon, phase);
+        main.innerHTML = ctx + renderPlaceholder(title, icon, phase);
     } else {
-        main.innerHTML = renderPlaceholder('Page Not Found', '?', '');
+        main.innerHTML = ctx + renderPlaceholder('Page Not Found', '?', '');
     }
 }
 
