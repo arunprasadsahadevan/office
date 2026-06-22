@@ -581,6 +581,63 @@
         }
         .nav-section-label:first-child { padding-top: var(--sp-sm); }
 
+        /* ── FUNNEL CHART ── */
+        .funnel { display: flex; flex-direction: column; gap: 10px; }
+        .funnel-row { display: flex; align-items: center; gap: 10px; }
+        .funnel-label { width: 100px; font-size: var(--fs-xs); font-weight: 600; color: var(--clr-muted); text-align: right; flex-shrink: 0; white-space: nowrap; }
+        .funnel-track { flex: 1; height: 28px; background: var(--clr-surface-tint); border-radius: var(--radius-sm); overflow: hidden; }
+        .funnel-fill { height: 100%; border-radius: var(--radius-sm); display: flex; align-items: center; padding: 0 8px; font-size: 11px; font-weight: 700; color: white; min-width: 28px; transition: width .5s ease; }
+        .funnel-pct { width: 32px; font-size: 11px; font-weight: 600; color: var(--clr-muted); text-align: right; flex-shrink: 0; }
+
+        /* ── CATEGORY BAR CHART ── */
+        .cat-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .cat-name { font-size: 11px; color: var(--clr-muted); width: 170px; flex-shrink: 0; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .cat-track { flex: 1; height: 14px; background: var(--clr-surface-tint); border-radius: 3px; overflow: hidden; }
+        .cat-fill { height: 100%; background: var(--clr-primary); border-radius: 3px; transition: width .5s ease; min-width: 4px; }
+        .cat-cnt { font-size: 11px; font-weight: 700; color: var(--clr-primary); width: 14px; text-align: right; flex-shrink: 0; }
+
+        /* ── COUNTDOWN WIDGET ── */
+        .countdown-widget { display: flex; align-items: center; gap: var(--sp-lg); }
+        .countdown-number { font-size: 52px; font-weight: 700; line-height: 1; }
+        .countdown-unit { font-size: 10px; font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
+        .countdown-label { font-size: var(--fs-md); font-weight: 700; color: var(--clr-text); margin-bottom: 2px; }
+        .countdown-sub { font-size: var(--fs-xs); color: var(--clr-muted); }
+
+        /* ── MINI IDEA ROWS (participant dashboard) ── */
+        .idea-mini-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--clr-border); }
+        .idea-mini-row:last-child { border-bottom: none; }
+        .idea-ref { font-size: 10px; font-weight: 700; color: var(--clr-muted); font-family: monospace; flex-shrink: 0; }
+        .idea-title { flex: 1; font-size: var(--fs-sm); font-weight: 500; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* ── SCORE PROGRESS ── */
+        .progress-wrap { background: var(--clr-surface-tint); border-radius: 999px; height: 10px; overflow: hidden; margin: var(--sp-sm) 0; }
+        .progress-fill { height: 100%; background: var(--clr-primary); border-radius: 999px; transition: width .5s ease; }
+        .score-row { display: flex; justify-content: space-between; font-size: var(--fs-xs); color: var(--clr-muted); }
+
+        /* ── AUDIT PREVIEW ── */
+        .audit-row { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--clr-border); font-size: var(--fs-xs); align-items: flex-start; }
+        .audit-row:last-child { border-bottom: none; }
+        .audit-ts { color: var(--clr-muted); flex-shrink: 0; white-space: nowrap; }
+        .audit-actor { font-weight: 600; color: var(--clr-primary); flex-shrink: 0; }
+        .audit-detail { color: var(--clr-text); flex: 1; }
+        .audit-entity { font-family: monospace; font-weight: 700; color: var(--clr-muted); flex-shrink: 0; }
+
+        /* ── LEADERBOARD MINI ── */
+        .lb-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--clr-border); }
+        .lb-row:last-child { border-bottom: none; }
+        .lb-rank { font-size: 14px; font-weight: 700; color: var(--clr-muted); width: 24px; flex-shrink: 0; text-align: center; }
+        .lb-rank.gold   { color: #B8923A; }
+        .lb-rank.silver { color: #64748B; }
+        .lb-rank.bronze { color: #92400E; }
+        .lb-title { flex: 1; font-size: var(--fs-sm); font-weight: 500; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .lb-score { font-size: var(--fs-sm); font-weight: 700; color: var(--clr-primary); flex-shrink: 0; }
+        .lb-pass { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 999px; flex-shrink: 0; }
+        .lb-pass.pass { color: var(--clr-eligible); background: var(--clr-eligible-bg); }
+        .lb-pass.fail { color: var(--clr-ineligible); background: var(--clr-ineligible-bg); }
+
+        /* ── 2-COL RESPONSIVE ── */
+        @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -1438,64 +1495,305 @@ function renderPage() {
 }
 
 // ── PAGE: dashboard ───────────────────────────────────────────
-function renderDashboard() {
-    const stages = [
-        { label: 'Awareness',    dates: '15–31 Jul', state: 'done'   },
-        { label: 'Submission',   dates: '01–31 Aug', state: 'done'   },
-        { label: 'Screening',    dates: '01–14 Sep', state: 'active' },
-        { label: 'Coaching',     dates: '15–21 Sep', state: ''       },
-        { label: 'ExCom Review', dates: '22–28 Sep', state: ''       },
-        { label: 'Announcement', dates: '01 Oct',    state: ''       },
-    ];
 
-    const stagesHtml = stages.map(s => {
+// Prototype reference date (mid-screening)
+const PROTO_NOW = new Date('2026-09-08');
+
+function fmtShortDate(iso) {
+    if (!iso) return '';
+    const [y,m,d] = iso.split('-');
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${+d} ${months[+m-1]}`;
+}
+function fmtTs(ts) {
+    if (!ts) return '';
+    const d = new Date(ts);
+    return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}) + ' ' +
+           d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+}
+function statusLabel(s) {
+    return { draft:'Draft', submitted:'Submitted', eligible:'Eligible', ineligible:'Ineligible',
+             needs_review:'Needs Review', shortlisted:'Shortlisted', finalist:'Finalist', winner:'Winner' }[s] || s;
+}
+function userName(id) { return USERS.find(u => u.id === id)?.name || id; }
+
+// ── Dashboard sub-builders ────────────────────────────────────
+
+function dbCountdown() {
+    const active = CYCLE.stages.find(s => s.state === 'active') || CYCLE.stages.find(s => s.state === 'upcoming');
+    if (!active) return `<div class="card"><p style="color:var(--clr-muted)">No active stage.</p></div>`;
+    const end  = new Date(active.end + 'T23:59:59');
+    const diff = Math.max(0, end - PROTO_NOW);
+    const days = Math.ceil(diff / 86400000);
+    const clr  = days <= 2 ? 'var(--clr-ineligible)' : days <= 5 ? 'var(--clr-review)' : 'var(--clr-accent)';
+    const msg  = days === 0 ? 'Deadline today!' : days === 1 ? '1 day remaining' : `${days} days remaining`;
+    const upcoming = CYCLE.stages.filter(s => s.state === 'upcoming').length;
+    return `<div class="card">
+        <div class="card-title">Next Deadline</div>
+        <div class="countdown-widget" style="margin-bottom:var(--sp-md)">
+            <div style="text-align:center">
+                <div class="countdown-number" style="color:${clr}">${days}</div>
+                <div class="countdown-unit">days</div>
+            </div>
+            <div style="width:1px;height:52px;background:var(--clr-border)"></div>
+            <div>
+                <div class="countdown-label">${active.label}</div>
+                <div class="countdown-sub">Ends ${fmtShortDate(active.end)}</div>
+                <div style="margin-top:4px;font-size:var(--fs-xs);font-weight:700;color:${clr}">${msg}</div>
+            </div>
+        </div>
+        <hr class="divider" style="margin:var(--sp-sm) 0 var(--sp-sm)">
+        <div style="font-size:var(--fs-xs);color:var(--clr-muted)">${upcoming} upcoming stage${upcoming!==1?'s':''} to follow</div>
+    </div>`;
+}
+
+function dbFunnel() {
+    const total = Math.max(IDEAS.filter(i => i.status !== 'draft').length, 1);
+    const stages = [
+        { label:'Submitted',   n: IDEAS.filter(i=>i.status!=='draft').length,                                     clr:'#0E5C4A' },
+        { label:'Eligible',    n: IDEAS.filter(i=>['eligible','shortlisted','finalist','winner'].includes(i.status)).length, clr:'#1A7A45' },
+        { label:'Shortlisted', n: IDEAS.filter(i=>['shortlisted','finalist','winner'].includes(i.status)).length, clr:'#B8923A' },
+        { label:'Finalist',    n: IDEAS.filter(i=>['finalist','winner'].includes(i.status)).length,               clr:'#6B21A8' },
+        { label:'Winner',      n: IDEAS.filter(i=>i.status==='winner').length,                                    clr:'#B91C1C' },
+    ];
+    const rows = stages.map(s => {
+        const pct = Math.round(s.n / total * 100);
+        const w   = s.n > 0 ? Math.max(pct, 8) : 0;
+        return `<div class="funnel-row">
+            <div class="funnel-label">${s.label}</div>
+            <div class="funnel-track">
+                <div class="funnel-fill" style="width:${w}%;background:${s.clr}">${s.n > 0 ? s.n : ''}</div>
+            </div>
+            <div class="funnel-pct">${pct}%</div>
+        </div>`;
+    }).join('');
+    return `<div class="card">
+        <div class="card-title">Submission Funnel</div>
+        <div class="funnel">${rows}</div>
+        <div style="margin-top:var(--sp-md);font-size:var(--fs-xs);color:var(--clr-muted)">
+            ${IDEAS.filter(i=>i.status==='ineligible').length} ineligible &nbsp;·&nbsp;
+            ${IDEAS.filter(i=>i.status==='needs_review').length} needs review &nbsp;·&nbsp;
+            ${IDEAS.filter(i=>i.status==='draft').length} draft (not submitted)
+        </div>
+    </div>`;
+}
+
+function dbCatChart() {
+    const counts = {};
+    CATEGORIES.forEach(c => { counts[c] = 0; });
+    IDEAS.filter(i => i.status !== 'draft').forEach(i => { if (counts[i.category] !== undefined) counts[i.category]++; });
+    const maxN = Math.max(...Object.values(counts), 1);
+    const rows = Object.entries(counts)
+        .sort((a,b) => b[1]-a[1])
+        .map(([cat, n]) => {
+            const pct = Math.round(n / maxN * 100);
+            const lbl = cat.length > 26 ? cat.slice(0,24)+'…' : cat;
+            return `<div class="cat-row">
+                <div class="cat-name" title="${cat}">${lbl}</div>
+                <div class="cat-track"><div class="cat-fill" style="width:${n>0?Math.max(pct,3):0}%"></div></div>
+                <div class="cat-cnt">${n}</div>
+            </div>`;
+        }).join('');
+    return `<div class="card">
+        <div class="card-title">Ideas by Category</div>
+        <div>${rows}</div>
+    </div>`;
+}
+
+function dbRecentAudit() {
+    const recent = [...AUDIT_LOG].reverse().slice(0, 6);
+    const rows = recent.map(e => {
+        const actor = userName(e.actor);
+        const initials = actor.split(' ').map(w=>w[0]).join('').slice(0,2);
+        return `<div class="audit-row">
+            <div class="audit-ts">${fmtTs(e.ts)}</div>
+            <div class="audit-actor" title="${actor}">${initials}</div>
+            <div class="audit-detail">${e.detail}</div>
+            <div class="audit-entity">${e.entity}</div>
+        </div>`;
+    }).join('');
+    return `<div class="card" style="margin-top:var(--sp-lg)">
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+            Recent Activity
+            ${can('viewAuditLog') ? `<button class="btn btn-ghost btn-sm" onclick="navigate('audit_log')">View full log →</button>` : ''}
+        </div>
+        ${rows}
+    </div>`;
+}
+
+function dbParticipantWidget() {
+    const myIdeas = getVisibleIdeas().filter(i => i.status !== 'draft');
+    if (!myIdeas.length) return `<div class="card">
+        <div class="card-title">My Submitted Ideas</div>
+        <div class="coming-soon" style="min-height:150px">
+            <div class="coming-soon-icon">✦</div>
+            <p>No submitted ideas yet.</p>
+            ${can('submitIdea') ? `<button class="btn btn-primary btn-sm" onclick="navigate('submit')">Submit Your First Idea</button>` : ''}
+        </div>
+    </div>`;
+    const rows = myIdeas.map(i => `<div class="idea-mini-row">
+        <span class="idea-ref">${i.refCode}</span>
+        <span class="idea-title" title="${i.title}">${i.title}</span>
+        <span class="chip chip-${i.status.replace('_','-')}">${statusLabel(i.status)}</span>
+    </div>`).join('');
+    return `<div class="card">
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+            My Submitted Ideas
+            ${can('submitIdea') ? `<button class="btn btn-primary btn-sm" onclick="navigate('submit')">+ Submit New</button>` : ''}
+        </div>
+        ${rows}
+        <button class="btn btn-ghost btn-sm" style="margin-top:var(--sp-sm)" onclick="navigate('my_ideas')">View all my ideas →</button>
+    </div>`;
+}
+
+function dbScreenerWidget() {
+    const pending  = IDEAS.filter(i => i.status === 'submitted');
+    const screened = IDEAS.filter(i => ['eligible','shortlisted','finalist'].includes(i.status)).length;
+    const inelig   = IDEAS.filter(i => i.status === 'ineligible').length;
+    const review   = IDEAS.filter(i => i.status === 'needs_review').length;
+    return `<div class="card">
+        <div class="card-title">Screening Overview</div>
+        <div class="card-grid grid-3" style="margin-bottom:var(--sp-md)">
+            <div style="text-align:center">
+                <div style="font-size:28px;font-weight:700;color:var(--clr-review)">${pending.length}</div>
+                <div style="font-size:var(--fs-xs);color:var(--clr-muted);font-weight:600">Pending</div>
+            </div>
+            <div style="text-align:center">
+                <div style="font-size:28px;font-weight:700;color:var(--clr-eligible)">${screened}</div>
+                <div style="font-size:var(--fs-xs);color:var(--clr-muted);font-weight:600">Eligible</div>
+            </div>
+            <div style="text-align:center">
+                <div style="font-size:28px;font-weight:700;color:var(--clr-ineligible)">${inelig}</div>
+                <div style="font-size:var(--fs-xs);color:var(--clr-muted);font-weight:600">Ineligible</div>
+            </div>
+        </div>
+        ${review > 0 ? `<div class="chip chip-review" style="margin-bottom:var(--sp-sm)">${review} idea${review!==1?'s':''} flagged Needs Review</div>` : ''}
+        ${pending.length > 0 ? `<button class="btn btn-primary" onclick="navigate('screening')">Go to Screening Queue →</button>`
+            : `<div style="color:var(--clr-eligible);font-size:var(--fs-sm);font-weight:600">✓ All submitted ideas have been screened</div>`}
+    </div>`;
+}
+
+function dbCoachWidget() {
+    const assigned = IDEAS.filter(i => ['shortlisted','finalist'].includes(i.status));
+    const ideaRows = assigned.slice(0,4).map(i => {
+        const sessions = COACHING_SESSIONS.filter(s => s.ideaId === i.refCode).length;
+        return `<div class="idea-mini-row">
+            <span class="idea-ref">${i.refCode}</span>
+            <span class="idea-title" title="${i.title}">${i.title}</span>
+            <span class="chip chip-${i.status}">${statusLabel(i.status)}</span>
+            <span style="font-size:10px;color:var(--clr-muted);flex-shrink:0">${sessions} session${sessions!==1?'s':''}</span>
+        </div>`;
+    }).join('');
+    return `<div class="card">
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+            Coaching Assignments
+            <button class="btn btn-primary btn-sm" onclick="navigate('coaching')">Go to Coaching →</button>
+        </div>
+        ${ideaRows || '<p style="color:var(--clr-muted);font-size:var(--fs-sm)">No assigned ideas yet.</p>'}
+        <div style="margin-top:var(--sp-md);font-size:var(--fs-xs);color:var(--clr-muted)">
+            ${COACHING_SESSIONS.length} session${COACHING_SESSIONS.length!==1?'s':''} logged across ${assigned.length} idea${assigned.length!==1?'s':''}
+        </div>
+    </div>`;
+}
+
+function dbJudgeWidget() {
+    const me       = currentUser();
+    const finalistIdeas = IDEAS.filter(i => i.status === 'finalist' || i.status === 'winner');
+    const myScored  = SCORES.filter(s => s.judgeId === me.id).map(s => s.ideaId);
+    const myRecused = COI_RECUSALS.filter(r => r.judgeId === me.id).map(r => r.ideaId);
+    const eligible  = finalistIdeas.filter(i => !myRecused.includes(i.refCode));
+    const done      = eligible.filter(i => myScored.includes(i.refCode)).length;
+    const total     = eligible.length;
+    const pct       = total > 0 ? Math.round(done / total * 100) : 0;
+    const next      = eligible.find(i => !myScored.includes(i.refCode));
+    return `<div class="card">
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+            My Scoring Progress
+            <button class="btn btn-primary btn-sm" onclick="navigate('scoring')">Go to Scoring →</button>
+        </div>
+        <div class="score-row"><span>${done} of ${total} ideas scored</span><span style="font-weight:700;color:var(--clr-primary)">${pct}%</span></div>
+        <div class="progress-wrap"><div class="progress-fill" style="width:${pct}%"></div></div>
+        ${myRecused.length ? `<div class="chip chip-ineligible" style="margin-top:var(--sp-sm)">Recused from ${myRecused.length} idea${myRecused.length!==1?'s':''} (CoI)</div>` : ''}
+        ${next ? `<div style="margin-top:var(--sp-md);font-size:var(--fs-xs);color:var(--clr-muted)">Next to score: <strong>${next.refCode}</strong> — ${next.title}</div>` : `<div style="margin-top:var(--sp-md);font-size:var(--fs-xs);color:var(--clr-eligible);font-weight:600">✓ All assigned ideas scored</div>`}
+        ${CYCLE.resultsLocked ? `<div class="chip chip-ineligible" style="margin-top:var(--sp-sm)">Results locked by Panel Chair</div>` : ''}
+    </div>`;
+}
+
+function dbLeaderboardMini() {
+    const rankings = getIdeaRankings().slice(0, 5);
+    const rankIcons = ['🥇','🥈','🥉','4','5'];
+    const rankClasses = ['gold','silver','bronze','',''];
+    const rows = rankings.map((idea, i) => {
+        const pass = (idea.avgScore || 0) >= CYCLE.shortlistThreshold;
+        return `<div class="lb-row">
+            <div class="lb-rank ${rankClasses[i]}">${rankIcons[i]}</div>
+            <div class="lb-title" title="${idea.title}">${idea.title}</div>
+            <div class="lb-score">${idea.avgScore?.toFixed(2) || '—'}</div>
+            <div class="lb-pass ${pass?'pass':'fail'}">${pass?'PASS':'FAIL'}</div>
+        </div>`;
+    }).join('');
+    return `<div class="card">
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+            Finalist Leaderboard
+            <button class="btn btn-ghost btn-sm" onclick="navigate('leaderboard')">Full leaderboard →</button>
+        </div>
+        ${rows || '<p style="color:var(--clr-muted);font-size:var(--fs-sm)">No scores available yet.</p>'}
+        <div style="margin-top:var(--sp-sm);font-size:10px;color:var(--clr-muted)">Threshold: ≥${CYCLE.shortlistThreshold} / 5.00 &nbsp;·&nbsp; ${CYCLE.resultsLocked?'🔒 Locked':'Scoring in progress'}</div>
+    </div>`;
+}
+
+function dbExcomWidget() {
+    const top5 = getIdeaRankings().slice(0, 5);
+    const rows = top5.map((idea, i) => {
+        const rankLabel = ['1st','2nd','3rd','4th','5th'][i];
+        return `<div class="lb-row">
+            <div class="lb-rank" style="color:var(--clr-accent);font-weight:700">${rankLabel}</div>
+            <div class="lb-title" title="${idea.title}">${idea.title}</div>
+            <div class="lb-score">${idea.avgScore?.toFixed(2) || '—'}</div>
+        </div>`;
+    }).join('');
+    return `<div class="card">
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+            Top-5 Finalist Packets
+            <button class="btn btn-primary btn-sm" onclick="navigate('excom')">Cast Your Vote →</button>
+        </div>
+        ${rows || '<p style="color:var(--clr-muted);font-size:var(--fs-sm)">Finalist scores not yet available.</p>'}
+        <div style="margin-top:var(--sp-sm);font-size:var(--fs-xs);color:var(--clr-muted)">Select Top-3 in ExCom Selection</div>
+    </div>`;
+}
+
+function renderDashboard() {
+    const submitted     = IDEAS.filter(i => i.status !== 'draft').length;
+    const eligible      = IDEAS.filter(i => ['eligible','shortlisted','finalist','winner'].includes(i.status)).length;
+    const finalists     = IDEAS.filter(i => ['finalist','winner'].includes(i.status)).length;
+    const pendingScreen = IDEAS.filter(i => i.status === 'submitted').length;
+    const scoredCount   = new Set(SCORES.map(s => s.ideaId)).size;
+    const participants  = USERS.filter(u => ['participant','team_lead'].includes(u.role)).length;
+
+    // Stage pipeline from CYCLE data
+    const stagesHtml = CYCLE.stages.map(s => {
         const dot = s.state === 'done' ? '✓' : s.state === 'active' ? '●' : '';
         return `<div class="stage-item ${s.state}">
             <div class="stage-dot">${dot}</div>
-            <div class="stage-label">${s.label}<br><span style="opacity:.7;font-size:9px">${s.dates}</span></div>
+            <div class="stage-label">${s.label}<br><span style="opacity:.7;font-size:9px">${fmtShortDate(s.start)}–${fmtShortDate(s.end)}</span></div>
         </div>`;
     }).join('');
 
-    // Live stats from seed data
-    const me = currentUser();
-    const myIdeas       = IDEAS.filter(i => i.submittedBy === me.id || (i.teamId && TEAMS.find(t => t.id === i.teamId && t.members.includes(me.id))));
-    const submitted     = IDEAS.filter(i => i.status !== 'draft').length;
-    const eligible      = IDEAS.filter(i => ['eligible','shortlisted','finalist','winner'].includes(i.status)).length;
-    const finalists     = IDEAS.filter(i => i.status === 'finalist' || i.status === 'winner').length;
-    const pendingScreen = IDEAS.filter(i => i.status === 'submitted').length;
-    const scoredCount   = new Set(SCORES.map(s => s.ideaId)).size;
-    const toScore       = finalists - scoredCount;
-    const participants  = USERS.filter(u => ['participant','team_lead'].includes(u.role)).length;
-
-    const roleWidgets = {
-        participant:      `<div class="chip chip-submitted">${myIdeas.length} idea${myIdeas.length!==1?'s':''} submitted</div>`,
-        team_lead:        `<div class="chip chip-submitted">${myIdeas.length} team idea${myIdeas.length!==1?'s':''}</div>`,
-        screener:         `<div class="chip chip-review">${pendingScreen} idea${pendingScreen!==1?'s':''} awaiting screening</div>`,
-        coach:            `<div class="chip chip-shortlisted">${COACHING_SESSIONS.length} coaching sessions logged</div>`,
-        judge:            `<div class="chip chip-finalist">${finalists} finalist${finalists!==1?'s':''} to score</div>`,
-        panel_chair:      `<div class="chip chip-finalist">${finalists} finalist${finalists!==1?'s':''} — scoring active</div>`,
-        excom_member:     `<div class="chip chip-shortlisted">Top-${Math.min(finalists,5)} packets ready</div>`,
-        innovation_admin: `<div class="chip chip-review">Screening stage active — ${pendingScreen} pending</div>`,
-        auditor:          `<div class="chip chip-screened">Read-only view — ${IDEAS.length} total ideas</div>`,
+    // Header status chip per role
+    const headerChips = {
+        participant:      `<span class="chip chip-submitted">${getVisibleIdeas().filter(i=>i.status!=='draft').length} submitted</span>`,
+        team_lead:        `<span class="chip chip-submitted">${getVisibleIdeas().filter(i=>i.status!=='draft').length} team ideas</span>`,
+        screener:         `<span class="chip chip-review">${pendingScreen} awaiting screening</span>`,
+        coach:            `<span class="chip chip-shortlisted">${COACHING_SESSIONS.length} sessions logged</span>`,
+        judge:            `<span class="chip chip-finalist">${finalists} finalists to score</span>`,
+        panel_chair:      `<span class="chip chip-finalist">${finalists} finalists — scoring active</span>`,
+        excom_member:     `<span class="chip chip-shortlisted">Top-${Math.min(finalists,5)} packets ready</span>`,
+        innovation_admin: `<span class="chip chip-review">Screening active — ${pendingScreen} pending</span>`,
+        auditor:          `<span class="chip chip-screened">Read-only — ${IDEAS.length} total ideas</span>`,
     };
 
-    return `
-    <div class="page-header">
-        <div class="page-header-row">
-            <div>
-                <h1>Dashboard</h1>
-                <p>2026 KFH Capital Innovation Competition &nbsp;·&nbsp; Stage: <strong style="color:var(--clr-accent)">Screening &amp; Shortlisting</strong></p>
-            </div>
-            ${roleWidgets[currentRole] || ''}
-        </div>
-    </div>
-
-    <div class="card" style="margin-bottom:var(--sp-lg)">
-        <div class="card-title">Competition Timeline — 2026</div>
-        <div class="stage-bar">${stagesHtml}</div>
-    </div>
-
-    <div class="card-grid grid-4" style="margin-bottom:var(--sp-lg)">
+    // Stat cards (role-tailored subtitles)
+    const statCards = `
         <div class="stat-card">
             <div class="stat-icon">📋</div>
             <div class="stat-label">Total Submissions</div>
@@ -1504,7 +1802,7 @@ function renderDashboard() {
         </div>
         <div class="stat-card">
             <div class="stat-icon">✅</div>
-            <div class="stat-label">Eligible / Screened</div>
+            <div class="stat-label">Eligible</div>
             <div class="stat-value">${eligible}</div>
             <div class="stat-sub">${pendingScreen} pending screening</div>
         </div>
@@ -1512,24 +1810,61 @@ function renderDashboard() {
             <div class="stat-icon">🏆</div>
             <div class="stat-label">Finalists</div>
             <div class="stat-value">${finalists}</div>
-            <div class="stat-sub">${scoredCount} scored so far</div>
+            <div class="stat-sub">${scoredCount} of ${finalists} scored</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon">👥</div>
             <div class="stat-label">Participants</div>
             <div class="stat-value">${participants}</div>
             <div class="stat-sub">Across ${TEAMS.length} teams</div>
+        </div>`;
+
+    // Role-specific main section layout
+    let mainSection = '';
+    const isAdminView = ['innovation_admin','panel_chair','auditor'].includes(currentRole);
+
+    if (isAdminView) {
+        mainSection = `
+        <div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">
+            ${dbFunnel()}
+            ${dbCatChart()}
+        </div>
+        <div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">
+            ${dbCountdown()}
+            ${currentRole === 'panel_chair' ? dbLeaderboardMini() : dbRecentAudit()}
+        </div>`;
+    } else if (currentRole === 'screener') {
+        mainSection = `<div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">${dbCountdown()}${dbScreenerWidget()}</div>`;
+    } else if (currentRole === 'coach') {
+        mainSection = `<div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">${dbCountdown()}${dbCoachWidget()}</div>`;
+    } else if (currentRole === 'judge') {
+        mainSection = `<div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">${dbCountdown()}${dbJudgeWidget()}</div>`;
+    } else if (currentRole === 'excom_member') {
+        mainSection = `<div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">${dbCountdown()}${dbExcomWidget()}</div>`;
+    } else {
+        // participant / team_lead
+        mainSection = `<div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">${dbCountdown()}${dbParticipantWidget()}</div>`;
+    }
+
+    return `
+    <div class="page-header">
+        <div class="page-header-row">
+            <div>
+                <h1>Dashboard</h1>
+                <p>${CYCLE.name} &nbsp;·&nbsp; Stage: <strong style="color:var(--clr-accent)">${CYCLE.stages.find(s=>s.id===CYCLE.currentStage)?.label || '—'}</strong></p>
+            </div>
+            ${headerChips[currentRole] || ''}
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-title">Full Dashboard Widgets</div>
-        <div class="coming-soon" style="min-height:180px">
-            <div class="coming-soon-icon">◈</div>
-            <p>Role-aware funnel chart, category breakdown bar chart, countdown timer, and per-role widgets arriving in Phase 4.</p>
-            <span class="phase-tag">Coming in Phase 4</span>
-        </div>
-    </div>`;
+    <div class="card" style="margin-bottom:var(--sp-lg)">
+        <div class="card-title">Competition Timeline</div>
+        <div class="stage-bar">${stagesHtml}</div>
+    </div>
+
+    <div class="card-grid grid-4" style="margin-bottom:var(--sp-lg)">${statCards}</div>
+
+    ${mainSection}`;
 }
 
 // ── PAGE: placeholder ─────────────────────────────────────────
