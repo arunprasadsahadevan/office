@@ -890,6 +890,92 @@
         .winner-banner { background: linear-gradient(135deg,#fef3c7,#fffbeb); border: 2px solid var(--clr-accent); border-radius: var(--radius); padding: var(--sp-lg); text-align: center; margin-bottom: var(--sp-lg); }
         .winner-banner-title { font-size: 1.2rem; font-weight: 800; color: var(--clr-accent); margin-bottom: var(--sp-sm); }
 
+        /* ── PHASE 9 · ADMIN CONSOLE & AUDIT LOG ── */
+        .admin-tabs { display: flex; gap: 2px; border-bottom: 2px solid var(--clr-border); margin-bottom: var(--sp-lg); }
+        .admin-tab { padding: 8px 20px; font-size: var(--fs-sm); font-weight: 600; color: var(--clr-muted); background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; cursor: pointer; transition: all .15s; }
+        .admin-tab:hover { color: var(--clr-primary); }
+        .admin-tab.active { color: var(--clr-primary); border-bottom-color: var(--clr-primary); }
+        .admin-section { margin-bottom: var(--sp-xl); }
+        .admin-section-hdr { font-size: var(--fs-sm); font-weight: 700; color: var(--clr-primary); text-transform: uppercase; letter-spacing: .06em; margin-bottom: var(--sp-md); padding-bottom: var(--sp-sm); border-bottom: 1px solid var(--clr-border); display: flex; align-items: center; gap: var(--sp-sm); }
+
+        /* Stage management */
+        .stage-mgmt-list { display: flex; flex-direction: column; gap: var(--sp-sm); }
+        .stage-mgmt-row { display: flex; align-items: center; gap: var(--sp-sm); padding: var(--sp-sm) var(--sp-md); border-radius: var(--radius); border: 1px solid var(--clr-border); background: #fff; }
+        .stage-mgmt-row.done { border-color: var(--clr-eligible); background: var(--clr-eligible-bg); }
+        .stage-mgmt-row.active { border-color: var(--clr-accent); background: #fffbeb; }
+        .stage-mgmt-row.upcoming { opacity: .7; }
+        .stage-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .stage-dot.done { background: var(--clr-eligible); }
+        .stage-dot.active { background: var(--clr-accent); }
+        .stage-dot.upcoming { background: var(--clr-border); }
+        .stage-mgmt-label { font-size: var(--fs-sm); font-weight: 600; flex: 1; }
+        .stage-dates { font-size: 11px; color: var(--clr-muted); }
+
+        /* Scoring weights */
+        .weight-row { display: flex; align-items: center; gap: var(--sp-sm); margin-bottom: 6px; font-size: var(--fs-sm); }
+        .weight-label { width: 160px; flex-shrink: 0; color: var(--clr-text); }
+        .weight-bar-bg { flex: 1; height: 8px; background: var(--clr-border); border-radius: 4px; overflow: hidden; }
+        .weight-bar-fill { height: 100%; background: var(--clr-primary); border-radius: 4px; }
+        .weight-pct { width: 36px; text-align: right; font-weight: 700; color: var(--clr-primary); flex-shrink: 0; }
+
+        /* Prize display */
+        .prize-cards { display: flex; gap: var(--sp-md); flex-wrap: wrap; }
+        .prize-card { flex: 1; min-width: 120px; padding: var(--sp-md); border-radius: var(--radius); text-align: center; border: 1px solid var(--clr-border); }
+        .prize-card.first  { border-color: var(--clr-accent); background: #fffbeb; }
+        .prize-card.second { border-color: #94a3b8; background: #f8fafc; }
+        .prize-card.third  { border-color: #92400e; background: #fff7ed; }
+        .prize-medal { font-size: 1.5rem; margin-bottom: 4px; }
+        .prize-amount { font-size: 1.3rem; font-weight: 800; color: var(--clr-primary); }
+        .prize-lbl { font-size: 11px; color: var(--clr-muted); margin-top: 2px; }
+
+        /* Idea management */
+        .ideas-mgmt-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+        .ideas-mgmt-table th { text-align: left; padding: 7px 10px; font-size: 11px; font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--clr-border); white-space: nowrap; }
+        .ideas-mgmt-table td { padding: 8px 10px; border-bottom: 1px solid var(--clr-border); vertical-align: middle; }
+        .ideas-mgmt-table tr:last-child td { border-bottom: none; }
+        .ideas-mgmt-table tr:hover td { background: var(--clr-bg); }
+        .status-select { padding: 4px 8px; border: 1px solid var(--clr-border); border-radius: var(--radius); font-size: 11px; font-family: inherit; outline: none; }
+        .status-select:focus { border-color: var(--clr-primary); }
+
+        /* User roster */
+        .user-roster-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+        .user-roster-table th { text-align: left; padding: 7px 10px; font-size: 11px; font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--clr-border); }
+        .user-roster-table td { padding: 9px 10px; border-bottom: 1px solid var(--clr-border); vertical-align: middle; }
+        .user-roster-table tr:last-child td { border-bottom: none; }
+        .role-select { padding: 4px 8px; border: 1px solid var(--clr-border); border-radius: var(--radius); font-size: 11px; font-family: inherit; outline: none; }
+        .role-select:focus { border-color: var(--clr-primary); }
+
+        /* Danger zone */
+        .danger-zone { border: 1px solid #fecaca; border-radius: var(--radius); padding: var(--sp-lg); background: #fff5f5; margin-top: var(--sp-xl); }
+        .danger-zone-title { font-size: var(--fs-sm); font-weight: 700; color: #dc2626; margin-bottom: var(--sp-sm); }
+        .danger-zone p { font-size: var(--fs-sm); color: var(--clr-muted); margin-bottom: var(--sp-md); }
+
+        /* Audit log */
+        .audit-filter-bar { display: flex; gap: var(--sp-sm); flex-wrap: wrap; margin-bottom: var(--sp-lg); align-items: flex-end; }
+        .audit-filter-group { display: flex; flex-direction: column; gap: 4px; }
+        .audit-filter-label { font-size: 11px; font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .04em; }
+        .audit-search { padding: 7px 12px; border: 1px solid var(--clr-border); border-radius: var(--radius); font-size: var(--fs-sm); font-family: inherit; outline: none; width: 220px; }
+        .audit-search:focus { border-color: var(--clr-primary); box-shadow: 0 0 0 3px rgba(14,92,74,.08); }
+        .audit-select { padding: 7px 10px; border: 1px solid var(--clr-border); border-radius: var(--radius); font-size: var(--fs-sm); font-family: inherit; outline: none; }
+        .audit-select:focus { border-color: var(--clr-primary); }
+        .audit-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+        .audit-table th { text-align: left; padding: 7px 12px; font-size: 11px; font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .05em; border-bottom: 2px solid var(--clr-border); white-space: nowrap; }
+        .audit-table td { padding: 9px 12px; border-bottom: 1px solid var(--clr-border); vertical-align: top; }
+        .audit-table tr:last-child td { border-bottom: none; }
+        .audit-table tr:hover td { background: var(--clr-bg); }
+        .audit-action-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: .03em; white-space: nowrap; }
+        .aat-submit    { background: #dbeafe; color: #1e40af; }
+        .aat-screen    { background: #fef3c7; color: #92400e; }
+        .aat-coach     { background: #ede9fe; color: #5b21b6; }
+        .aat-score     { background: #d1fae5; color: #065f46; }
+        .aat-coi       { background: #ffedd5; color: #c2410c; }
+        .aat-admin     { background: #fee2e2; color: #991b1b; }
+        .aat-excom     { background: #fef3c7; color: #b45309; }
+        .aat-default   { background: var(--clr-bg); color: var(--clr-muted); }
+        .audit-entity { font-size: 11px; color: var(--clr-muted); font-family: monospace; }
+        .audit-detail { color: var(--clr-text); line-height: 1.4; }
+        .audit-count-bar { display: flex; align-items: center; gap: var(--sp-md); margin-bottom: var(--sp-sm); font-size: var(--fs-sm); color: var(--clr-muted); }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -1727,10 +1813,7 @@ function renderPage() {
         return;
     }
 
-    const placeholderPages = {
-        admin:       ['Admin Console',     '⚙', 'Phase 9'],
-        audit_log:   ['Audit Log',         '⌖', 'Phase 9'],
-    };
+    const placeholderPages = {};
 
     if (currentPage === 'dashboard') {
         main.innerHTML = ctx + renderDashboard();
@@ -1750,6 +1833,10 @@ function renderPage() {
         main.innerHTML = ctx + renderLeaderboard();
     } else if (currentPage === 'excom') {
         main.innerHTML = ctx + renderExcom();
+    } else if (currentPage === 'admin') {
+        main.innerHTML = ctx + renderAdmin();
+    } else if (currentPage === 'audit_log') {
+        main.innerHTML = ctx + renderAuditLog();
     } else if (placeholderPages[currentPage]) {
         const [title, icon, phase] = placeholderPages[currentPage];
         main.innerHTML = ctx + renderPlaceholder(title, icon, phase);
@@ -3694,6 +3781,413 @@ function renderExcom() {
         </div>` : ''}
 
     ${packetsHtml}`;
+}
+
+// ── PAGE: Admin Console ────────────────────────────────────────
+let _adminTab = 'cycle';
+
+function switchAdminTab(tab) {
+    _adminTab = tab;
+    renderPage();
+}
+
+function advanceStage() {
+    const activeIdx = CYCLE.stages.findIndex(s => s.state === 'active');
+    if (activeIdx === -1 || activeIdx >= CYCLE.stages.length - 1) return;
+    if (!confirm(`Advance stage from "${CYCLE.stages[activeIdx].label}" to "${CYCLE.stages[activeIdx + 1].label}"?`)) return;
+    CYCLE.stages[activeIdx].state     = 'done';
+    CYCLE.stages[activeIdx + 1].state = 'active';
+    CYCLE.currentStage = CYCLE.stages[activeIdx + 1].id;
+    appendAudit('STAGE_ADVANCED', 'CYCLE-2026',
+        `Stage advanced from ${CYCLE.stages[activeIdx].label} to ${CYCLE.stages[activeIdx + 1].label}.`);
+    showToast(`Stage advanced to <strong>${CYCLE.stages[activeIdx + 1].label}</strong>`, 'success');
+    renderPage();
+}
+
+function overrideIdeaStatus(refCode) {
+    if (!can('manageUsers')) return;
+    const sel = document.getElementById('override-status-' + refCode);
+    if (!sel) return;
+    const newStatus = sel.value;
+    const idea = IDEAS.find(i => i.refCode === refCode);
+    if (!idea || idea.status === newStatus) return;
+    const oldStatus = idea.status;
+    idea.status    = newStatus;
+    idea.updatedAt = new Date(PROTO_NOW).toISOString();
+    appendAudit('IDEA_STATUS_OVERRIDE', refCode,
+        `Admin overrode status from ${statusLabel(oldStatus)} to ${statusLabel(newStatus)}.`);
+    showToast(`${refCode} → <strong>${statusLabel(newStatus)}</strong>`, 'success');
+    renderPage();
+}
+
+function changeUserRole(userId) {
+    if (!can('manageUsers')) return;
+    const sel = document.getElementById('role-sel-' + userId);
+    if (!sel) return;
+    const newRole = sel.value;
+    const user    = USERS.find(u => u.id === userId);
+    if (!user || user.role === newRole) return;
+    const oldRole = user.role;
+    user.role     = newRole;
+    appendAudit('USER_ROLE_CHANGED', userId,
+        `${user.name}: role changed from ${ROLES[oldRole]?.label || oldRole} to ${ROLES[newRole]?.label || newRole}.`);
+    showToast(`${user.name} → <strong>${ROLES[newRole]?.label || newRole}</strong>`, 'success');
+    renderPage();
+}
+
+function renderAdminCycleTab() {
+    const activeIdx = CYCLE.stages.findIndex(s => s.state === 'active');
+    const nextStage = activeIdx >= 0 && activeIdx < CYCLE.stages.length - 1
+        ? CYCLE.stages[activeIdx + 1] : null;
+
+    const stagesHtml = CYCLE.stages.map(s => `
+        <div class="stage-mgmt-row ${s.state}">
+            <div class="stage-dot ${s.state}"></div>
+            <div class="stage-mgmt-label">${s.label}</div>
+            <div class="stage-dates">${s.start} → ${s.end}</div>
+            <span class="chip ${s.state === 'done' ? 'chip-eligible' : s.state === 'active' ? 'chip-review' : 'chip-muted'}">${s.state === 'done' ? 'Done' : s.state === 'active' ? 'Active' : 'Upcoming'}</span>
+        </div>`).join('');
+
+    const weightsHtml = CRITERIA.map(c => {
+        const w = CYCLE.scoringWeights[c.key];
+        return `<div class="weight-row">
+            <div class="weight-label">${c.label}</div>
+            <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:${w * 100}%"></div></div>
+            <div class="weight-pct">${(w * 100).toFixed(0)}%</div>
+        </div>`;
+    }).join('');
+
+    const prizes = CYCLE.prizes;
+    const prizeHtml = `
+        <div class="prize-cards">
+            <div class="prize-card first"><div class="prize-medal">🥇</div><div class="prize-amount">${prizes.first.amount.toLocaleString()} ${prizes.first.currency}</div><div class="prize-lbl">${prizes.first.label}</div></div>
+            <div class="prize-card second"><div class="prize-medal">🥈</div><div class="prize-amount">${prizes.second.amount.toLocaleString()} ${prizes.second.currency}</div><div class="prize-lbl">${prizes.second.label}</div></div>
+            <div class="prize-card third"><div class="prize-medal">🥉</div><div class="prize-amount">${prizes.third.amount.toLocaleString()} ${prizes.third.currency}</div><div class="prize-lbl">${prizes.third.label}</div></div>
+        </div>`;
+
+    return `
+    <div class="admin-section">
+        <div class="admin-section-hdr">Stage Management</div>
+        <div class="stage-mgmt-list">${stagesHtml}</div>
+        <div style="display:flex;gap:var(--sp-sm);margin-top:var(--sp-md);align-items:center;flex-wrap:wrap">
+            ${nextStage
+                ? `<button class="btn btn-primary" onclick="advanceStage()">Advance to ${nextStage.label} →</button>`
+                : `<span style="color:var(--clr-muted);font-size:var(--fs-sm)">All stages complete.</span>`}
+            <span style="font-size:11px;color:var(--clr-muted)">Current: <strong>${CYCLE.currentStage}</strong></span>
+        </div>
+    </div>
+
+    <div class="admin-section">
+        <div class="admin-section-hdr">Scoring Weights (read-only)</div>
+        <div style="margin-bottom:var(--sp-sm);font-size:11px;color:var(--clr-muted)">Shortlist threshold: <strong>${CYCLE.shortlistThreshold} / 5.00</strong></div>
+        ${weightsHtml}
+    </div>
+
+    <div class="admin-section">
+        <div class="admin-section-hdr">Prize Structure</div>
+        ${prizeHtml}
+    </div>
+
+    <div class="admin-section">
+        <div class="admin-section-hdr">Scoring Lock</div>
+        <div style="display:flex;align-items:center;gap:var(--sp-md)">
+            <span style="font-size:var(--fs-sm)">Results: <strong>${CYCLE.resultsLocked ? '🔒 Locked' : '🔓 Unlocked'}</strong></span>
+            <button class="btn ${CYCLE.resultsLocked ? 'btn-outline' : 'btn-primary'}" onclick="toggleResultsLock()">
+                ${CYCLE.resultsLocked ? 'Unlock Results' : 'Lock Results'}
+            </button>
+        </div>
+    </div>`;
+}
+
+function renderAdminIdeasTab() {
+    const STATUSES = ['draft','submitted','eligible','ineligible','needs_review','shortlisted','finalist','winner'];
+    const rows = IDEAS.map(i => {
+        const statusCls = i.status.replace('_','-');
+        const teamObj   = i.teamId ? TEAMS.find(t => t.id === i.teamId) : null;
+        const options   = STATUSES.map(s =>
+            `<option value="${s}"${i.status === s ? ' selected' : ''}>${statusLabel(s)}</option>`
+        ).join('');
+        return `<tr>
+            <td class="audit-entity">${i.refCode}</td>
+            <td>
+                <div style="font-weight:600;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${i.title}</div>
+                <div style="font-size:11px;color:var(--clr-muted)">${userName(i.submittedBy)}${teamObj ? ' · ' + teamObj.name : ''}</div>
+            </td>
+            <td><span class="status-badge status-${statusCls}">${statusLabel(i.status)}</span></td>
+            <td>
+                <div style="display:flex;gap:6px;align-items:center">
+                    <select id="override-status-${i.refCode}" class="status-select">${options}</select>
+                    <button class="btn btn-outline btn-sm" onclick="overrideIdeaStatus('${i.refCode}')">Apply</button>
+                </div>
+            </td>
+        </tr>`;
+    }).join('');
+
+    return `
+    <div class="admin-section">
+        <div class="admin-section-hdr">Idea Status Management</div>
+        <div style="overflow-x:auto">
+            <table class="ideas-mgmt-table">
+                <thead><tr><th>Ref</th><th>Idea</th><th>Status</th><th>Override</th></tr></thead>
+                <tbody>${rows}</tbody>
+            </table>
+        </div>
+    </div>`;
+}
+
+function renderAdminUsersTab() {
+    const roleOptions = Object.keys(ROLES).map(r =>
+        `<option value="${r}">${ROLES[r].label}</option>`
+    ).join('');
+
+    const rows = USERS.map(u => {
+        const roleDot = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${ROLES[u.role]?.color||'#ccc'};margin-right:4px"></span>`;
+        const options = Object.keys(ROLES).map(r =>
+            `<option value="${r}"${u.role === r ? ' selected' : ''}>${ROLES[r].label}</option>`
+        ).join('');
+        return `<tr>
+            <td>
+                <div style="display:flex;align-items:center;gap:var(--sp-sm)">
+                    <div class="member-avatar-sm">${u.avatar}</div>
+                    <div>
+                        <div style="font-weight:600">${u.name}</div>
+                        <div style="font-size:11px;color:var(--clr-muted)">${u.email}</div>
+                    </div>
+                </div>
+            </td>
+            <td style="font-size:11px;color:var(--clr-muted)">${u.dept}</td>
+            <td>${roleDot}<span style="font-size:var(--fs-sm)">${ROLES[u.role]?.label || u.role}</span></td>
+            <td>
+                <div style="display:flex;gap:6px;align-items:center">
+                    <select id="role-sel-${u.id}" class="role-select">${options}</select>
+                    <button class="btn btn-outline btn-sm" onclick="changeUserRole('${u.id}')">Save</button>
+                </div>
+            </td>
+        </tr>`;
+    }).join('');
+
+    return `
+    <div class="admin-section">
+        <div class="admin-section-hdr">User Roster (${USERS.length} users)</div>
+        <div style="overflow-x:auto">
+            <table class="user-roster-table">
+                <thead><tr><th>User</th><th>Department</th><th>Current Role</th><th>Change Role</th></tr></thead>
+                <tbody>${rows}</tbody>
+            </table>
+        </div>
+    </div>`;
+}
+
+function renderAdmin() {
+    const tabs = [
+        { key: 'cycle', label: '⚙ Cycle & Stages' },
+        { key: 'ideas', label: '✦ Ideas' },
+        { key: 'users', label: '⬡ Users' },
+    ];
+
+    const tabsHtml = tabs.map(t =>
+        `<button class="admin-tab${_adminTab === t.key ? ' active' : ''}" onclick="switchAdminTab('${t.key}')">${t.label}</button>`
+    ).join('');
+
+    const totalIdeas   = IDEAS.length;
+    const totalUsers   = USERS.length;
+    const auditEntries = AUDIT_LOG.length;
+
+    const content = _adminTab === 'cycle' ? renderAdminCycleTab()
+                  : _adminTab === 'ideas' ? renderAdminIdeasTab()
+                  : renderAdminUsersTab();
+
+    return `
+    <div class="page-header">
+        <div>
+            <h1>Admin Console</h1>
+            <p class="page-sub">KFH Capital InnovationHub · Cycle 2026</p>
+        </div>
+    </div>
+
+    <div class="card-grid grid-4" style="margin-bottom:var(--sp-lg)">
+        ${statCard('Total Ideas',   '✦', totalIdeas,   '', 'var(--clr-primary)')}
+        ${statCard('Total Users',   '⬡', totalUsers,   '', 'var(--clr-accent)')}
+        ${statCard('Audit Entries', '⌖', auditEntries, '', '#7c3aed')}
+        ${statCard('Stage',         '◈', CYCLE.currentStage, '', 'var(--clr-eligible)')}
+    </div>
+
+    <div class="card">
+        <div class="admin-tabs">${tabsHtml}</div>
+        ${content}
+
+        <div class="danger-zone">
+            <div class="danger-zone-title">⚠ Danger Zone</div>
+            <p>Resets all in-memory data to the prototype seed state. All scores, votes, sessions, and audit entries added during this session will be lost. This cannot be undone.</p>
+            <button class="btn btn-outline" style="border-color:#dc2626;color:#dc2626" onclick="if(confirm('Reset all data to seed state? This cannot be undone.')) resetToSeed()">Reset to Seed Data</button>
+        </div>
+    </div>`;
+}
+
+// ── PAGE: Audit Log ────────────────────────────────────────────
+let _auditSearch      = '';
+let _auditActorFilter = '';
+let _auditActionFilter = '';
+
+function auditActionClass(action) {
+    const a = (action || '').toUpperCase();
+    if (a.includes('SUBMIT') || a.includes('IDEA_UPDATED')) return 'aat-submit';
+    if (a.includes('SCREEN') || a.includes('SHORTLIST') || a.includes('ELIGIBLE') || a.includes('FINALIST') || a.includes('WINNER')) return 'aat-screen';
+    if (a.includes('COACH')) return 'aat-coach';
+    if (a.includes('SCOR') || a.includes('LOCK')) return 'aat-score';
+    if (a.includes('COI')) return 'aat-coi';
+    if (a.includes('STAGE') || a.includes('USER_ROLE') || a.includes('PRIZE') || a.includes('OVERRIDE') || a.includes('RESET')) return 'aat-admin';
+    if (a.includes('EXCOM') || a.includes('VOTE')) return 'aat-excom';
+    return 'aat-default';
+}
+
+function applyAuditFilters() {
+    _auditSearch       = (document.getElementById('audit-search')?.value || '').toLowerCase();
+    _auditActorFilter  = document.getElementById('audit-actor-filter')?.value || '';
+    _auditActionFilter = document.getElementById('audit-action-filter')?.value || '';
+    const tbody = document.getElementById('audit-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = buildAuditRows();
+    document.getElementById('audit-count')?.textContent && updateAuditCount();
+}
+
+function updateAuditCount() {
+    const count = document.getElementById('audit-tbody')?.querySelectorAll('tr').length || 0;
+    const el    = document.getElementById('audit-count');
+    if (el) el.textContent = count + ' entries shown';
+}
+
+function buildAuditRows() {
+    const log = [...AUDIT_LOG].reverse();
+    const filtered = log.filter(e => {
+        const actorName = userName(e.actor).toLowerCase();
+        const matchSearch = !_auditSearch
+            || actorName.includes(_auditSearch)
+            || (e.action || '').toLowerCase().includes(_auditSearch)
+            || (e.entity || '').toLowerCase().includes(_auditSearch)
+            || (e.detail || '').toLowerCase().includes(_auditSearch);
+        const matchActor  = !_auditActorFilter || e.actor === _auditActorFilter;
+        const matchAction = !_auditActionFilter || auditActionClass(e.action) === _auditActionFilter;
+        return matchSearch && matchActor && matchAction;
+    });
+
+    if (!filtered.length) {
+        return `<tr><td colspan="5" style="text-align:center;color:var(--clr-muted);padding:var(--sp-xl)">No entries match the current filters.</td></tr>`;
+    }
+
+    return filtered.map(e => {
+        const cls = auditActionClass(e.action);
+        return `<tr>
+            <td style="font-size:11px;white-space:nowrap;color:var(--clr-muted)">${fmtTs(e.ts)}</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:6px">
+                    <div class="member-avatar-sm" style="width:24px;height:24px;font-size:9px">${USERS.find(u=>u.id===e.actor)?.avatar||'?'}</div>
+                    <span style="font-size:var(--fs-sm);font-weight:600">${userName(e.actor)}</span>
+                </div>
+                <div style="font-size:10px;color:var(--clr-muted)">${USERS.find(u=>u.id===e.actor)?.dept||''}</div>
+            </td>
+            <td><span class="audit-action-tag ${cls}">${e.action}</span></td>
+            <td class="audit-entity">${e.entity || ''}</td>
+            <td class="audit-detail">${e.detail || ''}</td>
+        </tr>`;
+    }).join('');
+}
+
+function exportAuditLog() {
+    const log = [...AUDIT_LOG].reverse();
+    const header = ['Timestamp','Actor','Department','Action','Entity','Detail'];
+    const rows = log.map(e => [
+        e.ts,
+        userName(e.actor),
+        USERS.find(u => u.id === e.actor)?.dept || '',
+        e.action,
+        e.entity || '',
+        (e.detail || '').replace(/,/g, ';'),
+    ].map(v => `"${v}"`).join(','));
+    const csv  = [header.join(','), ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `KFHInnovationHub_AuditLog_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Audit log exported as CSV', 'success');
+}
+
+function renderAuditLog() {
+    const uniqueActors  = [...new Set(AUDIT_LOG.map(e => e.actor))];
+    const actionCategories = [
+        { value: 'aat-submit',  label: 'Submissions'      },
+        { value: 'aat-screen',  label: 'Screening & Status'},
+        { value: 'aat-coach',   label: 'Coaching'         },
+        { value: 'aat-score',   label: 'Scoring & Lock'   },
+        { value: 'aat-coi',     label: 'CoI Declarations' },
+        { value: 'aat-admin',   label: 'Admin Actions'    },
+        { value: 'aat-excom',   label: 'ExCom Votes'      },
+    ];
+
+    const actorOptions = uniqueActors.map(id =>
+        `<option value="${id}"${_auditActorFilter === id ? ' selected' : ''}>${userName(id)}</option>`
+    ).join('');
+
+    const actionOptions = actionCategories.map(c =>
+        `<option value="${c.value}"${_auditActionFilter === c.value ? ' selected' : ''}>${c.label}</option>`
+    ).join('');
+
+    const initialRows = buildAuditRows();
+    const shownCount  = (initialRows.match(/<tr>/g) || []).length;
+
+    return `
+    <div class="page-header">
+        <div>
+            <h1>Audit Log</h1>
+            <p class="page-sub">${AUDIT_LOG.length} total entries · immutable record</p>
+        </div>
+        <button class="btn btn-outline" onclick="exportAuditLog()">Export CSV</button>
+    </div>
+
+    <div class="card">
+        <div class="audit-filter-bar">
+            <div class="audit-filter-group">
+                <div class="audit-filter-label">Search</div>
+                <input id="audit-search" class="audit-search" placeholder="Actor, action, entity, detail…"
+                    value="${_auditSearch}" oninput="applyAuditFilters()">
+            </div>
+            <div class="audit-filter-group">
+                <div class="audit-filter-label">Actor</div>
+                <select id="audit-actor-filter" class="audit-select" onchange="applyAuditFilters()">
+                    <option value="">All actors</option>
+                    ${actorOptions}
+                </select>
+            </div>
+            <div class="audit-filter-group">
+                <div class="audit-filter-label">Category</div>
+                <select id="audit-action-filter" class="audit-select" onchange="applyAuditFilters()">
+                    <option value="">All categories</option>
+                    ${actionOptions}
+                </select>
+            </div>
+            <div style="align-self:flex-end">
+                <button class="btn btn-ghost btn-sm" onclick="_auditSearch='';_auditActorFilter='';_auditActionFilter='';renderPage()">Clear</button>
+            </div>
+        </div>
+
+        <div class="audit-count-bar">
+            <span id="audit-count">${shownCount} entries shown</span>
+            <span>·</span>
+            <span>${AUDIT_LOG.length} total</span>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="audit-table">
+                <thead><tr>
+                    <th>Timestamp</th><th>Actor</th><th>Action</th><th>Entity</th><th>Detail</th>
+                </tr></thead>
+                <tbody id="audit-tbody">${initialRows}</tbody>
+            </table>
+        </div>
+    </div>`;
 }
 
 // ── PAGE: placeholder ─────────────────────────────────────────
