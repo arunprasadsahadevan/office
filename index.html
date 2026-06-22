@@ -638,6 +638,61 @@
         /* ── 2-COL RESPONSIVE ── */
         @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
 
+        /* ── PHASE 5 · SUBMIT IDEA & MY IDEAS ── */
+        .form-section { margin-bottom: var(--sp-xl); }
+        .form-section-header { display: flex; align-items: center; gap: var(--sp-sm); margin-bottom: var(--sp-lg); padding-bottom: var(--sp-sm); border-bottom: 2px solid var(--clr-primary); }
+        .form-section-num { width: 28px; height: 28px; border-radius: 50%; background: var(--clr-primary); color: #fff; font-size: var(--fs-sm); font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .form-section-title { font-size: var(--fs-base); font-weight: 700; color: var(--clr-primary); }
+        .form-group { margin-bottom: var(--sp-md); }
+        .form-group label { display: block; font-size: var(--fs-sm); font-weight: 600; color: var(--clr-text); margin-bottom: 4px; }
+        .req { color: #dc2626; margin-left: 2px; }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--clr-border); border-radius: var(--radius); font-size: var(--fs-sm); font-family: inherit; color: var(--clr-text); background: #fff; box-sizing: border-box; transition: border-color .15s; outline: none; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--clr-primary); box-shadow: 0 0 0 3px rgba(14,92,74,.08); }
+        .form-input.error, .form-select.error, .form-textarea.error { border-color: #dc2626; }
+        .form-textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md); }
+        @media (max-width: 680px) { .form-row { grid-template-columns: 1fr; } }
+        .form-error-msg { color: #dc2626; font-size: 11px; margin-top: 3px; display: none; }
+        .form-error-msg.visible { display: block; }
+        .form-help { color: var(--clr-muted); font-size: 11px; margin-top: 3px; }
+        .ev-helper { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius); padding: var(--sp-sm) var(--sp-md); margin-top: var(--sp-sm); font-size: var(--fs-sm); color: #166534; }
+        .ev-helper strong { display: block; margin-bottom: 4px; }
+        .ip-ack-box { background: #fffbeb; border: 1px solid #fcd34d; border-radius: var(--radius); padding: var(--sp-md); margin-top: var(--sp-md); }
+        .ip-ack-box label { display: flex; gap: var(--sp-sm); align-items: flex-start; font-size: var(--fs-sm); color: var(--clr-text); cursor: pointer; font-weight: 400; }
+        .ip-ack-box input[type=checkbox] { margin-top: 2px; flex-shrink: 0; accent-color: var(--clr-primary); }
+        .form-action-bar { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--clr-border); padding: var(--sp-md) var(--sp-lg); display: flex; gap: var(--sp-sm); justify-content: flex-end; margin: var(--sp-xl) calc(-1*var(--sp-lg)) calc(-1*var(--sp-lg)); border-radius: 0 0 var(--radius) var(--radius); z-index: 10; }
+        .ineligible-banner { background: var(--clr-ineligible-bg); border: 1px solid var(--clr-ineligible); border-radius: var(--radius); padding: var(--sp-md) var(--sp-lg); color: var(--clr-ineligible); font-size: var(--fs-sm); margin-bottom: var(--sp-lg); }
+        .ineligible-banner strong { display: block; margin-bottom: 4px; font-size: var(--fs-base); }
+
+        /* Filter tabs */
+        .filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--sp-lg); }
+        .filter-tab { padding: 5px 14px; border-radius: 999px; border: 1px solid var(--clr-border); background: #fff; color: var(--clr-muted); font-size: var(--fs-sm); cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all .15s; }
+        .filter-tab:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
+        .filter-tab.active { background: var(--clr-primary); border-color: var(--clr-primary); color: #fff; }
+        .filter-count { font-size: 11px; font-weight: 700; background: rgba(255,255,255,.25); border-radius: 999px; padding: 1px 6px; }
+        .filter-tab:not(.active) .filter-count { background: var(--clr-bg); color: var(--clr-muted); }
+
+        /* My Ideas list */
+        .ideas-list { display: flex; flex-direction: column; gap: var(--sp-sm); }
+        .idea-card { border: 1px solid var(--clr-border); border-radius: var(--radius); background: #fff; overflow: hidden; }
+        .idea-card-header { display: flex; align-items: center; gap: var(--sp-sm); padding: var(--sp-md) var(--sp-lg); cursor: pointer; user-select: none; }
+        .idea-card-header:hover { background: var(--clr-bg); }
+        .idea-card-ref { font-size: 11px; color: var(--clr-muted); font-weight: 600; flex-shrink: 0; }
+        .idea-card-title { font-size: var(--fs-sm); font-weight: 600; color: var(--clr-text); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .idea-card-chevron { color: var(--clr-muted); font-size: 12px; flex-shrink: 0; transition: transform .2s; }
+        .idea-card.open .idea-card-chevron { transform: rotate(90deg); }
+        .idea-card-body { display: none; padding: 0 var(--sp-lg) var(--sp-lg); border-top: 1px solid var(--clr-border); }
+        .idea-card.open .idea-card-body { display: block; }
+        .idea-fields { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-sm); margin-top: var(--sp-md); }
+        @media (max-width: 700px) { .idea-fields { grid-template-columns: 1fr; } }
+        .idea-field { font-size: var(--fs-sm); }
+        .idea-field.full { grid-column: 1 / -1; }
+        .idea-field-label { font-weight: 600; color: var(--clr-muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 2px; }
+        .idea-field-value { color: var(--clr-text); line-height: 1.5; }
+        .screening-feedback { background: #fffbeb; border: 1px solid #fcd34d; border-radius: var(--radius); padding: var(--sp-sm) var(--sp-md); margin-top: var(--sp-md); font-size: var(--fs-sm); }
+        .screening-feedback strong { color: #92400e; }
+        .idea-card-actions { display: flex; gap: var(--sp-sm); margin-top: var(--sp-md); }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -1472,8 +1527,6 @@ function renderPage() {
     }
 
     const placeholderPages = {
-        submit:      ['Submit Idea',       '✦', 'Phase 5'],
-        my_ideas:    ['My Ideas',          '◉', 'Phase 5'],
         manage_team: ['Manage Team',       '⬡', 'Phase 6'],
         screening:   ['Screening Queue',   '◫', 'Phase 6'],
         coaching:    ['Coaching',          '❋', 'Phase 6'],
@@ -1486,6 +1539,10 @@ function renderPage() {
 
     if (currentPage === 'dashboard') {
         main.innerHTML = ctx + renderDashboard();
+    } else if (currentPage === 'submit') {
+        main.innerHTML = ctx + renderSubmitIdea();
+    } else if (currentPage === 'my_ideas') {
+        main.innerHTML = ctx + renderMyIdeas();
     } else if (placeholderPages[currentPage]) {
         const [title, icon, phase] = placeholderPages[currentPage];
         main.innerHTML = ctx + renderPlaceholder(title, icon, phase);
@@ -1865,6 +1922,459 @@ function renderDashboard() {
     <div class="card-grid grid-4" style="margin-bottom:var(--sp-lg)">${statCards}</div>
 
     ${mainSection}`;
+}
+
+// ── PAGE: Submit Idea ─────────────────────────────────────────
+let _myIdeasFilter  = 'all';
+let _editingDraftRef = null;
+
+function nextRefCode() {
+    const nums = IDEAS.map(i => parseInt(i.refCode.split('-')[2], 10));
+    const next  = (Math.max(0, ...nums) + 1).toString().padStart(4, '0');
+    return `KFHC-2026-${next}`;
+}
+
+function validateIdeaField(id, errId, minLen) {
+    const el  = document.getElementById(id);
+    const err = document.getElementById(errId);
+    if (!el || !err) return true;
+    const val = el.value.trim();
+    const ok  = val.length >= minLen;
+    el.classList.toggle('error', !ok);
+    err.classList.toggle('visible', !ok);
+    return ok;
+}
+
+function handleIdeaSave(asDraft) {
+    if (!can('submitIdea')) return;
+    const me = currentUser();
+
+    const fields = [
+        ['si-title',     'si-title-err',     5],
+        ['si-category',  'si-cat-err',        1],
+        ['si-problem',   'si-problem-err',   30],
+        ['si-solution',  'si-solution-err',  30],
+        ['si-benefits',  'si-benefits-err',  20],
+    ];
+    if (!asDraft) {
+        fields.push(
+            ['si-baseline',  'si-baseline-err',  10],
+            ['si-target',    'si-target-err',     5],
+            ['si-approach',  'si-approach-err',  20],
+            ['si-resources', 'si-resources-err',  5],
+            ['si-risk',      'si-risk-err',       5],
+            ['si-success',   'si-success-err',    5],
+        );
+    }
+    const allOk = fields.map(([id, errId, min]) => validateIdeaField(id, errId, min)).every(Boolean);
+    if (!allOk && !asDraft) {
+        document.getElementById('si-form-error')?.classList.add('visible');
+        return;
+    }
+    document.getElementById('si-form-error')?.classList.remove('visible');
+
+    const ipEl = document.getElementById('si-ip-ack');
+    if (!asDraft && ipEl && !ipEl.checked) {
+        alert('Please acknowledge the IP declaration before submitting.');
+        return;
+    }
+
+    const g = id => (document.getElementById(id)?.value || '').trim();
+
+    const refCode = _editingDraftRef || nextRefCode();
+    const existing = IDEAS.find(i => i.refCode === refCode);
+    const now = new Date(PROTO_NOW).toISOString();
+
+    const ideaData = {
+        refCode,
+        title:                g('si-title'),
+        category:             g('si-category'),
+        submittedBy:          me.id,
+        teamId:               TEAMS.find(t => t.members.includes(me.id))?.id || null,
+        status:               asDraft ? 'draft' : 'submitted',
+        submittedAt:          asDraft ? (existing?.submittedAt || null) : now,
+        updatedAt:            now,
+        problemStatement:     g('si-problem'),
+        proposedSolution:     g('si-solution'),
+        expectedBenefits:     g('si-benefits'),
+        baselineMetric:       g('si-baseline'),
+        improvementTarget:    g('si-target'),
+        implementationApproach: g('si-approach'),
+        resourcesRequired:    g('si-resources'),
+        riskAndMitigation:    g('si-risk'),
+        successMetrics:       g('si-success'),
+        supportingEvidence:   g('si-evidence'),
+        ipAcknowledged:       !!(ipEl?.checked),
+    };
+
+    if (existing) {
+        Object.assign(existing, ideaData);
+        appendAudit('idea_updated', refCode, asDraft ? 'Saved as draft' : 'Resubmitted');
+    } else {
+        IDEAS.push(ideaData);
+        appendAudit('idea_submitted', refCode, asDraft ? 'Saved as draft' : 'Submitted');
+    }
+
+    _editingDraftRef = null;
+    navigate(asDraft ? 'my_ideas' : 'my_ideas');
+}
+
+function fillDemoIdea() {
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+    set('si-title',     'AI-Powered Invoice Reconciliation Engine');
+    set('si-category',  'Operational Efficiency');
+    set('si-problem',   'Manual invoice reconciliation across 14 vendor systems takes Operations staff ~1,800 hours/month and produces a 3–4% error rate, causing late-payment penalties and audit findings.');
+    set('si-solution',  'Deploy an ML-based reconciliation engine that ingests vendor invoices via API, matches line-items against PO records in the core system, and flags exceptions for human review only. Integration uses existing middleware stack (MuleSoft).');
+    set('si-benefits',  'Estimated KWD 280K annual saving in staff hours and late-payment penalties. Error rate expected to drop from 4% to <0.5%. Frees team capacity for higher-value controls work.');
+    set('si-baseline',  '1,800 staff-hours/month; 3.8% error rate on 12,000 invoices/month; KWD 95K late-payment penalties in FY2025');
+    set('si-target',    'Reduce to 200 staff-hours/month (-89%); error rate <0.5%; zero late-payment penalties within 6 months post-launch');
+    set('si-approach',  'Phase 1 (M1–M2): vendor API onboarding + MuleSoft config. Phase 2 (M3–M4): ML model training on 24-month historical data. Phase 3 (M5–M6): parallel run + UAT. Phase 4 (M7): full cutover.');
+    set('si-resources', 'IT & Digital: 2 FTEs × 6 months. External ML vendor (budgeted KWD 45K). Operations SME: 0.5 FTE for UAT. No new hardware — leverages existing cloud subscription.');
+    set('si-risk',      'Data quality risk: mitigated by pre-processing pipeline and SME validation gates. Vendor API availability: fallback to SFTP ingestion. Change management: phased rollout with parallel processing safety net.');
+    set('si-success',   'Staff hours ≤200/month; error rate ≤0.5%; penalty claims = 0; system uptime ≥99.5%; user satisfaction score ≥4/5 at 90-day post-launch survey.');
+    set('si-evidence',  'FY2025 Operations Audit Report (Ref: OPS-AUD-2025-14); vendor API documentation; MuleSoft capacity assessment memo dated Jan 2026.');
+    document.getElementById('si-ip-ack').checked = true;
+}
+
+function prefillSubmitForm(refCode) {
+    const idea = IDEAS.find(i => i.refCode === refCode);
+    if (!idea) return;
+    _editingDraftRef = refCode;
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+    set('si-title',    idea.title);
+    set('si-category', idea.category);
+    set('si-problem',  idea.problemStatement);
+    set('si-solution', idea.proposedSolution);
+    set('si-benefits', idea.expectedBenefits);
+    set('si-baseline', idea.baselineMetric);
+    set('si-target',   idea.improvementTarget);
+    set('si-approach', idea.implementationApproach);
+    set('si-resources',idea.resourcesRequired);
+    set('si-risk',     idea.riskAndMitigation);
+    set('si-success',  idea.successMetrics);
+    set('si-evidence', idea.supportingEvidence);
+    if (idea.ipAcknowledged) {
+        const el = document.getElementById('si-ip-ack');
+        if (el) el.checked = true;
+    }
+    document.getElementById('si-edit-banner')?.classList.remove('hidden');
+    document.getElementById('si-edit-ref')?.textContent && (document.getElementById('si-edit-ref').textContent = refCode);
+}
+
+function editDraftIdea(refCode) {
+    _editingDraftRef = refCode;
+    navigate('submit');
+    setTimeout(() => prefillSubmitForm(refCode), 50);
+}
+
+function submitDraftIdea(refCode) {
+    const idea = IDEAS.find(i => i.refCode === refCode);
+    if (!idea || idea.status !== 'draft') return;
+    idea.status = 'submitted';
+    idea.submittedAt = new Date(PROTO_NOW).toISOString();
+    idea.updatedAt   = new Date(PROTO_NOW).toISOString();
+    appendAudit('idea_submitted', refCode, 'Promoted from draft');
+    renderPage();
+}
+
+function renderSubmitIdea() {
+    if (!can('submitIdea')) {
+        return `<div class="page-header"><h1>Submit Idea</h1></div>
+        <div class="card"><p class="text-muted">You do not have permission to submit ideas.</p></div>`;
+    }
+    const me = currentUser();
+    const myTeam = TEAMS.find(t => t.members.includes(me.id));
+    const editingIdea = _editingDraftRef ? IDEAS.find(i => i.refCode === _editingDraftRef) : null;
+    const isEdit = !!editingIdea;
+
+    return `
+    <div class="page-header">
+        <div>
+            <h1>${isEdit ? 'Edit Draft Idea' : 'Submit New Idea'}</h1>
+            <p class="page-sub">${isEdit ? `Editing ${_editingDraftRef}` : 'KFH Capital InnovationHub · Cycle 2026'}</p>
+        </div>
+        <button class="btn btn-outline" onclick="fillDemoIdea()">Fill Demo</button>
+    </div>
+
+    <div id="si-edit-banner" class="${isEdit ? '' : 'hidden'}" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:var(--radius);padding:var(--sp-sm) var(--sp-md);margin-bottom:var(--sp-lg);font-size:var(--fs-sm);color:#1e40af;">
+        Editing draft <strong id="si-edit-ref">${_editingDraftRef || ''}</strong> — changes will update the existing draft.
+    </div>
+
+    <div id="si-form-error" class="form-error-msg" style="font-size:var(--fs-sm);margin-bottom:var(--sp-md);">
+        Please fix the highlighted fields before submitting.
+    </div>
+
+    <div class="card" style="padding:var(--sp-xl)">
+
+        <!-- Section 1: Basics -->
+        <div class="form-section">
+            <div class="form-section-header">
+                <div class="form-section-num">1</div>
+                <div class="form-section-title">Idea Basics</div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="si-title">Idea Title <span class="req">*</span></label>
+                    <input id="si-title" class="form-input" placeholder="Clear, specific title (max 120 chars)" maxlength="120">
+                    <div id="si-title-err" class="form-error-msg">Title must be at least 5 characters.</div>
+                </div>
+                <div class="form-group">
+                    <label for="si-category">Category <span class="req">*</span></label>
+                    <select id="si-category" class="form-select">
+                        <option value="">— Select category —</option>
+                        ${CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('')}
+                    </select>
+                    <div id="si-cat-err" class="form-error-msg">Please select a category.</div>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:var(--sp-sm)">
+                <span style="font-size:var(--fs-sm);color:var(--clr-muted)">Submitting as: <strong>${me.name}</strong>${myTeam ? ` · Team: <strong>${myTeam.name}</strong>` : ' · Individual submission'}</span>
+            </div>
+        </div>
+
+        <!-- Section 2: Problem & Solution -->
+        <div class="form-section">
+            <div class="form-section-header">
+                <div class="form-section-num">2</div>
+                <div class="form-section-title">Problem & Solution</div>
+            </div>
+            <div class="form-group">
+                <label for="si-problem">Problem Statement <span class="req">*</span></label>
+                <textarea id="si-problem" class="form-textarea" rows="4" placeholder="Describe the specific pain point, inefficiency, or opportunity. Include scope, affected teams, and current impact."></textarea>
+                <div id="si-problem-err" class="form-error-msg">Minimum 30 characters required.</div>
+            </div>
+            <div class="form-group">
+                <label for="si-solution">Proposed Solution <span class="req">*</span></label>
+                <textarea id="si-solution" class="form-textarea" rows="4" placeholder="Describe your solution concept. How does it address the problem? What is the mechanism of change?"></textarea>
+                <div id="si-solution-err" class="form-error-msg">Minimum 30 characters required.</div>
+            </div>
+            <div class="form-group">
+                <label for="si-benefits">Expected Benefits <span class="req">*</span></label>
+                <textarea id="si-benefits" class="form-textarea" rows="3" placeholder="Quantify the value: cost savings (KWD), time saved, error reduction %, revenue uplift, customer impact, risk reduction…"></textarea>
+                <div id="si-benefits-err" class="form-error-msg">Minimum 20 characters required.</div>
+            </div>
+        </div>
+
+        <!-- Section 3: Metrics -->
+        <div class="form-section">
+            <div class="form-section-header">
+                <div class="form-section-num">3</div>
+                <div class="form-section-title">Baseline & Target Metrics</div>
+            </div>
+            <div class="ev-helper">
+                <strong>Why this matters</strong>
+                Screeners and judges score on measurable impact. Ideas with clear baselines and SMART targets consistently score higher on Business Impact and Feasibility criteria.
+            </div>
+            <div class="form-row" style="margin-top:var(--sp-md)">
+                <div class="form-group">
+                    <label for="si-baseline">Baseline Metric <span class="req">*</span></label>
+                    <textarea id="si-baseline" class="form-textarea" rows="3" placeholder="Current state measurement: e.g. '1,800 staff-hours/month; 3.8% error rate; KWD 95K penalties in FY2025'"></textarea>
+                    <div id="si-baseline-err" class="form-error-msg">Please describe the current baseline.</div>
+                </div>
+                <div class="form-group">
+                    <label for="si-target">Improvement Target <span class="req">*</span></label>
+                    <textarea id="si-target" class="form-textarea" rows="3" placeholder="Target after implementation: e.g. '≤200 hours/month; error rate <0.5%; zero penalties by Q4 2026'"></textarea>
+                    <div id="si-target-err" class="form-error-msg">Please state the improvement target.</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="si-success">Success Metrics <span class="req">*</span></label>
+                <input id="si-success" class="form-input" placeholder="KPIs used to declare success, e.g. 'Staff-hours ≤200/month AND error rate ≤0.5% within 6 months'">
+                <div id="si-success-err" class="form-error-msg">Minimum 5 characters required.</div>
+            </div>
+        </div>
+
+        <!-- Section 4: Implementation -->
+        <div class="form-section">
+            <div class="form-section-header">
+                <div class="form-section-num">4</div>
+                <div class="form-section-title">Implementation Plan</div>
+            </div>
+            <div class="form-group">
+                <label for="si-approach">Implementation Approach <span class="req">*</span></label>
+                <textarea id="si-approach" class="form-textarea" rows="4" placeholder="High-level phased plan: key milestones, dependencies, timeline. Reference existing systems or vendors if relevant."></textarea>
+                <div id="si-approach-err" class="form-error-msg">Minimum 20 characters required.</div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="si-resources">Resources Required <span class="req">*</span></label>
+                    <textarea id="si-resources" class="form-textarea" rows="3" placeholder="Staff (FTEs × months), budget (KWD), tools, vendor support, infrastructure…"></textarea>
+                    <div id="si-resources-err" class="form-error-msg">Minimum 5 characters required.</div>
+                </div>
+                <div class="form-group">
+                    <label for="si-risk">Risk & Mitigation <span class="req">*</span></label>
+                    <textarea id="si-risk" class="form-textarea" rows="3" placeholder="Top 2–3 risks and how you plan to mitigate each."></textarea>
+                    <div id="si-risk-err" class="form-error-msg">Minimum 5 characters required.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Evidence -->
+        <div class="form-section">
+            <div class="form-section-header">
+                <div class="form-section-num">5</div>
+                <div class="form-section-title">Supporting Evidence</div>
+            </div>
+            <div class="form-group">
+                <label for="si-evidence">Supporting Evidence <span class="form-help" style="display:inline">(optional)</span></label>
+                <textarea id="si-evidence" class="form-textarea" rows="3" placeholder="Reference internal reports, audit findings, benchmarks, or pilot data that support your case."></textarea>
+                <div class="form-help">No file uploads in this prototype — list document names and reference numbers.</div>
+            </div>
+        </div>
+
+        <!-- Section 6: IP Declaration -->
+        <div class="form-section">
+            <div class="form-section-header">
+                <div class="form-section-num">6</div>
+                <div class="form-section-title">IP Declaration</div>
+            </div>
+            <div class="ip-ack-box">
+                <label>
+                    <input type="checkbox" id="si-ip-ack">
+                    <span>I confirm that this idea is original work or clearly references third-party sources. I understand that any implemented innovation becomes the intellectual property of KFH Capital, and prize awards are subject to successful implementation milestones. I accept the <strong>InnovationHub Terms & Conditions</strong>.</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="form-action-bar">
+            <button class="btn btn-outline" onclick="navigate('my_ideas')">Cancel</button>
+            <button class="btn btn-outline" onclick="handleIdeaSave(true)">Save as Draft</button>
+            <button class="btn btn-primary" onclick="handleIdeaSave(false)">Submit Idea</button>
+        </div>
+    </div>`;
+}
+
+// ── PAGE: My Ideas ─────────────────────────────────────────────
+function filterMyIdeasTab(status) {
+    _myIdeasFilter = status;
+    renderPage();
+}
+
+function toggleIdeaDetail(refCode) {
+    const card = document.getElementById('idea-card-' + refCode);
+    if (!card) return;
+    card.classList.toggle('open');
+}
+
+function renderIdeaCard(idea) {
+    const me = currentUser();
+    const statusCls = idea.status.replace('_', '-');
+    const actions = [];
+
+    if (idea.status === 'draft' && idea.submittedBy === me.id) {
+        actions.push(`<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();submitDraftIdea('${idea.refCode}')">Submit Now</button>`);
+        actions.push(`<button class="btn btn-outline btn-sm" onclick="event.stopPropagation();editDraftIdea('${idea.refCode}')">Edit Draft</button>`);
+    }
+
+    const screenerNote = idea.screenerNote || '';
+    const feedbackHtml = screenerNote ? `
+        <div class="screening-feedback">
+            <strong>Screener Feedback:</strong> ${screenerNote}
+        </div>` : '';
+
+    const fieldsHtml = `
+        <div class="idea-fields">
+            <div class="idea-field full">
+                <div class="idea-field-label">Problem Statement</div>
+                <div class="idea-field-value">${idea.problemStatement || '—'}</div>
+            </div>
+            <div class="idea-field full">
+                <div class="idea-field-label">Proposed Solution</div>
+                <div class="idea-field-value">${idea.proposedSolution || '—'}</div>
+            </div>
+            <div class="idea-field full">
+                <div class="idea-field-label">Expected Benefits</div>
+                <div class="idea-field-value">${idea.expectedBenefits || '—'}</div>
+            </div>
+            <div class="idea-field">
+                <div class="idea-field-label">Baseline Metric</div>
+                <div class="idea-field-value">${idea.baselineMetric || '—'}</div>
+            </div>
+            <div class="idea-field">
+                <div class="idea-field-label">Improvement Target</div>
+                <div class="idea-field-value">${idea.improvementTarget || '—'}</div>
+            </div>
+            <div class="idea-field full">
+                <div class="idea-field-label">Implementation Approach</div>
+                <div class="idea-field-value">${idea.implementationApproach || '—'}</div>
+            </div>
+            <div class="idea-field">
+                <div class="idea-field-label">Resources Required</div>
+                <div class="idea-field-value">${idea.resourcesRequired || '—'}</div>
+            </div>
+            <div class="idea-field">
+                <div class="idea-field-label">Risk & Mitigation</div>
+                <div class="idea-field-value">${idea.riskAndMitigation || '—'}</div>
+            </div>
+            <div class="idea-field full">
+                <div class="idea-field-label">Success Metrics</div>
+                <div class="idea-field-value">${idea.successMetrics || '—'}</div>
+            </div>
+            ${idea.supportingEvidence ? `<div class="idea-field full">
+                <div class="idea-field-label">Supporting Evidence</div>
+                <div class="idea-field-value">${idea.supportingEvidence}</div>
+            </div>` : ''}
+        </div>
+        ${feedbackHtml}
+        ${actions.length ? `<div class="idea-card-actions">${actions.join('')}</div>` : ''}`;
+
+    const submittedLabel = idea.submittedAt ? `Submitted ${fmtShortDate(idea.submittedAt)}` : (idea.updatedAt ? `Saved ${fmtShortDate(idea.updatedAt)}` : '');
+    const teamObj = idea.teamId ? TEAMS.find(t => t.id === idea.teamId) : null;
+    const teamLabel = teamObj ? ` · ${teamObj.name}` : '';
+
+    return `
+    <div class="idea-card" id="idea-card-${idea.refCode}">
+        <div class="idea-card-header" onclick="toggleIdeaDetail('${idea.refCode}')">
+            <span class="idea-card-ref">${idea.refCode}</span>
+            <span class="idea-card-title">${idea.title}</span>
+            <span class="status-badge status-${statusCls}">${statusLabel(idea.status)}</span>
+            <span style="font-size:11px;color:var(--clr-muted);flex-shrink:0">${submittedLabel}${teamLabel}</span>
+            <span class="idea-card-chevron">&#9658;</span>
+        </div>
+        <div class="idea-card-body">
+            ${fieldsHtml}
+        </div>
+    </div>`;
+}
+
+function renderMyIdeas() {
+    const myIdeas = getVisibleIdeas();
+    const statuses = ['all', 'draft', 'submitted', 'needs_review', 'eligible', 'ineligible', 'shortlisted', 'finalist', 'winner'];
+    const counts   = {};
+    statuses.forEach(s => counts[s] = s === 'all' ? myIdeas.length : myIdeas.filter(i => i.status === s).length);
+
+    const activeStatuses = statuses.filter(s => s === 'all' || counts[s] > 0);
+
+    const tabsHtml = activeStatuses.map(s => `
+        <button class="filter-tab${_myIdeasFilter === s ? ' active' : ''}" onclick="filterMyIdeasTab('${s}')">
+            ${s === 'all' ? 'All Ideas' : statusLabel(s)}
+            <span class="filter-count">${counts[s]}</span>
+        </button>`).join('');
+
+    const filtered = _myIdeasFilter === 'all' ? myIdeas : myIdeas.filter(i => i.status === _myIdeasFilter);
+
+    const listHtml = filtered.length
+        ? filtered.map(i => renderIdeaCard(i)).join('')
+        : `<div class="empty-state" style="text-align:center;padding:var(--sp-xl);color:var(--clr-muted)">
+               <div style="font-size:2rem;margin-bottom:var(--sp-sm)">◉</div>
+               <p>No ideas match this filter.</p>
+           </div>`;
+
+    const canSubmit = can('submitIdea');
+
+    return `
+    <div class="page-header">
+        <div>
+            <h1>My Ideas</h1>
+            <p class="page-sub">${myIdeas.length} idea${myIdeas.length !== 1 ? 's' : ''} visible to you</p>
+        </div>
+        ${canSubmit ? `<button class="btn btn-primary" onclick="navigate('submit')">+ New Idea</button>` : ''}
+    </div>
+
+    <div class="filter-tabs">${tabsHtml}</div>
+
+    <div class="ideas-list">${listHtml}</div>`;
 }
 
 // ── PAGE: placeholder ─────────────────────────────────────────
