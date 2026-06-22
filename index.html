@@ -1716,7 +1716,7 @@ function appendAudit(action, entity, detail) {
     const me = currentUser();
     AUDIT_LOG.push({
         id:     `aud-${Date.now()}`,
-        ts:     new Date().toISOString(),
+        ts:     new Date(PROTO_NOW).toISOString(),
         actor:  me.id,
         action,
         entity,
@@ -2561,7 +2561,7 @@ function renderIdeaCard(idea) {
         actions.push(`<button class="btn btn-outline btn-sm" onclick="event.stopPropagation();editDraftIdea('${idea.refCode}')">Edit Draft</button>`);
     }
 
-    const screenerNote = idea.screenerNote || '';
+    const screenerNote = idea.screeningNotes || '';
     const feedbackHtml = screenerNote ? `
         <div class="screening-feedback">
             <strong>Screener Feedback:</strong> ${screenerNote}
