@@ -767,6 +767,58 @@
         .no-team-msg { text-align: center; padding: var(--sp-xl) 0; color: var(--clr-muted); font-size: var(--fs-sm); }
         .no-team-msg .nt-icon { font-size: 2.5rem; margin-bottom: var(--sp-sm); }
 
+        /* ── PHASE 7 · SCORING ── */
+        .scoring-card { border: 1px solid var(--clr-border); border-radius: var(--radius); background: #fff; margin-bottom: var(--sp-md); overflow: hidden; }
+        .scoring-card-header { display: flex; align-items: center; gap: var(--sp-sm); padding: var(--sp-md) var(--sp-lg); cursor: pointer; user-select: none; }
+        .scoring-card-header:hover { background: var(--clr-bg); }
+        .scoring-card.open .scoring-card-header { background: var(--clr-bg); }
+        .scoring-card-ref  { font-size: 11px; color: var(--clr-muted); font-weight: 600; flex-shrink: 0; }
+        .scoring-card-title { flex: 1; font-size: var(--fs-sm); font-weight: 600; color: var(--clr-text); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .scoring-card-chevron { color: var(--clr-muted); font-size: 12px; flex-shrink: 0; transition: transform .2s; }
+        .scoring-card.open .scoring-card-chevron { transform: rotate(90deg); }
+        .scoring-card-body { display: none; padding: var(--sp-md) var(--sp-lg) var(--sp-lg); border-top: 1px solid var(--clr-border); }
+        .scoring-card.open .scoring-card-body { display: block; }
+
+        /* Criteria sliders */
+        .criteria-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md) var(--sp-xl); margin-bottom: var(--sp-lg); }
+        @media (max-width:720px) { .criteria-grid { grid-template-columns: 1fr; } }
+        .criterion-row { display: flex; flex-direction: column; gap: 6px; }
+        .criterion-header { display: flex; justify-content: space-between; align-items: baseline; }
+        .criterion-label { font-size: var(--fs-sm); font-weight: 600; color: var(--clr-text); }
+        .criterion-weight { font-size: 11px; color: var(--clr-muted); }
+        .criterion-slider-row { display: flex; align-items: center; gap: var(--sp-sm); }
+        .score-slider { flex: 1; -webkit-appearance: none; appearance: none; height: 4px; background: var(--clr-border); border-radius: 2px; outline: none; cursor: pointer; }
+        .score-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--clr-primary); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+        .score-slider::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--clr-primary); cursor: pointer; border: none; }
+        .slider-val { width: 28px; text-align: center; font-size: var(--fs-sm); font-weight: 700; color: var(--clr-primary); flex-shrink: 0; }
+        .slider-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--clr-muted); margin-top: 2px; }
+
+        /* Live score preview */
+        .live-score-box { background: var(--clr-bg); border: 1px solid var(--clr-border); border-radius: var(--radius); padding: var(--sp-md) var(--sp-lg); display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-md); }
+        .live-score-label { font-size: var(--fs-sm); color: var(--clr-muted); font-weight: 600; }
+        .live-score-num { font-size: 2rem; font-weight: 800; line-height: 1; transition: color .2s; }
+        .live-score-threshold { font-size: 11px; color: var(--clr-muted); text-align: right; }
+
+        /* Score summary (panel_chair / auditor view) */
+        .score-summary { margin-top: var(--sp-md); border-top: 1px dashed var(--clr-border); padding-top: var(--sp-md); }
+        .score-summary-title { font-size: 11px; font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: var(--sp-sm); }
+        .score-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+        .score-table th { text-align: left; padding: 6px 10px; font-size: 11px; font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .04em; border-bottom: 1px solid var(--clr-border); }
+        .score-table td { padding: 8px 10px; border-bottom: 1px solid var(--clr-border); vertical-align: top; }
+        .score-table tr:last-child td { border-bottom: none; }
+        .score-pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+        .score-pill.pass { background: var(--clr-eligible-bg); color: var(--clr-eligible); }
+        .score-pill.fail { background: var(--clr-ineligible-bg); color: var(--clr-ineligible); }
+        .coi-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; font-size: 11px; font-weight: 700; }
+        .score-avg-row { display: flex; align-items: center; gap: var(--sp-sm); padding: var(--sp-sm) 0; border-top: 2px solid var(--clr-border); margin-top: var(--sp-sm); }
+        .score-avg-label { font-size: var(--fs-sm); font-weight: 700; flex: 1; }
+        .my-score-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius); padding: var(--sp-sm) var(--sp-md); margin-bottom: var(--sp-md); font-size: var(--fs-sm); color: #1e40af; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-sm); }
+        .coi-declared-box { background: #fef3c7; border: 1px solid #fcd34d; border-radius: var(--radius); padding: var(--sp-sm) var(--sp-md); margin-bottom: var(--sp-md); font-size: var(--fs-sm); color: #92400e; }
+        .coi-form { border: 1px dashed #fcd34d; border-radius: var(--radius); padding: var(--sp-md); background: #fffbeb; margin-top: var(--sp-md); }
+        .coi-form-title { font-size: var(--fs-sm); font-weight: 700; color: #92400e; margin-bottom: var(--sp-sm); }
+        .score-actions { display: flex; gap: var(--sp-sm); align-items: center; justify-content: flex-end; margin-top: var(--sp-md); flex-wrap: wrap; }
+        .locked-banner { background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); padding: var(--sp-sm) var(--sp-md); color: #dc2626; font-size: var(--fs-sm); font-weight: 600; margin-bottom: var(--sp-lg); }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -1601,7 +1653,6 @@ function renderPage() {
     }
 
     const placeholderPages = {
-        scoring:     ['Scoring',           '★', 'Phase 7'],
         leaderboard: ['Leaderboard',       '▲', 'Phase 8'],
         excom:       ['ExCom Selection',   '◆', 'Phase 8'],
         admin:       ['Admin Console',     '⚙', 'Phase 9'],
@@ -1620,6 +1671,8 @@ function renderPage() {
         main.innerHTML = ctx + renderCoaching();
     } else if (currentPage === 'manage_team') {
         main.innerHTML = ctx + renderManageTeam();
+    } else if (currentPage === 'scoring') {
+        main.innerHTML = ctx + renderScoring();
     } else if (placeholderPages[currentPage]) {
         const [title, icon, phase] = placeholderPages[currentPage];
         main.innerHTML = ctx + renderPlaceholder(title, icon, phase);
@@ -2872,6 +2925,362 @@ function renderManageTeam() {
                 }).join('')}
                </div>`}
     </div>`;
+}
+
+// ── PAGE: Scoring ──────────────────────────────────────────────
+const CRITERIA = [
+    { key: 'businessImpact',      label: 'Business Impact',      pct: '30%' },
+    { key: 'feasibility',         label: 'Feasibility',          pct: '25%' },
+    { key: 'innovation',          label: 'Innovation',           pct: '25%' },
+    { key: 'strategicAlignment',  label: 'Strategic Alignment',  pct: '10%' },
+    { key: 'scalability',         label: 'Scalability',          pct:  '5%' },
+    { key: 'presentationClarity', label: 'Presentation Clarity', pct:  '5%' },
+];
+
+function toggleScoringCard(refCode) {
+    const el = document.getElementById('sc-card-' + refCode);
+    if (el) el.classList.toggle('open');
+}
+
+function updateLiveScore(ideaId) {
+    const w = CYCLE.scoringWeights;
+    let total = 0;
+    for (const c of CRITERIA) {
+        const val = parseInt(document.getElementById(`sc-${ideaId}-${c.key}`)?.value || 0, 10);
+        total += val * (w[c.key] || 0);
+        const numEl = document.getElementById(`sc-num-${ideaId}-${c.key}`);
+        if (numEl) numEl.textContent = val;
+    }
+    const liveEl = document.getElementById('sc-live-' + ideaId);
+    if (liveEl) {
+        liveEl.textContent = total.toFixed(2);
+        liveEl.style.color = total >= CYCLE.shortlistThreshold ? 'var(--clr-eligible)' : '#dc2626';
+    }
+}
+
+function declareCOI(ideaId) {
+    if (CYCLE.resultsLocked) return;
+    const me = currentUser();
+    const alreadyRecused = COI_RECUSALS.some(r => r.judgeId === me.id && r.ideaId === ideaId);
+    if (alreadyRecused) return;
+    const reasonEl = document.getElementById('coi-reason-' + ideaId);
+    const reason   = (reasonEl?.value || '').trim();
+    if (!reason) { alert('Please enter a reason for your recusal.'); return; }
+
+    COI_RECUSALS.push({
+        id:          'coi-' + String(COI_RECUSALS.length + 1).padStart(2, '0'),
+        judgeId:     me.id,
+        ideaId,
+        reason,
+        declaredAt:  new Date(PROTO_NOW).toISOString(),
+    });
+    appendAudit('COI_DECLARED', ideaId, `${me.name} declared conflict of interest and recused from scoring ${ideaId}.`);
+    renderPage();
+}
+
+function submitScore(ideaId) {
+    if (!can('scoreIdeas') || CYCLE.resultsLocked) return;
+    const me = currentUser();
+    const w  = CYCLE.scoringWeights;
+
+    const vals = {};
+    for (const c of CRITERIA) {
+        const v = parseInt(document.getElementById(`sc-${ideaId}-${c.key}`)?.value || 0, 10);
+        if (!v || v < 1 || v > 5) {
+            alert(`Please set a score (1–5) for "${c.label}".`);
+            return;
+        }
+        vals[c.key] = v;
+    }
+    const notes = (document.getElementById('sc-notes-' + ideaId)?.value || '').trim();
+    const now   = new Date(PROTO_NOW).toISOString();
+    const ws    = +(vals.businessImpact*w.businessImpact + vals.feasibility*w.feasibility +
+                    vals.innovation*w.innovation + vals.strategicAlignment*w.strategicAlignment +
+                    vals.scalability*w.scalability + vals.presentationClarity*w.presentationClarity).toFixed(2);
+
+    const existing = SCORES.find(s => s.ideaId === ideaId && s.judgeId === me.id);
+    if (existing) {
+        Object.assign(existing, { ...vals, notes, submittedAt: now });
+        appendAudit('IDEA_RESCORED', ideaId, `Score updated. Weighted total: ${ws}/5.00.`);
+    } else {
+        SCORES.push({
+            id:          'sc-' + String(SCORES.length + 1).padStart(3, '0'),
+            ideaId, judgeId: me.id, submittedAt: now,
+            ...vals, notes,
+        });
+        appendAudit('IDEA_SCORED', ideaId, `Score submitted. Weighted total: ${ws}/5.00.`);
+    }
+    renderPage();
+}
+
+function renderScoreForm(idea, existingScore) {
+    const me        = currentUser();
+    const isLocked  = CYCLE.resultsLocked;
+    const readonly  = isLocked || can('readOnly');
+    const startVals = existingScore || { businessImpact:3, feasibility:3, innovation:3, strategicAlignment:3, scalability:3, presentationClarity:3 };
+    const w = CYCLE.scoringWeights;
+    const initWS = CRITERIA.reduce((t, c) => t + startVals[c.key] * w[c.key], 0);
+
+    const slidersHtml = CRITERIA.map(c => {
+        const val = startVals[c.key];
+        return `
+        <div class="criterion-row">
+            <div class="criterion-header">
+                <span class="criterion-label">${c.label}</span>
+                <span class="criterion-weight">${c.pct} weight</span>
+            </div>
+            <div class="criterion-slider-row">
+                <input type="range" class="score-slider" min="1" max="5" step="1"
+                       id="sc-${idea.refCode}-${c.key}" value="${val}"
+                       ${readonly ? 'disabled' : `oninput="updateLiveScore('${idea.refCode}')"`}>
+                <span class="slider-val" id="sc-num-${idea.refCode}-${c.key}">${val}</span>
+            </div>
+            <div class="slider-labels"><span>1 — Weak</span><span>3 — Good</span><span>5 — Excellent</span></div>
+        </div>`;
+    }).join('');
+
+    const liveColor = initWS >= CYCLE.shortlistThreshold ? 'var(--clr-eligible)' : '#dc2626';
+    const liveBox = `
+    <div class="live-score-box">
+        <div>
+            <div class="live-score-label">Weighted Score</div>
+            <div class="live-score-num" id="sc-live-${idea.refCode}" style="color:${liveColor}">${initWS.toFixed(2)}</div>
+        </div>
+        <div class="live-score-threshold">
+            <div>Shortlist threshold: <strong>${CYCLE.shortlistThreshold}</strong></div>
+            <div style="margin-top:2px;font-size:10px">Max possible: 5.00</div>
+        </div>
+    </div>`;
+
+    const notesEl = `
+    <div class="form-group">
+        <label style="font-size:var(--fs-sm);font-weight:600">Scoring Notes ${readonly ? '' : '<span style="font-weight:400;color:var(--clr-muted)">(will be visible to panel chair)</span>'}</label>
+        <textarea id="sc-notes-${idea.refCode}" class="form-textarea" rows="2"
+            ${readonly ? 'disabled' : ''}
+            placeholder="Key observations, concerns, or strengths…">${existingScore?.notes || ''}</textarea>
+    </div>`;
+
+    const actions = readonly ? '' : `
+    <div class="score-actions">
+        ${existingScore ? `<span style="font-size:11px;color:var(--clr-muted)">Previously scored — updating will overwrite.</span>` : ''}
+        <button class="btn btn-primary" onclick="submitScore('${idea.refCode}')">
+            ${existingScore ? 'Update Score' : 'Submit Score'}
+        </button>
+    </div>`;
+
+    return `
+    <div class="criteria-grid">${slidersHtml}</div>
+    ${liveBox}
+    ${notesEl}
+    ${actions}`;
+}
+
+function renderAllScoresSummary(idea) {
+    const recused = COI_RECUSALS.filter(r => r.ideaId === idea.refCode);
+    const recusedIds = recused.map(r => r.judgeId);
+    const validScores = SCORES.filter(s => s.ideaId === idea.refCode && !recusedIds.includes(s.judgeId));
+    const avg = computeIdeaScore(idea.refCode);
+
+    const judges = USERS.filter(u => ['judge','panel_chair'].includes(u.role));
+    const w = CYCLE.scoringWeights;
+
+    const rows = judges.map(j => {
+        const score = SCORES.find(s => s.ideaId === idea.refCode && s.judgeId === j.id);
+        const isRecused = recusedIds.includes(j.id);
+        const coi = isRecused ? recused.find(r => r.judgeId === j.id) : null;
+
+        if (isRecused) {
+            return `<tr>
+                <td>${j.name}</td>
+                <td colspan="7"><span class="coi-badge">⚠ CoI Recused</span> ${coi?.reason ? `<span style="font-size:11px;color:var(--clr-muted);margin-left:8px">${coi.reason.slice(0,80)}…</span>` : ''}</td>
+            </tr>`;
+        }
+        if (!score) {
+            return `<tr>
+                <td>${j.name}</td>
+                <td colspan="7" style="color:var(--clr-muted);font-size:11px">Not yet scored</td>
+            </tr>`;
+        }
+        const ws = computeWeightedScore(score);
+        const pillCls = ws >= CYCLE.shortlistThreshold ? 'pass' : 'fail';
+        return `<tr>
+            <td>${j.name}</td>
+            <td>${score.businessImpact}</td>
+            <td>${score.feasibility}</td>
+            <td>${score.innovation}</td>
+            <td>${score.strategicAlignment}</td>
+            <td>${score.scalability}</td>
+            <td>${score.presentationClarity}</td>
+            <td><span class="score-pill ${pillCls}">${ws.toFixed(2)}</span></td>
+        </tr>`;
+    }).join('');
+
+    const avgPillCls = avg !== null && avg >= CYCLE.shortlistThreshold ? 'pass' : 'fail';
+
+    return `
+    <div class="score-summary">
+        <div class="score-summary-title">All Judge Scores</div>
+        <div style="overflow-x:auto">
+            <table class="score-table">
+                <thead>
+                    <tr>
+                        <th>Judge</th>
+                        <th title="Business Impact (30%)">BI</th>
+                        <th title="Feasibility (25%)">Fe</th>
+                        <th title="Innovation (25%)">In</th>
+                        <th title="Strategic Alignment (10%)">SA</th>
+                        <th title="Scalability (5%)">Sc</th>
+                        <th title="Presentation Clarity (5%)">PC</th>
+                        <th>Weighted</th>
+                    </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            </table>
+        </div>
+        ${avg !== null ? `
+        <div class="score-avg-row">
+            <span class="score-avg-label">Panel Average (${validScores.length} judge${validScores.length!==1?'s':''})</span>
+            <span class="score-pill ${avgPillCls}" style="font-size:var(--fs-sm);padding:4px 14px">${avg.toFixed(2)}</span>
+        </div>` : ''}
+    </div>`;
+}
+
+function renderScoringCard(idea) {
+    const me       = currentUser();
+    const myScore  = SCORES.find(s => s.ideaId === idea.refCode && s.judgeId === me.id);
+    const isCOI    = COI_RECUSALS.some(r => r.judgeId === me.id && r.ideaId === idea.refCode);
+    const canScore = can('scoreIdeas') && !CYCLE.resultsLocked && !can('readOnly');
+    const canViewAll = can('viewAllScores');
+    const statusCls = idea.status.replace('_','-');
+    const avg = computeIdeaScore(idea.refCode);
+    const teamObj = idea.teamId ? TEAMS.find(t => t.id === idea.teamId) : null;
+    const teamLabel = teamObj ? ` · ${teamObj.name}` : '';
+
+    const avgBadge = avg !== null
+        ? `<span class="score-pill ${avg >= CYCLE.shortlistThreshold ? 'pass' : 'fail'}">${avg.toFixed(2)}</span>`
+        : `<span style="font-size:11px;color:var(--clr-muted)">Unscored</span>`;
+
+    // Body content
+    let bodyContent = '';
+
+    if (isCOI) {
+        const coiRecord = COI_RECUSALS.find(r => r.judgeId === me.id && r.ideaId === idea.refCode);
+        bodyContent = `
+        <div class="coi-declared-box">
+            <strong>You have declared a conflict of interest</strong> and are recused from scoring this idea.<br>
+            ${coiRecord?.reason ? `<span style="font-size:11px;margin-top:4px;display:block">Reason: "${coiRecord.reason}"</span>` : ''}
+        </div>`;
+    } else if (myScore && canScore) {
+        bodyContent = `
+        <div class="my-score-box">
+            <span>Your current score: <strong>${computeWeightedScore(myScore).toFixed(2)}</strong></span>
+            <span style="font-size:11px">Submitted ${fmtTs(myScore.submittedAt)}</span>
+        </div>
+        ${renderScoreForm(idea, myScore)}`;
+    } else if (canScore) {
+        // Show CoI option + score form
+        bodyContent = `
+        <details style="margin-bottom:var(--sp-md)">
+            <summary style="cursor:pointer;font-size:var(--fs-sm);color:#d97706;font-weight:600">⚠ Declare Conflict of Interest</summary>
+            <div class="coi-form">
+                <div class="coi-form-title">CoI Declaration</div>
+                <p style="font-size:var(--fs-sm);color:var(--clr-text);margin-bottom:var(--sp-sm)">
+                    If you have a personal, financial, or professional interest in this idea, you must recuse yourself. This action is permanent and will be audit-logged.
+                </p>
+                <textarea id="coi-reason-${idea.refCode}" class="form-textarea" rows="2"
+                    placeholder="State the nature of your conflict (e.g. I am a named stakeholder / I advised the submitter / financial interest)…"></textarea>
+                <div style="display:flex;justify-content:flex-end;margin-top:var(--sp-sm)">
+                    <button class="btn btn-outline btn-sm" style="border-color:#d97706;color:#d97706" onclick="declareCOI('${idea.refCode}')">Confirm Recusal</button>
+                </div>
+            </div>
+        </details>
+        ${renderScoreForm(idea, null)}`;
+    } else if (can('readOnly') || canViewAll) {
+        // View-only score form showing average
+        bodyContent = myScore ? renderScoreForm(idea, myScore) : `<p style="color:var(--clr-muted);font-size:var(--fs-sm)">No scores recorded yet.</p>`;
+    }
+
+    if (canViewAll) {
+        bodyContent += renderAllScoresSummary(idea);
+    }
+
+    return `
+    <div class="scoring-card" id="sc-card-${idea.refCode}">
+        <div class="scoring-card-header" onclick="toggleScoringCard('${idea.refCode}')">
+            <span class="scoring-card-ref">${idea.refCode}</span>
+            <span class="scoring-card-title">${idea.title}</span>
+            <span class="status-badge status-${statusCls}">${statusLabel(idea.status)}</span>
+            <span style="font-size:11px;color:var(--clr-muted);flex-shrink:0">${idea.category}</span>
+            ${isCOI ? `<span class="coi-badge">CoI</span>` : myScore ? `<span class="chip chip-shortlisted" style="font-size:10px;flex-shrink:0">Scored</span>` : ''}
+            ${avgBadge}
+            <span class="scoring-card-chevron">&#9658;</span>
+        </div>
+        <div class="scoring-card-body">${bodyContent}</div>
+    </div>`;
+}
+
+function renderScoring() {
+    const finalists = IDEAS.filter(i => i.status === 'finalist');
+    const me        = currentUser();
+    const myScored  = new Set(SCORES.filter(s => s.judgeId === me.id).map(s => s.ideaId));
+    const myRecused = new Set(COI_RECUSALS.filter(r => r.judgeId === me.id).map(r => r.ideaId));
+    const pending   = finalists.filter(i => !myScored.has(i.refCode) && !myRecused.has(i.refCode)).length;
+    const totalAvg  = finalists.length
+        ? (finalists.reduce((s, i) => { const sc = computeIdeaScore(i.refCode); return sc ? s + sc : s; }, 0)
+           / finalists.filter(i => computeIdeaScore(i.refCode) !== null).length || 0).toFixed(2)
+        : '—';
+
+    const lockedBanner = CYCLE.resultsLocked
+        ? `<div class="locked-banner">🔒 Scoring is locked. Results have been finalised by the Panel Chair.</div>` : '';
+
+    const listHtml = finalists.length
+        ? finalists.map(renderScoringCard).join('')
+        : `<div class="empty-state" style="text-align:center;padding:var(--sp-xl);color:var(--clr-muted)">
+               <div style="font-size:2rem;margin-bottom:var(--sp-sm)">★</div>
+               <p>No finalist ideas available for scoring.</p>
+           </div>`;
+
+    const w = CYCLE.scoringWeights;
+    const weightsHtml = CRITERIA.map(c =>
+        `<span style="font-size:11px;color:var(--clr-muted)">${c.label} <strong>${c.pct}</strong></span>`
+    ).join(' · ');
+
+    return `
+    <div class="page-header">
+        <div>
+            <h1>Scoring Panel</h1>
+            <p class="page-sub">${finalists.length} finalist idea${finalists.length !== 1 ? 's' : ''} · ${pending} pending your score</p>
+        </div>
+        ${CYCLE.resultsLocked && can('lockResults') ? `<button class="btn btn-outline" onclick="toggleResultsLock()">Unlock Results</button>` : ''}
+        ${!CYCLE.resultsLocked && can('lockResults') ? `<button class="btn btn-primary" onclick="toggleResultsLock()">Lock Results</button>` : ''}
+    </div>
+
+    ${lockedBanner}
+
+    <div class="card-grid grid-4" style="margin-bottom:var(--sp-lg)">
+        ${statCard('Finalists',     '▲', finalists.length, '', 'var(--clr-primary)')}
+        ${statCard('My Scored',     '★', myScored.size,    '', 'var(--clr-eligible)')}
+        ${statCard('CoI Recusals',  '⚠', COI_RECUSALS.length, '', '#d97706')}
+        ${statCard('Panel Avg',     '◈', totalAvg,         '', 'var(--clr-accent)')}
+    </div>
+
+    <div class="card" style="margin-bottom:var(--sp-lg);padding:var(--sp-md) var(--sp-lg)">
+        <div style="font-size:11px;font-weight:700;color:var(--clr-muted);text-transform:uppercase;margin-bottom:6px">Scoring Criteria Weights</div>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--sp-md)">${weightsHtml}</div>
+    </div>
+
+    ${listHtml}`;
+}
+
+function toggleResultsLock() {
+    if (!can('lockResults')) return;
+    CYCLE.resultsLocked = !CYCLE.resultsLocked;
+    appendAudit(
+        CYCLE.resultsLocked ? 'RESULTS_LOCKED' : 'RESULTS_UNLOCKED',
+        'CYCLE-2026',
+        CYCLE.resultsLocked ? 'Scoring results locked by Panel Chair.' : 'Scoring results unlocked.'
+    );
+    renderPage();
 }
 
 // ── PAGE: placeholder ─────────────────────────────────────────
