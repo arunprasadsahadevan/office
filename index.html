@@ -981,6 +981,46 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--clr-border); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--clr-muted); }
+
+        /* ── ADDED: missing utility classes ── */
+        .chip-muted { color: var(--clr-muted); background: var(--clr-surface-off); border: 1px solid var(--clr-border); }
+        .text-muted { color: var(--clr-muted); font-size: var(--fs-sm); }
+        .page-sub { color: var(--clr-muted); font-size: var(--fs-sm); margin-top: 2px; }
+
+        /* ── FIXES: card-grid responsive ── */
+        @media (max-width: 900px) {
+            .card-grid.grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 500px) {
+            .card-grid.grid-4 { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            .card-grid.grid-2 { grid-template-columns: 1fr; }
+        }
+
+        /* ── FIX: page-header button overflow ── */
+        .page-header { margin-bottom: var(--sp-xl); }
+        .page-header-row { flex-wrap: wrap; gap: var(--sp-sm); }
+
+        /* ── FIX: podium mobile stack ── */
+        @media (max-width: 600px) {
+            .podium-wrap { flex-direction: column; align-items: center; }
+            .podium-col { max-width: 100%; width: 100%; }
+        }
+
+        /* ── FIX: audit filter full-width on mobile ── */
+        @media (max-width: 600px) {
+            .audit-search { width: 100%; }
+            .audit-filter-bar { flex-direction: column; }
+        }
+
+        /* ── FIX: form-action-bar overflow ── */
+        @media (max-width: 600px) {
+            .form-action-bar { margin: var(--sp-lg) 0 0; border-radius: var(--radius-md); }
+        }
+
+        /* ── FIX: table horizontal scroll ── */
+        .ideas-mgmt-table, .user-roster-table { min-width: 600px; }
     </style>
 </head>
 <body>
@@ -1472,6 +1512,155 @@ const IDEAS = [
         screeningNotes: 'High ESG and efficiency impact. Well-structured. Advanced to finalist.',
         screenedBy: 'u07', screenedAt: '2026-09-13T11:30:00',
     },
+    {
+        refCode: 'KFHC-2026-0013', status: 'submitted',
+        submittedBy: 'u01', teamId: 'team-01',
+        submittedAt: '2026-08-28T09:00:00', updatedAt: '2026-08-28T09:00:00',
+        title: 'AI-Powered Client Onboarding Chatbot',
+        category: 'Customer Service Improvement',
+        problemStatement: 'New retail clients face a 45-minute manual onboarding interview for basic banking products, resulting in branch congestion and a 22% application abandonment rate during peak hours.',
+        proposedSolution: 'Deploy an Arabic-English NLP chatbot integrated with the bank\'s CRM and product catalogue to guide clients through account opening, collect KYC data digitally, and schedule relationship manager callbacks only for complex queries.',
+        expectedBenefits: 'Reduce onboarding time from 45 minutes to under 10 minutes; cut abandonment rate from 22% to under 8%; free 4 relationship manager hours daily per branch for higher-value advisory work.',
+        baselineMetric: '45 min onboarding; 22% abandonment rate; 40 RM hours/day consumed by basic queries.',
+        improvementTarget: '≤10 min onboarding; abandonment ≤8%; RM hours on advisory work up by 30%.',
+        implementationApproach: 'Phase 1: chatbot design and NLP model training on 500 historical queries. Phase 2: CRM integration and pilot at 2 branches. Phase 3: full rollout with live escalation.',
+        resourcesRequired: '1 AI developer, 1 UX designer, NLP platform licence KWD 12,000/yr, 4 months.',
+        riskAndMitigation: 'Client reluctance to interact with chatbot for sensitive queries. Mitigation: prominent human escalation option and bilingual support throughout.',
+        successMetrics: 'Onboarding ≤10 min; abandonment ≤8%; client satisfaction ≥4.2/5; chatbot containment rate ≥65%.',
+        ipAcknowledged: true,
+        screeningNotes: null, screenedBy: null, screenedAt: null,
+    },
+    {
+        refCode: 'KFHC-2026-0014', status: 'eligible',
+        submittedBy: 'u03', teamId: 'team-02',
+        submittedAt: '2026-08-26T14:30:00', updatedAt: '2026-09-08T09:00:00',
+        title: 'Zero-Based Budgeting Automation for Cost Centres',
+        category: 'Cost Optimization',
+        problemStatement: 'Annual budgeting across 18 cost centres is conducted via disconnected Excel templates, resulting in a 6-week consolidation cycle, frequent version conflicts, and an average 12% variance between approved and actual spend.',
+        proposedSolution: 'Implement a zero-based budgeting module integrated with Oracle Financials that forces line-by-line cost justification, auto-pulls prior-year actuals as a baseline, and provides real-time variance dashboards throughout the year.',
+        expectedBenefits: 'Reduce budget cycle from 6 weeks to 2 weeks; cut spend variance from 12% to under 5%; eliminate manual consolidation effort saving 300 finance staff hours annually.',
+        baselineMetric: '6-week budget cycle; 12% avg spend variance; 300 staff hours on consolidation.',
+        improvementTarget: '≤2-week cycle; variance ≤5%; consolidation hours ≤30.',
+        implementationApproach: 'Oracle Financials module configuration → ZBB template design → pilot with 3 cost centres → full rollout.',
+        resourcesRequired: '1 Finance systems analyst, Oracle Financials ZBB module licence KWD 18,000, 3 months.',
+        riskAndMitigation: 'Cost centre manager resistance to full justification requirement. Mitigation: executive mandate, training sessions, and tiered rollout starting with largest cost centres.',
+        successMetrics: 'Budget cycle ≤2 weeks; variance ≤5%; 100% cost centre adoption within 1 year.',
+        ipAcknowledged: true,
+        screeningNotes: 'Clear cost reduction case. Eligible for shortlisting.',
+        screenedBy: 'u07', screenedAt: '2026-09-08T09:00:00',
+    },
+    {
+        refCode: 'KFHC-2026-0015', status: 'submitted',
+        submittedBy: 'u02', teamId: null,
+        submittedAt: '2026-09-01T11:15:00', updatedAt: '2026-09-01T11:15:00',
+        title: 'Blockchain-Based Trade Settlement Ledger',
+        category: 'Digital Transformation',
+        problemStatement: 'Trade finance settlement between KFH Capital and correspondent banks involves multiple reconciliation cycles lasting 3–5 days, with 8% of settlements requiring manual intervention due to data mismatches across counterparty systems.',
+        proposedSolution: 'Pilot a permissioned blockchain ledger shared with 3 key correspondent banks to record trade finance obligations in real time, enabling automated settlement triggers when all counterparty conditions are met and reducing reconciliation discrepancies.',
+        expectedBenefits: 'Reduce settlement cycle from 3–5 days to under 24 hours; cut manual interventions from 8% to under 1%; improve counterparty trust and operational resilience.',
+        baselineMetric: '3–5 day settlement; 8% manual intervention rate; KWD 45,000/yr remediation cost.',
+        improvementTarget: '≤24-hour settlement; intervention ≤1%; remediation cost ≤KWD 5,000/yr.',
+        implementationApproach: 'Counterparty negotiation → smart contract design → permissioned blockchain deployment → 60-day pilot with 3 correspondents → evaluation → full rollout.',
+        resourcesRequired: '2 developers, 1 legal reviewer, blockchain infrastructure KWD 35,000 first year, 8 months.',
+        riskAndMitigation: 'Counterparty adoption risk. Mitigation: incentivise participation with faster settlement terms and reduced reconciliation fees.',
+        successMetrics: 'Settlement ≤24 hours; intervention ≤1%; 3 correspondent banks live within 12 months.',
+        ipAcknowledged: true,
+        screeningNotes: null, screenedBy: null, screenedAt: null,
+    },
+    {
+        refCode: 'KFHC-2026-0016', status: 'shortlisted',
+        submittedBy: 'u05', teamId: 'team-02',
+        submittedAt: '2026-08-22T08:00:00', updatedAt: '2026-09-04T10:00:00',
+        title: 'Automated Fee Leakage Detection Engine',
+        category: 'Revenue Leakage Prevention',
+        problemStatement: 'Annual post-period analysis reveals approximately KWD 220,000 in uncollected or under-collected fees across custody, brokerage, and asset management services due to stale fee schedules and manual billing oversight.',
+        proposedSolution: 'Build an automated fee leakage detection engine that reconciles contracted fee schedules against billed amounts daily across all service lines, flags discrepancies above KWD 100, and auto-generates correction invoices for Finance approval.',
+        expectedBenefits: 'Recover an estimated KWD 180,000–220,000 in annual fee leakage; reduce billing cycle from monthly to daily; eliminate year-end revenue adjustment surprises.',
+        baselineMetric: 'KWD 220,000 estimated annual leakage; monthly billing cycle; 100% manual fee audit.',
+        improvementTarget: 'Leakage ≤KWD 20,000/yr; daily reconciliation; >95% auto-detection rate.',
+        implementationApproach: 'Fee schedule data mapping → reconciliation engine build → exception workflow → Finance integration → parallel run → go live.',
+        resourcesRequired: '1 developer, 1 Finance analyst, existing BI infrastructure, 3 months.',
+        riskAndMitigation: 'Incorrect fee schedule data causing false positives. Mitigation: structured fee schedule validation gateway before engine ingestion.',
+        successMetrics: 'Detection rate ≥95%; leakage ≤KWD 20,000/yr; billing accuracy ≥99.5%.',
+        ipAcknowledged: true,
+        screeningNotes: 'Strong revenue impact. Shortlisted.',
+        screenedBy: 'u06', screenedAt: '2026-09-04T10:00:00',
+    },
+    {
+        refCode: 'KFHC-2026-0017', status: 'finalist',
+        submittedBy: 'u01', teamId: 'team-01',
+        submittedAt: '2026-08-17T15:00:00', updatedAt: '2026-09-06T11:00:00',
+        title: 'Predictive Document Expiry Alert System',
+        category: 'Operational Efficiency',
+        problemStatement: 'KFH Capital manages 4,200+ client and counterparty documents — trade licences, legal mandates, passports, insurance certificates — with expiry dates tracked manually in spreadsheets. Expired documents are discovered reactively, causing contract delays and CBK compliance findings.',
+        proposedSolution: 'Build a centralised document registry integrated with the DMS that auto-scans expiry dates, sends tiered alert notifications (90/60/30/7 days) to relationship managers and clients, and generates a compliance dashboard for senior management.',
+        expectedBenefits: 'Eliminate reactive document expiry discoveries; reduce compliance breach risk; save 8 FTE hours/week currently spent on manual tracking; achieve 100% on-time renewal rate within 6 months.',
+        baselineMetric: '8 FTE hours/week on manual tracking; 4,200 documents; 23 expired document incidents in H1 2026.',
+        improvementTarget: 'Zero expired document incidents; renewal completion rate ≥98%; tracking time ≤1 hour/week.',
+        implementationApproach: 'DMS API integration → registry build → alert engine → compliance dashboard → UAT with Operations and Legal → full rollout.',
+        resourcesRequired: '1 developer, 1 Operations analyst, existing DMS licence, 3 months.',
+        riskAndMitigation: 'Incomplete document metadata in existing DMS. Mitigation: 4-week data cleansing sprint before go-live.',
+        successMetrics: 'Zero expired incidents post-go-live; renewal rate ≥98%; system adoption 100% by month 2.',
+        ipAcknowledged: true,
+        screeningNotes: 'Operationally strong. Advanced to finalist.',
+        screenedBy: 'u07', screenedAt: '2026-09-06T11:00:00',
+    },
+    {
+        refCode: 'KFHC-2026-0018', status: 'needs_review',
+        submittedBy: 'u03', teamId: null,
+        submittedAt: '2026-09-02T10:00:00', updatedAt: '2026-09-09T14:00:00',
+        title: 'Smart Meeting Room Utilisation Analytics',
+        category: 'Workforce Productivity',
+        problemStatement: 'KFH Capital\'s 34 meeting rooms are booked at 78% apparent utilisation but physical occupancy sensors show only 41% actual use, suggesting significant ghost bookings. Facilities management cannot optimise room configuration without reliable usage data.',
+        proposedSolution: 'Deploy IoT occupancy sensors in all meeting rooms integrated with the Outlook calendar system to compare booked vs. actual utilisation, auto-release no-show bookings after 15 minutes, and provide a facilities dashboard with heat-map analytics.',
+        expectedBenefits: 'Increase actual room utilisation from 41% to 65%; eliminate 60% of ghost bookings; generate KWD 30,000/yr in avoided leased space costs through informed decommissioning decisions.',
+        baselineMetric: '41% actual utilisation; 78% booked; estimated 37% ghost booking rate.',
+        improvementTarget: 'Actual utilisation ≥65%; ghost bookings ≤15%; decommission 2 rooms saving KWD 30,000.',
+        implementationApproach: 'IoT sensor vendor selection → Outlook integration → dashboard build → pilot on 5 rooms → full rollout.',
+        resourcesRequired: 'IoT sensors KWD 15,000, 1 IT developer, Facilities Management SME, 4 months.',
+        riskAndMitigation: 'Employee perception of surveillance. Mitigation: clear communication that sensors track rooms not individuals; anonymised reporting only.',
+        successMetrics: 'Actual utilisation ≥65%; auto-release adoption ≥90%; Facilities Management sign-off on decommission decisions.',
+        ipAcknowledged: true,
+        screeningNotes: 'Needs facilities management sign-off before advancing.',
+        screenedBy: 'u06', screenedAt: '2026-09-09T14:00:00',
+    },
+    {
+        refCode: 'KFHC-2026-0019', status: 'submitted',
+        submittedBy: 'u04', teamId: 'team-01',
+        submittedAt: '2026-09-03T13:00:00', updatedAt: '2026-09-03T13:00:00',
+        title: 'Real-Time AML Transaction Monitoring Dashboard',
+        category: 'Risk & Compliance Efficiency',
+        problemStatement: 'AML transaction alerts are generated by the core monitoring system but reviewed in a batch process with an average 6-hour lag. During high-volume periods, the compliance team has a backlog of 200+ unreviewed alerts, increasing regulatory exposure.',
+        proposedSolution: 'Build a real-time AML alert dashboard that streams transaction flags from the monitoring engine, prioritises alerts by risk score, assigns them to compliance analysts with SLA timers, and provides an escalation workflow for suspicious activity reports.',
+        expectedBenefits: 'Reduce alert review lag from 6 hours to under 30 minutes; clear backlog within 2 months; improve CBK STR filing timeliness from 72% to 98% on-time.',
+        baselineMetric: '6-hour review lag; 200+ alert backlog at peak; 72% STR on-time filing.',
+        improvementTarget: '≤30-min review; zero backlog; STR on-time ≥98%.',
+        implementationApproach: 'Streaming integration with AML engine → alert prioritisation model → compliance dashboard → SLA workflow → UAT with compliance team → go live.',
+        resourcesRequired: '2 developers, 1 compliance analyst, existing AML infrastructure, 4 months.',
+        riskAndMitigation: 'Alert fatigue from high-volume low-quality flags. Mitigation: AI-assisted pre-screening to reduce false positive rate by 40% before human review.',
+        successMetrics: 'Review lag ≤30 min; STR on-time ≥98%; false positive rate down 40%; analyst productivity up 50%.',
+        ipAcknowledged: true,
+        screeningNotes: null, screenedBy: null, screenedAt: null,
+    },
+    {
+        refCode: 'KFHC-2026-0020', status: 'ineligible',
+        submittedBy: 'u02', teamId: null,
+        submittedAt: '2026-08-29T09:30:00', updatedAt: '2026-09-07T15:00:00',
+        title: 'Green Office Paper Reduction Initiative',
+        category: 'Sustainability & ESG',
+        problemStatement: 'KFH Capital offices consume approximately 2.4 million sheets of paper annually, costing KWD 18,000/yr and contributing to the organisation\'s carbon footprint.',
+        proposedSolution: 'Launch a structured paper reduction programme with default double-sided printing, mandatory digital approval workflows for internal memos, monthly usage dashboards by department, and a paper-free recognition scheme for top-performing teams.',
+        expectedBenefits: 'Reduce paper consumption 60% within 12 months; save KWD 10,800/yr; support KFH Group ESG commitments; reduce CO2 equivalent by an estimated 6 tonnes annually.',
+        baselineMetric: '2.4 million sheets/yr; KWD 18,000 annual cost; 0% formal tracking.',
+        improvementTarget: '≤960,000 sheets/yr; KWD ≤7,200 cost; monthly tracking dashboard in place.',
+        implementationApproach: 'Policy mandate → printer config change → digital workflow enforcement → dashboard build → quarterly reporting.',
+        resourcesRequired: '1 HR coordinator, 1 IT administrator, 1 month, no capex.',
+        riskAndMitigation: 'Staff habits resistant to change. Mitigation: floor champions, gamification leaderboard, visible paper meters per floor.',
+        successMetrics: '60% paper reduction; KWD 10,800 saved; all departments on dashboard by month 2.',
+        ipAcknowledged: true,
+        screeningNotes: 'Operational housekeeping — does not meet innovation threshold.',
+        screenedBy: 'u07', screenedAt: '2026-09-07T15:00:00',
+    },
 ];
 
 // ── SCORING ENGINE ─────────────────────────────────────────────
@@ -1522,6 +1711,17 @@ const SCORES = [
     { id:'sc-012', ideaId:'KFHC-2026-0012', judgeId:'u11', submittedAt:'2026-09-24T11:00:00',
       businessImpact:4, feasibility:4, innovation:5, strategicAlignment:4, scalability:4, presentationClarity:4,
       notes:'Innovative use of biometric e-signature in Gulf banking context. Strong ESG story.' },
+
+    // KFHC-2026-0017 — Predictive Document Expiry Alert System
+    { id:'sc-013', ideaId:'KFHC-2026-0017', judgeId:'u09', submittedAt:'2026-09-24T09:30:00',
+      businessImpact:4, feasibility:5, innovation:3, strategicAlignment:4, scalability:4, presentationClarity:4,
+      notes:'Solid operational play. Feasibility is very high — existing systems already support this.' },
+    { id:'sc-014', ideaId:'KFHC-2026-0017', judgeId:'u10', submittedAt:'2026-09-24T10:00:00',
+      businessImpact:3, feasibility:5, innovation:3, strategicAlignment:3, scalability:4, presentationClarity:4,
+      notes:'Low innovation score but genuine time-saving value. Well-scoped.' },
+    { id:'sc-015', ideaId:'KFHC-2026-0017', judgeId:'u11', submittedAt:'2026-09-24T11:00:00',
+      businessImpact:4, feasibility:4, innovation:4, strategicAlignment:4, scalability:3, presentationClarity:5,
+      notes:'Best-presented submission. Clear problem quantification.' },
 ];
 
 // Conflict-of-interest recusals — judge excluded from scoring that idea
@@ -1552,6 +1752,18 @@ const COACHING_SESSIONS = [
         notes: 'Follow-up. Revised implementation plan is strong. Discussed scoring panel presentation structure.',
         nextSteps: 'No further sessions required. Idea ready for finalist evaluation.',
     },
+    {
+        id: 'cs-04', ideaId: 'KFHC-2026-0016', coachId: 'u08',
+        sessionDate: '2026-09-17', durationMins: 45,
+        notes: 'Reviewed the detection algorithm approach. Suggested adding a false-positive rate KPI to the success metrics.',
+        nextSteps: 'Update success metrics and prepare business case summary for panel.',
+    },
+    {
+        id: 'cs-05', ideaId: 'KFHC-2026-0017', coachId: 'u08',
+        sessionDate: '2026-09-19', durationMins: 30,
+        notes: 'Strong submission. Advised on presentation structure for the scoring panel.',
+        nextSteps: 'No further sessions required.',
+    },
 ];
 
 // ── AUDIT LOG ─────────────────────────────────────────────────
@@ -1571,6 +1783,11 @@ const AUDIT_LOG = [
     { id:'aud-13', ts:'2026-09-16T10:00:00', actor:'u08', action:'COACHING_SESSION_LOGGED', entity:'KFHC-2026-0007', detail:'Session 1: RPA exception-handling review. 60 minutes.' },
     { id:'aud-14', ts:'2026-09-22T08:30:00', actor:'u10', action:'COI_DECLARED',            entity:'KFHC-2026-0011', detail:'Hessa Al-Failakawi declared conflict of interest and recused from scoring KFHC-2026-0011.' },
     { id:'aud-15', ts:'2026-09-23T14:15:00', actor:'u09', action:'IDEA_SCORED',             entity:'KFHC-2026-0009', detail:'Score submitted. Weighted total: 4.45/5.00.' },
+    { id:'aud-16', ts:'2026-09-08T09:00:00', actor:'u07', action:'IDEA_SCREENED_ELIGIBLE',       entity:'KFHC-2026-0014', detail:'Marked Eligible — clear cost reduction case.' },
+    { id:'aud-17', ts:'2026-09-08T15:00:00', actor:'u07', action:'IDEA_SCREENED_INELIGIBLE',     entity:'KFHC-2026-0020', detail:'Marked Ineligible — below innovation threshold.' },
+    { id:'aud-18', ts:'2026-09-08T16:00:00', actor:'u06', action:'IDEA_SHORTLISTED',             entity:'KFHC-2026-0016', detail:'Advanced to Shortlisted — strong revenue impact.' },
+    { id:'aud-19', ts:'2026-09-09T09:30:00', actor:'u08', action:'COACHING_SESSION_LOGGED',      entity:'KFHC-2026-0016', detail:'Session 1: Revenue leakage detection review. 45 minutes.' },
+    { id:'aud-20', ts:'2026-09-09T14:00:00', actor:'u06', action:'IDEA_SCREENED_NEEDS_REVIEW',   entity:'KFHC-2026-0018', detail:'Needs facilities sign-off before advancing.' },
 ];
 
 // ── SCORING ENGINE helpers ────────────────────────────────────
@@ -1898,30 +2115,47 @@ function dbCountdown() {
     </div>`;
 }
 
-function dbFunnel() {
-    const total = Math.max(IDEAS.filter(i => i.status !== 'draft').length, 1);
+function dbPipelineChart() {
+    const submitted   = IDEAS.filter(i => i.status !== 'draft').length;
+    const screened    = IDEAS.filter(i => ['eligible','needs_review','shortlisted','finalist','winner','ineligible'].includes(i.status)).length;
+    const eligible    = IDEAS.filter(i => ['eligible','shortlisted','finalist','winner'].includes(i.status)).length;
+    const shortlisted = IDEAS.filter(i => ['shortlisted','finalist','winner'].includes(i.status)).length;
+    const finalist    = IDEAS.filter(i => ['finalist','winner'].includes(i.status)).length;
+    const winner      = IDEAS.filter(i => i.status === 'winner').length;
+
     const stages = [
-        { label:'Submitted',   n: IDEAS.filter(i=>i.status!=='draft').length,                                     clr:'#0E5C4A' },
-        { label:'Eligible',    n: IDEAS.filter(i=>['eligible','shortlisted','finalist','winner'].includes(i.status)).length, clr:'#1A7A45' },
-        { label:'Shortlisted', n: IDEAS.filter(i=>['shortlisted','finalist','winner'].includes(i.status)).length, clr:'#B8923A' },
-        { label:'Finalist',    n: IDEAS.filter(i=>['finalist','winner'].includes(i.status)).length,               clr:'#6B21A8' },
-        { label:'Winner',      n: IDEAS.filter(i=>i.status==='winner').length,                                    clr:'#B91C1C' },
+        { label: 'Submitted',   n: submitted,   clr: '#0E5C4A' },
+        { label: 'Screened',    n: screened,    clr: '#1A7A45' },
+        { label: 'Eligible',    n: eligible,    clr: '#2D9E5F' },
+        { label: 'Shortlisted', n: shortlisted, clr: '#B8923A' },
+        { label: 'Finalist',    n: finalist,    clr: '#6B21A8' },
+        { label: 'Winner',      n: winner,      clr: '#B91C1C' },
     ];
-    const rows = stages.map(s => {
-        const pct = Math.round(s.n / total * 100);
-        const w   = s.n > 0 ? Math.max(pct, 8) : 0;
-        return `<div class="funnel-row">
-            <div class="funnel-label">${s.label}</div>
-            <div class="funnel-track">
-                <div class="funnel-fill" style="width:${w}%;background:${s.clr}">${s.n > 0 ? s.n : ''}</div>
-            </div>
-            <div class="funnel-pct">${pct}%</div>
-        </div>`;
-    }).join('');
+    const maxN = Math.max(submitted, 1);
+    const W = 340; const H = stages.length * 40 + 20;
+
+    let bars = ''; let convLabels = '';
+    stages.forEach((s, i) => {
+        const barW = Math.max(s.n > 0 ? Math.round(s.n / maxN * W) : 0, s.n > 0 ? 24 : 0);
+        const y = 10 + i * 40;
+        bars += `<rect x="0" y="${y}" width="${barW}" height="28" rx="4" fill="${s.clr}" opacity="0.9"/>`;
+        if (s.n > 0) {
+            bars += `<text x="${Math.min(barW + 6, W - 20)}" y="${y + 19}" font-size="13" font-weight="700" fill="#1A1A1A">${s.n}</text>`;
+        }
+        bars += `<text x="${W + 10}" y="${y + 19}" font-size="11" fill="#5A5A5A" font-weight="600">${s.label}</text>`;
+        if (i < stages.length - 1 && stages[i].n > 0 && stages[i+1].n > 0) {
+            const conv = Math.round(stages[i+1].n / stages[i].n * 100);
+            const arrowY = y + 36;
+            convLabels += `<text x="${barW > 40 ? barW/2 : 50}" y="${arrowY}" font-size="10" fill="#B8923A" font-weight="700" text-anchor="middle">${conv}% →</text>`;
+        }
+    });
+
     return `<div class="card">
-        <div class="card-title">Submission Funnel</div>
-        <div class="funnel">${rows}</div>
-        <div style="margin-top:var(--sp-md);font-size:var(--fs-xs);color:var(--clr-muted)">
+        <div class="card-title">Submission Pipeline</div>
+        <svg viewBox="0 0 ${W + 90} ${H}" width="100%" style="overflow:visible;display:block">
+            ${bars}${convLabels}
+        </svg>
+        <div style="margin-top:var(--sp-sm);font-size:var(--fs-xs);color:var(--clr-muted)">
             ${IDEAS.filter(i=>i.status==='ineligible').length} ineligible &nbsp;·&nbsp;
             ${IDEAS.filter(i=>i.status==='needs_review').length} needs review &nbsp;·&nbsp;
             ${IDEAS.filter(i=>i.status==='draft').length} draft (not submitted)
@@ -1933,21 +2167,137 @@ function dbCatChart() {
     const counts = {};
     CATEGORIES.forEach(c => { counts[c] = 0; });
     IDEAS.filter(i => i.status !== 'draft').forEach(i => { if (counts[i.category] !== undefined) counts[i.category]++; });
+    const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
     const maxN = Math.max(...Object.values(counts), 1);
-    const rows = Object.entries(counts)
-        .sort((a,b) => b[1]-a[1])
-        .map(([cat, n]) => {
-            const pct = Math.round(n / maxN * 100);
-            const lbl = cat.length > 26 ? cat.slice(0,24)+'…' : cat;
-            return `<div class="cat-row">
-                <div class="cat-name" title="${cat}">${lbl}</div>
-                <div class="cat-track"><div class="cat-fill" style="width:${n>0?Math.max(pct,3):0}%"></div></div>
-                <div class="cat-cnt">${n}</div>
-            </div>`;
-        }).join('');
+    const rows = sorted.map(([cat, n], idx) => {
+        const pct = Math.round(n / maxN * 100);
+        const lbl = cat.length > 26 ? cat.slice(0,24)+'…' : cat;
+        const fillClr = idx < 3 ? 'var(--clr-accent)' : 'var(--clr-primary)';
+        return `<div class="cat-row">
+            <div class="cat-name" title="${cat}">${lbl}</div>
+            <div class="cat-track" style="height:18px"><div class="cat-fill" style="width:${n>0?Math.max(pct,4):0}%;background:${fillClr};height:100%"></div></div>
+            <div class="cat-cnt" style="width:20px">${n}</div>
+        </div>`;
+    }).join('');
     return `<div class="card">
         <div class="card-title">Ideas by Category</div>
         <div>${rows}</div>
+        <div style="margin-top:var(--sp-sm);font-size:var(--fs-xs);color:var(--clr-muted)">
+            <span style="display:inline-block;width:10px;height:10px;background:var(--clr-accent);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Top 3 categories &nbsp;
+            <span style="display:inline-block;width:10px;height:10px;background:var(--clr-primary);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Others
+        </div>
+    </div>`;
+}
+
+function dbScoreDistribution() {
+    const finalists = IDEAS.filter(i => i.status === 'finalist' || i.status === 'winner');
+    const scoredIdeas = finalists.map(i => ({ id: i.refCode, score: computeIdeaScore(i.refCode) })).filter(x => x.score !== null);
+    if (!scoredIdeas.length) return `<div class="card"><div class="card-title">Score Distribution</div><p style="color:var(--clr-muted);font-size:var(--fs-sm)">No scores yet.</p></div>`;
+
+    const threshold = CYCLE.shortlistThreshold;
+    const buckets = [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5].map(b => ({
+        lo: b, hi: b+0.5,
+        count: scoredIdeas.filter(s => s.score >= b && s.score < b+0.5).length
+    }));
+    const maxCount = Math.max(...buckets.map(b => b.count), 1);
+    const W = 320; const H = 100; const bW = W / buckets.length - 2;
+
+    let rects = ''; let xLabels = '';
+    buckets.forEach((b, i) => {
+        const bH = b.count > 0 ? Math.max(b.count / maxCount * (H - 20), 4) : 0;
+        const x = i * (W / buckets.length) + 1;
+        const y = H - 20 - bH;
+        const isPass = b.lo >= threshold;
+        rects += `<rect x="${x}" y="${y}" width="${bW}" height="${bH}" rx="2" fill="${isPass ? '#1A7A45' : '#CBD5E1'}" opacity="0.85"/>`;
+        if (b.count > 0) rects += `<text x="${x + bW/2}" y="${y - 3}" font-size="10" font-weight="700" fill="#1A1A1A" text-anchor="middle">${b.count}</text>`;
+        if (i % 2 === 0) xLabels += `<text x="${x + bW/2}" y="${H - 4}" font-size="9" fill="#5A5A5A" text-anchor="middle">${b.lo.toFixed(1)}</text>`;
+    });
+
+    const threshX = (threshold / 5) * W;
+    const threshLine = `<line x1="${threshX}" y1="0" x2="${threshX}" y2="${H-18}" stroke="#B8923A" stroke-width="2" stroke-dasharray="4,3"/>
+        <text x="${threshX + 3}" y="12" font-size="9" fill="#B8923A" font-weight="700">Pass ${threshold}</text>`;
+
+    return `<div class="card">
+        <div class="card-title">Score Distribution</div>
+        <svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;overflow:visible">
+            <rect x="0" y="0" width="${threshX}" height="${H-18}" fill="#FEE2E2" opacity="0.25" rx="2"/>
+            <rect x="${threshX}" y="0" width="${W - threshX}" height="${H-18}" fill="#D1FAE5" opacity="0.25" rx="2"/>
+            ${rects}${threshLine}${xLabels}
+        </svg>
+        <div style="margin-top:var(--sp-xs);font-size:10px;color:var(--clr-muted);display:flex;gap:12px">
+            <span><span style="display:inline-block;width:8px;height:8px;background:#1A7A45;border-radius:1px;vertical-align:middle;margin-right:3px"></span>Pass (≥${threshold})</span>
+            <span><span style="display:inline-block;width:8px;height:8px;background:#CBD5E1;border-radius:1px;vertical-align:middle;margin-right:3px"></span>Fail</span>
+            <span style="margin-left:auto">${scoredIdeas.length} idea${scoredIdeas.length!==1?'s':''} scored</span>
+        </div>
+    </div>`;
+}
+
+function dbDeptChart() {
+    const deptMap = {};
+    IDEAS.filter(i => i.status !== 'draft').forEach(i => {
+        const user = USERS.find(u => u.id === i.submittedBy);
+        if (!user) return;
+        if (!deptMap[user.dept]) deptMap[user.dept] = { ideas: 0, participants: new Set() };
+        deptMap[user.dept].ideas++;
+        deptMap[user.dept].participants.add(user.id);
+    });
+    const depts = Object.entries(deptMap).map(([dept, d]) => ({ dept, ideas: d.ideas, participants: d.participants.size }))
+        .sort((a,b) => b.ideas - a.ideas);
+    const maxIdeas = Math.max(...depts.map(d => d.ideas), 1);
+    const rows = depts.map(d => {
+        const pct = Math.round(d.ideas / maxIdeas * 100);
+        const lbl = d.dept.length > 22 ? d.dept.slice(0,20)+'…' : d.dept;
+        return `<div class="cat-row">
+            <div class="cat-name" title="${d.dept}" style="width:160px">${lbl}</div>
+            <div class="cat-track" style="height:16px"><div class="cat-fill" style="width:${Math.max(pct,4)}%;height:100%"></div></div>
+            <div style="font-size:11px;color:var(--clr-primary);font-weight:700;width:20px;flex-shrink:0;text-align:right">${d.ideas}</div>
+            <div style="font-size:10px;color:var(--clr-muted);flex-shrink:0;width:60px;text-align:right">${d.participants} person${d.participants!==1?'s':''}</div>
+        </div>`;
+    }).join('');
+    return `<div class="card">
+        <div class="card-title">Submissions by Department</div>
+        ${rows || '<p style="color:var(--clr-muted);font-size:var(--fs-sm)">No data.</p>'}
+    </div>`;
+}
+
+function dbActivitySparkline() {
+    const byWeek = {};
+    IDEAS.filter(i => i.submittedAt).forEach(i => {
+        const d = new Date(i.submittedAt);
+        const weekStart = new Date(d); weekStart.setDate(d.getDate() - d.getDay());
+        const key = weekStart.toISOString().slice(0,10);
+        byWeek[key] = (byWeek[key] || 0) + 1;
+    });
+    const weeks = Object.keys(byWeek).sort();
+    if (weeks.length < 2) return '';
+    let cum = 0;
+    const cumData = weeks.map(w => { cum += byWeek[w]; return { w, cum }; });
+    const maxCum = cum;
+    const W = 320; const H = 70;
+    const pts = cumData.map((d, i) => {
+        const x = (i / (cumData.length - 1)) * W;
+        const y = H - 10 - (d.cum / maxCum) * (H - 20);
+        return `${x},${y}`;
+    }).join(' ');
+    const areaBot = `${(cumData.length-1)/(cumData.length-1)*W},${H-10} 0,${H-10}`;
+    return `<div class="card">
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+            Submission Pace
+            <span style="font-size:var(--fs-xs);color:var(--clr-muted)">${maxCum} total over ${weeks.length} weeks</span>
+        </div>
+        <svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">
+            <defs>
+                <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0E5C4A" stop-opacity="0.25"/>
+                    <stop offset="100%" stop-color="#0E5C4A" stop-opacity="0.02"/>
+                </linearGradient>
+            </defs>
+            <polygon points="${pts} ${areaBot}" fill="url(#sparkGrad)"/>
+            <polyline points="${pts}" fill="none" stroke="#0E5C4A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--clr-muted);margin-top:2px">
+            <span>${weeks[0]}</span><span>${weeks[weeks.length-1]}</span>
+        </div>
     </div>`;
 }
 
@@ -2113,6 +2463,22 @@ function dbExcomWidget() {
     </div>`;
 }
 
+function statCard(label, icon, value, sub, color, trend) {
+    let trendHtml = '';
+    if (trend) {
+        const tclr = trend.dir === 'up' ? '#1A7A45' : '#B91C1C';
+        const tarrow = trend.dir === 'up' ? '↑' : '↓';
+        trendHtml = `<div style="font-size:11px;font-weight:700;color:${tclr};margin-top:2px">${tarrow} ${trend.pct}</div>`;
+    }
+    return `<div class="stat-card">
+        <div class="stat-icon">${icon}</div>
+        <div class="stat-label">${label}</div>
+        <div class="stat-value" style="color:${color}">${value}</div>
+        <div class="stat-sub">${sub}</div>
+        ${trendHtml}
+    </div>`;
+}
+
 function renderDashboard() {
     const submitted     = IDEAS.filter(i => i.status !== 'draft').length;
     const eligible      = IDEAS.filter(i => ['eligible','shortlisted','finalist','winner'].includes(i.status)).length;
@@ -2144,31 +2510,12 @@ function renderDashboard() {
     };
 
     // Stat cards (role-tailored subtitles)
-    const statCards = `
-        <div class="stat-card">
-            <div class="stat-icon">📋</div>
-            <div class="stat-label">Total Submissions</div>
-            <div class="stat-value">${submitted}</div>
-            <div class="stat-sub">Across ${new Set(IDEAS.filter(i=>i.status!=='draft').map(i=>i.category)).size} categories</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">✅</div>
-            <div class="stat-label">Eligible</div>
-            <div class="stat-value">${eligible}</div>
-            <div class="stat-sub">${pendingScreen} pending screening</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">🏆</div>
-            <div class="stat-label">Finalists</div>
-            <div class="stat-value">${finalists}</div>
-            <div class="stat-sub">${scoredCount} of ${finalists} scored</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">👥</div>
-            <div class="stat-label">Participants</div>
-            <div class="stat-value">${participants}</div>
-            <div class="stat-sub">Across ${TEAMS.length} teams</div>
-        </div>`;
+    const statCards = [
+        statCard('Total Submissions', '📋', submitted, `Across ${new Set(IDEAS.filter(i=>i.status!=='draft').map(i=>i.category)).size} categories`, 'var(--clr-primary)', {dir:'up',pct:'8%'}),
+        statCard('Eligible', '✅', eligible, `${pendingScreen} pending screening`, 'var(--clr-eligible)', null),
+        statCard('Finalists', '🏆', finalists, `${scoredCount} of ${finalists} scored`, 'var(--clr-accent)', null),
+        statCard('Participants', '👥', participants, `Across ${TEAMS.length} teams`, '#1D4ED8', null),
+    ].join('');
 
     // Role-specific main section layout
     let mainSection = '';
@@ -2177,13 +2524,18 @@ function renderDashboard() {
     if (isAdminView) {
         mainSection = `
         <div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">
-            ${dbFunnel()}
-            ${dbCatChart()}
+            ${dbPipelineChart()}
+            ${dbCountdown()}
         </div>
         <div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">
-            ${dbCountdown()}
+            ${dbCatChart()}
+            ${dbScoreDistribution()}
+        </div>
+        <div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">
+            ${dbDeptChart()}
             ${currentRole === 'panel_chair' ? dbLeaderboardMini() : dbRecentAudit()}
-        </div>`;
+        </div>
+        ${dbActivitySparkline() ? `<div style="margin-bottom:var(--sp-lg)">${dbActivitySparkline()}</div>` : ''}`;
     } else if (currentRole === 'screener') {
         mainSection = `<div class="card-grid grid-2" style="margin-bottom:var(--sp-lg)">${dbCountdown()}${dbScreenerWidget()}</div>`;
     } else if (currentRole === 'coach') {
