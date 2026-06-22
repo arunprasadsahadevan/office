@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KFH Capital — InnovationHub</title>
+    <style>
+        /* ── DESIGN SYSTEM: CSS VARIABLES ── */
+        :root {
+            --clr-primary:       #0E5C4A;
+            --clr-primary-dark:  #0A4034;
+            --clr-accent:        #B8923A;
+            --clr-surface-tint:  #E7F0ED;
+            --clr-surface-off:   #F4F8F6;
+            --clr-white:         #FFFFFF;
+            --clr-text:          #1A1A1A;
+            --clr-muted:         #5A5A5A;
+            --clr-border:        #CCD5D2;
+
+            --clr-eligible:      #1A7A45;
+            --clr-eligible-bg:   #E6F4EC;
+            --clr-review:        #B45309;
+            --clr-review-bg:     #FEF3C7;
+            --clr-ineligible:    #B91C1C;
+            --clr-ineligible-bg: #FEE2E2;
+            --clr-finalist:      #92700E;
+            --clr-finalist-bg:   #FEF9E7;
+            --clr-winner:        #0E5C4A;
+            --clr-winner-bg:     #E7F0ED;
+            --clr-draft:         #4B5563;
+            --clr-draft-bg:      #F3F4F6;
+
+            --sp-xs:  4px;
+            --sp-sm:  8px;
+            --sp-md:  16px;
+            --sp-lg:  24px;
+            --sp-xl:  32px;
+            --sp-2xl: 48px;
+
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif;
+            --fs-xs:   11px;
+            --fs-sm:   13px;
+            --fs-base: 15px;
+            --fs-md:   17px;
+            --fs-lg:   20px;
+            --fs-xl:   24px;
+            --fs-2xl:  30px;
+
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+
+            --appbar-h:    64px;
+            --sidebar-w:   248px;
+        }
+
+        /* ── RESET ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: 15px; scroll-behavior: smooth; }
+        body {
+            font-family: var(--font);
+            font-size: var(--fs-base);
+            color: var(--clr-text);
+            background: var(--clr-surface-off);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+        a { color: var(--clr-primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        button {
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: var(--fs-sm);
+            border: none;
+            border-radius: var(--radius-md);
+            transition: background .15s, box-shadow .15s, opacity .15s;
+        }
+        button:disabled { opacity: .5; cursor: not-allowed; }
+        input, select, textarea { font-family: var(--font); font-size: var(--fs-sm); color: var(--clr-text); }
+
+        /* ── APP SHELL ── */
+        #app { min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* ── TOP APP BAR ── */
+        .appbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--appbar-h);
+            background: var(--clr-primary);
+            display: flex;
+            align-items: center;
+            padding: 0 var(--sp-xl);
+            gap: var(--sp-lg);
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,.22);
+        }
+
+        .appbar-wordmark { display: flex; flex-direction: column; gap: 1px; position: relative; }
+        .appbar-wordmark .brand-main {
+            font-size: var(--fs-md);
+            font-weight: 700;
+            color: var(--clr-white);
+            letter-spacing: .01em;
+            white-space: nowrap;
+        }
+        .appbar-wordmark .brand-sub {
+            font-size: var(--fs-xs);
+            font-weight: 600;
+            color: var(--clr-accent);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+        /* Gold underline accent */
+        .appbar-wordmark::after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--clr-accent) 60%, transparent);
+            margin-top: 3px;
+        }
+
+        .appbar-vr {
+            width: 1px; height: 32px;
+            background: rgba(255,255,255,.2);
+            flex-shrink: 0;
+        }
+        .appbar-cycle {
+            font-size: var(--fs-xs);
+            color: rgba(255,255,255,.6);
+            white-space: nowrap;
+        }
+        .appbar-spacer { flex: 1; }
+
+        /* Role Switcher */
+        .role-switcher { display: flex; align-items: center; gap: var(--sp-sm); }
+        .role-switcher label {
+            font-size: var(--fs-xs);
+            color: rgba(255,255,255,.6);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .role-switcher select {
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.22);
+            color: var(--clr-white);
+            padding: 6px 28px 6px 10px;
+            border-radius: var(--radius-md);
+            font-size: var(--fs-sm);
+            font-weight: 500;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            transition: background .15s, border-color .15s;
+        }
+        .role-switcher select:hover {
+            background-color: rgba(255,255,255,.2);
+            border-color: rgba(255,255,255,.4);
+        }
+        .role-switcher select option {
+            background: var(--clr-primary-dark);
+            color: var(--clr-white);
+        }
+
+        /* Hamburger (mobile) */
+        .hamburger {
+            display: none;
+            align-items: center; justify-content: center;
+            width: 36px; height: 36px;
+            border-radius: var(--radius-md);
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.2);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* ── BODY LAYOUT ── */
+        .body-layout {
+            display: flex;
+            margin-top: var(--appbar-h);
+            min-height: calc(100vh - var(--appbar-h));
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: var(--sidebar-w);
+            background: var(--clr-white);
+            border-right: 1px solid var(--clr-border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            position: fixed;
+            top: var(--appbar-h); bottom: 0; left: 0;
+            overflow-y: auto;
+            z-index: 900;
+            transition: transform .25s ease;
+        }
+
+        .sidebar-role-badge {
+            padding: var(--sp-md) var(--sp-md) var(--sp-sm);
+            border-bottom: 1px solid var(--clr-border);
+            background: var(--clr-surface-off);
+        }
+        .role-badge-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--sp-xs);
+            background: var(--clr-primary);
+            color: var(--clr-white);
+            font-size: var(--fs-xs);
+            font-weight: 700;
+            padding: 3px 10px 3px 8px;
+            border-radius: 999px;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .role-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--clr-accent);
+            flex-shrink: 0;
+        }
+        .role-capability {
+            font-size: var(--fs-xs);
+            color: var(--clr-muted);
+            line-height: 1.45;
+        }
+
+        .sidebar-nav { padding: var(--sp-sm) 0; flex: 1; }
+
+        .nav-section-label {
+            font-size: var(--fs-xs);
+            font-weight: 700;
+            color: var(--clr-muted);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            padding: var(--sp-sm) var(--sp-md) 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--sp-sm);
+            padding: 10px var(--sp-md);
+            font-size: var(--fs-sm);
+            font-weight: 500;
+            color: var(--clr-muted);
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: background .12s, color .12s;
+            user-select: none;
+        }
+        .nav-item:hover { background: var(--clr-surface-tint); color: var(--clr-primary); }
+        .nav-item.active {
+            background: var(--clr-surface-tint);
+            color: var(--clr-primary);
+            border-left-color: var(--clr-primary);
+            font-weight: 600;
+        }
+        .nav-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+        .nav-badge {
+            margin-left: auto;
+            background: var(--clr-accent);
+            color: var(--clr-white);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 999px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* Mobile sidebar overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,.35);
+            z-index: 850;
+        }
+        .sidebar-overlay.visible { display: block; }
+
+        /* ── MAIN CONTENT ── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            min-width: 0;
+            padding: var(--sp-xl);
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header { margin-bottom: var(--sp-xl); }
+        .page-header h1 {
+            font-size: var(--fs-xl);
+            font-weight: 700;
+            color: var(--clr-text);
+            margin-bottom: 4px;
+        }
+        .page-header p { font-size: var(--fs-sm); color: var(--clr-muted); }
+        .page-header-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: var(--sp-md);
+            flex-wrap: wrap;
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: var(--clr-white);
+            border: 1px solid var(--clr-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: var(--sp-lg);
+        }
+        .card + .card { margin-top: var(--sp-lg); }
+        .card-title {
+            font-size: var(--fs-md);
+            font-weight: 600;
+            color: var(--clr-text);
+            margin-bottom: var(--sp-md);
+        }
+        .card-grid { display: grid; gap: var(--sp-lg); }
+        .grid-2 { grid-template-columns: repeat(2,1fr); }
+        .grid-3 { grid-template-columns: repeat(3,1fr); }
+        .grid-4 { grid-template-columns: repeat(4,1fr); }
+
+        /* ── STATUS CHIPS ── */
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: var(--fs-xs);
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        .chip::before {
+            content: '';
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+            flex-shrink: 0;
+        }
+        .chip-draft       { color: var(--clr-draft);      background: var(--clr-draft-bg); }
+        .chip-submitted   { color: #1D4ED8;                background: #EFF6FF; }
+        .chip-eligible    { color: var(--clr-eligible);   background: var(--clr-eligible-bg); }
+        .chip-ineligible  { color: var(--clr-ineligible); background: var(--clr-ineligible-bg); }
+        .chip-review      { color: var(--clr-review);     background: var(--clr-review-bg); }
+        .chip-shortlisted { color: var(--clr-finalist);   background: var(--clr-finalist-bg); }
+        .chip-finalist    { color: #6B21A8;                background: #F3E8FF; }
+        .chip-winner      { color: var(--clr-primary);    background: var(--clr-winner-bg); }
+        .chip-screened    { color: #065F46;                background: #D1FAE5; }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--sp-xs);
+            padding: 9px 18px;
+            font-size: var(--fs-sm);
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            transition: all .15s;
+            white-space: nowrap;
+        }
+        .btn-primary  { background: var(--clr-primary); color: var(--clr-white); box-shadow: 0 1px 3px rgba(14,92,74,.3); }
+        .btn-primary:hover  { background: var(--clr-primary-dark); box-shadow: 0 2px 6px rgba(14,92,74,.35); }
+        .btn-secondary { background: var(--clr-white); color: var(--clr-primary); border: 1.5px solid var(--clr-primary); }
+        .btn-secondary:hover { background: var(--clr-surface-tint); }
+        .btn-accent  { background: var(--clr-accent); color: var(--clr-white); }
+        .btn-accent:hover  { background: #A07C2E; }
+        .btn-danger  { background: #FEE2E2; color: var(--clr-ineligible); border: 1.5px solid #FECACA; }
+        .btn-danger:hover  { background: #FECACA; }
+        .btn-ghost   { background: transparent; color: var(--clr-muted); }
+        .btn-ghost:hover   { background: var(--clr-surface-tint); color: var(--clr-primary); }
+        .btn-sm  { padding: 5px 12px; font-size: var(--fs-xs); }
+        .btn-lg  { padding: 12px 24px; font-size: var(--fs-base); }
+
+        /* ── ACCESS DENIED ── */
+        .access-denied {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--sp-2xl);
+            min-height: 420px;
+            gap: var(--sp-md);
+        }
+        .access-denied-icon { font-size: 52px; margin-bottom: var(--sp-sm); }
+        .access-denied h2 { font-size: var(--fs-xl); font-weight: 700; }
+        .access-denied p { font-size: var(--fs-sm); color: var(--clr-muted); max-width: 440px; }
+        .allowed-roles { display: flex; flex-wrap: wrap; gap: var(--sp-xs); justify-content: center; margin-top: var(--sp-sm); }
+        .allowed-role-pill {
+            background: var(--clr-surface-tint);
+            color: var(--clr-primary);
+            font-size: var(--fs-xs);
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--clr-border);
+        }
+
+        /* ── TOAST ── */
+        .toast-container {
+            position: fixed;
+            top: calc(var(--appbar-h) + var(--sp-md));
+            right: var(--sp-lg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-sm);
+            pointer-events: none;
+        }
+        .toast {
+            background: var(--clr-white);
+            border: 1px solid var(--clr-border);
+            border-left: 4px solid var(--clr-primary);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: 10px var(--sp-md);
+            font-size: var(--fs-sm);
+            font-weight: 500;
+            min-width: 260px; max-width: 360px;
+            display: flex;
+            align-items: center;
+            gap: var(--sp-sm);
+            pointer-events: all;
+            animation: toastIn .2s ease;
+        }
+        .toast-success { border-left-color: var(--clr-eligible); }
+        .toast-error   { border-left-color: var(--clr-ineligible); }
+        .toast-warning { border-left-color: var(--clr-review); }
+        .toast-icon { font-size: 15px; flex-shrink: 0; }
+        .toast-msg  { flex: 1; }
+        @keyframes toastIn  { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+        @keyframes toastOut { from { opacity:1; transform:translateX(0); }   to { opacity:0; transform:translateX(20px); } }
+        .toast.removing { animation: toastOut .2s ease forwards; }
+
+        /* ── STAGE PIPELINE ── */
+        .stage-bar {
+            display: flex;
+            align-items: flex-start;
+            overflow-x: auto;
+            padding: var(--sp-md) 0 var(--sp-sm);
+        }
+        .stage-item {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 6px; min-width: 96px; position: relative;
+        }
+        .stage-item:not(:last-child)::after {
+            content: '';
+            position: absolute; top: 11px; left: 50%; width: 100%; height: 2px;
+            background: var(--clr-border);
+        }
+        .stage-item.done::after  { background: var(--clr-primary); }
+        .stage-item.active::after { background: linear-gradient(90deg, var(--clr-primary), var(--clr-border)); }
+        .stage-dot {
+            width: 24px; height: 24px; border-radius: 50%;
+            border: 2px solid var(--clr-border);
+            background: var(--clr-white);
+            z-index: 1;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 700;
+        }
+        .stage-item.done   .stage-dot { background: var(--clr-primary); border-color: var(--clr-primary); color: white; }
+        .stage-item.active .stage-dot { background: var(--clr-accent);  border-color: var(--clr-accent);  color: white; }
+        .stage-label {
+            font-size: 10px; font-weight: 500; color: var(--clr-muted);
+            text-align: center; line-height: 1.3;
+        }
+        .stage-item.done   .stage-label { color: var(--clr-primary); font-weight: 600; }
+        .stage-item.active .stage-label { color: var(--clr-accent);  font-weight: 700; }
+
+        /* ── STAT CARDS ── */
+        .stat-card {
+            background: var(--clr-white);
+            border: 1px solid var(--clr-border);
+            border-radius: var(--radius-lg);
+            padding: var(--sp-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        .stat-icon    { font-size: 26px; margin-bottom: var(--sp-sm); }
+        .stat-label   { font-size: var(--fs-xs); font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+        .stat-value   { font-size: var(--fs-2xl); font-weight: 700; color: var(--clr-primary); line-height: 1; margin-bottom: 2px; }
+        .stat-sub     { font-size: var(--fs-xs); color: var(--clr-muted); }
+
+        /* ── COMING SOON PLACEHOLDER ── */
+        .coming-soon {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; min-height: 240px;
+            gap: var(--sp-md); text-align: center;
+        }
+        .coming-soon-icon { font-size: 40px; }
+        .coming-soon h3 { font-size: var(--fs-lg); font-weight: 600; }
+        .coming-soon p  { font-size: var(--fs-sm); color: var(--clr-muted); max-width: 380px; }
+        .phase-tag {
+            display: inline-block;
+            background: var(--clr-surface-tint);
+            color: var(--clr-primary);
+            font-size: var(--fs-xs); font-weight: 700;
+            padding: 3px 12px; border-radius: 999px;
+            border: 1px solid var(--clr-border);
+        }
+
+        /* ── MISC ── */
+        .divider { border: none; border-top: 1px solid var(--clr-border); margin: var(--sp-lg) 0; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: var(--sp-md); }
+            .appbar { padding: 0 var(--sp-md); }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .appbar-cycle { display: none; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--clr-border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--clr-muted); }
+    </style>
+</head>
+<body>
+
+<div id="app">
+
+    <!-- ── TOP APP BAR ── -->
+    <header class="appbar">
+        <button class="hamburger" onclick="toggleSidebar()" aria-label="Toggle menu">&#9776;</button>
+
+        <div class="appbar-wordmark">
+            <span class="brand-main">KFH Capital</span>
+            <span class="brand-sub">InnovationHub</span>
+        </div>
+
+        <div class="appbar-vr"></div>
+        <span class="appbar-cycle">2026 Innovation Competition</span>
+
+        <div class="appbar-spacer"></div>
+
+        <!-- ROLE SWITCHER -->
+        <div class="role-switcher">
+            <label for="role-select">Viewing as:</label>
+            <select id="role-select" onchange="switchRole(this.value)">
+                <option value="participant">Participant</option>
+                <option value="team_lead">Team Lead</option>
+                <option value="screener">Screener</option>
+                <option value="coach">Coach</option>
+                <option value="judge">Judge</option>
+                <option value="panel_chair">Panel Chair</option>
+                <option value="excom_member">ExCom Member</option>
+                <option value="innovation_admin" selected>Innovation Admin</option>
+                <option value="auditor">Auditor</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <div class="body-layout">
+
+        <!-- ── SIDEBAR ── -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-role-badge">
+                <div class="role-badge-chip" id="role-chip">
+                    <span class="role-dot"></span>
+                    <span id="role-chip-name">Innovation Admin</span>
+                </div>
+                <div class="role-capability" id="role-cap-text">
+                    Full operational access: cycle config, user management, funnel dashboard, publish results.
+                </div>
+            </div>
+            <div class="sidebar-nav" id="sidebar-nav"></div>
+        </nav>
+
+        <!-- ── MAIN CONTENT ── -->
+        <main class="main-content" id="main-content"></main>
+
+    </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+/* ============================================================
+   KFH Capital InnovationHub — Phase 1: Shell & Design System
+   ============================================================ */
+
+// ── RBAC ──────────────────────────────────────────────────────
+// Maps each role to its label, capability description, allowed pages, and colour
+const ROLES = {
+    participant: {
+        label: 'Participant',
+        capability: 'Submit ideas and track your own submissions and feedback.',
+        pages: ['dashboard','submit','my_ideas'],
+        color: '#1D4ED8'
+    },
+    team_lead: {
+        label: 'Team Lead',
+        capability: 'Participant rights plus manage your team roster and prize split.',
+        pages: ['dashboard','submit','my_ideas','manage_team'],
+        color: '#065F46'
+    },
+    screener: {
+        label: 'Screener',
+        capability: 'Mark submitted ideas as Eligible, Ineligible, or Needs Review with notes.',
+        pages: ['dashboard','screening'],
+        color: '#92400E'
+    },
+    coach: {
+        label: 'Coach',
+        capability: 'View assigned ideas and log coaching sessions. Cannot score.',
+        pages: ['dashboard','coaching'],
+        color: '#5B21B6'
+    },
+    judge: {
+        label: 'Judge',
+        capability: 'Score assigned finalists on 6 criteria. Declare conflicts of interest.',
+        pages: ['dashboard','scoring'],
+        color: '#0369A1'
+    },
+    panel_chair: {
+        label: 'Panel Chair',
+        capability: 'Judge rights plus view all scores, leaderboard, resolve ties, and lock results.',
+        pages: ['dashboard','scoring','leaderboard','audit_log'],
+        color: '#7C2D12'
+    },
+    excom_member: {
+        label: 'ExCom Member',
+        capability: 'Review Top-5 finalist packets and cast the final Top-3 selection.',
+        pages: ['dashboard','excom'],
+        color: '#701A75'
+    },
+    innovation_admin: {
+        label: 'Innovation Admin',
+        capability: 'Full operational access: cycle config, user management, funnel dashboard, publish results.',
+        pages: ['dashboard','submit','my_ideas','screening','coaching','scoring','leaderboard','excom','admin','audit_log'],
+        color: '#0E5C4A'
+    },
+    auditor: {
+        label: 'Auditor',
+        capability: 'Read-only access to all records, scores, and the audit log.',
+        pages: ['dashboard','leaderboard','audit_log'],
+        color: '#374151'
+    }
+};
+
+// Nav items: icon, label, route key, allowed roles (null = all roles)
+const NAV_ITEMS = [
+    { icon: '◈', label: 'Dashboard',       page: 'dashboard',   roles: null },
+    { icon: '✦', label: 'Submit Idea',     page: 'submit',      roles: ['participant','team_lead','innovation_admin'] },
+    { icon: '◉', label: 'My Ideas',        page: 'my_ideas',    roles: ['participant','team_lead','innovation_admin'] },
+    { icon: '⬡', label: 'Manage Team',     page: 'manage_team', roles: ['team_lead','innovation_admin'] },
+    { icon: '◫', label: 'Screening Queue', page: 'screening',   roles: ['screener','innovation_admin'] },
+    { icon: '❋', label: 'Coaching',        page: 'coaching',    roles: ['coach','innovation_admin'] },
+    { icon: '★', label: 'Scoring',         page: 'scoring',     roles: ['judge','panel_chair','innovation_admin'] },
+    { icon: '▲', label: 'Leaderboard',     page: 'leaderboard', roles: ['panel_chair','innovation_admin','auditor'] },
+    { icon: '◆', label: 'ExCom Selection', page: 'excom',       roles: ['excom_member','innovation_admin'] },
+    { icon: '⚙', label: 'Admin Console',   page: 'admin',       roles: ['innovation_admin'] },
+    { icon: '⌖', label: 'Audit Log',       page: 'audit_log',   roles: ['panel_chair','innovation_admin','auditor'] },
+];
+
+// Build a quick lookup: page → allowed roles
+const PAGE_ACCESS = {};
+NAV_ITEMS.forEach(n => { PAGE_ACCESS[n.page] = n.roles; });
+
+// ── STATE ─────────────────────────────────────────────────────
+let currentRole = 'innovation_admin';
+let currentPage = 'dashboard';
+
+// ── RBAC helpers ──────────────────────────────────────────────
+function canAccess(role, page) {
+    const allowed = PAGE_ACCESS[page];
+    return !allowed || allowed.includes(role);
+}
+
+// ── ROUTER ────────────────────────────────────────────────────
+function navigate(page) {
+    currentPage = page;
+    renderNav();
+    renderPage();
+    closeSidebar();
+}
+
+// ── ROLE SWITCH ───────────────────────────────────────────────
+function switchRole(role) {
+    currentRole = role;
+    if (!canAccess(role, currentPage)) currentPage = 'dashboard';
+    renderRoleBadge();
+    renderNav();
+    renderPage();
+    showToast(`Switched to <strong>${ROLES[role].label}</strong>`, 'info');
+}
+
+// ── RENDER: role badge ────────────────────────────────────────
+function renderRoleBadge() {
+    const r = ROLES[currentRole];
+    document.getElementById('role-chip-name').textContent = r.label;
+    document.getElementById('role-cap-text').textContent  = r.capability;
+    document.getElementById('role-chip').style.background = r.color;
+}
+
+// ── RENDER: sidebar nav ───────────────────────────────────────
+function renderNav() {
+    const nav = document.getElementById('sidebar-nav');
+    nav.innerHTML = NAV_ITEMS
+        .filter(n => !n.roles || n.roles.includes(currentRole))
+        .map(n => {
+            const active = currentPage === n.page ? 'active' : '';
+            return `<div class="nav-item ${active}" onclick="navigate('${n.page}')">
+                        <span class="nav-icon">${n.icon}</span>${n.label}
+                    </div>`;
+        }).join('');
+}
+
+// ── RENDER: page ──────────────────────────────────────────────
+function renderPage() {
+    const main = document.getElementById('main-content');
+
+    if (!canAccess(currentRole, currentPage)) {
+        const allowedLabels = (PAGE_ACCESS[currentPage] || []).map(r => ROLES[r]?.label || r);
+        main.innerHTML = renderAccessDenied(currentPage, allowedLabels);
+        return;
+    }
+
+    const placeholderPages = {
+        submit:      ['Submit Idea',       '✦', 'Phase 5'],
+        my_ideas:    ['My Ideas',          '◉', 'Phase 5'],
+        manage_team: ['Manage Team',       '⬡', 'Phase 6'],
+        screening:   ['Screening Queue',   '◫', 'Phase 6'],
+        coaching:    ['Coaching',          '❋', 'Phase 6'],
+        scoring:     ['Scoring',           '★', 'Phase 7'],
+        leaderboard: ['Leaderboard',       '▲', 'Phase 8'],
+        excom:       ['ExCom Selection',   '◆', 'Phase 8'],
+        admin:       ['Admin Console',     '⚙', 'Phase 9'],
+        audit_log:   ['Audit Log',         '⌖', 'Phase 9'],
+    };
+
+    if (currentPage === 'dashboard') {
+        main.innerHTML = renderDashboard();
+    } else if (placeholderPages[currentPage]) {
+        const [title, icon, phase] = placeholderPages[currentPage];
+        main.innerHTML = renderPlaceholder(title, icon, phase);
+    } else {
+        main.innerHTML = renderPlaceholder('Page Not Found', '?', '');
+    }
+}
+
+// ── PAGE: dashboard ───────────────────────────────────────────
+function renderDashboard() {
+    const stages = [
+        { label: 'Awareness',    dates: '15–31 Jul', state: 'done'   },
+        { label: 'Submission',   dates: '01–31 Aug', state: 'done'   },
+        { label: 'Screening',    dates: '01–14 Sep', state: 'active' },
+        { label: 'Coaching',     dates: '15–21 Sep', state: ''       },
+        { label: 'ExCom Review', dates: '22–28 Sep', state: ''       },
+        { label: 'Announcement', dates: '01 Oct',    state: ''       },
+    ];
+
+    const stagesHtml = stages.map(s => {
+        const dot = s.state === 'done' ? '✓' : s.state === 'active' ? '●' : '';
+        return `<div class="stage-item ${s.state}">
+            <div class="stage-dot">${dot}</div>
+            <div class="stage-label">${s.label}<br><span style="opacity:.7;font-size:9px">${s.dates}</span></div>
+        </div>`;
+    }).join('');
+
+    const roleWidgets = {
+        participant:      `<div class="chip chip-submitted">0 ideas submitted</div>`,
+        team_lead:        `<div class="chip chip-submitted">0 team ideas submitted</div>`,
+        screener:         `<div class="chip chip-review">4 ideas awaiting screening</div>`,
+        coach:            `<div class="chip chip-shortlisted">2 ideas assigned to you</div>`,
+        judge:            `<div class="chip chip-finalist">5 ideas left to score</div>`,
+        panel_chair:      `<div class="chip chip-finalist">Scoring active — 5 finalists</div>`,
+        excom_member:     `<div class="chip chip-shortlisted">Top-5 packets ready for review</div>`,
+        innovation_admin: `<div class="chip chip-review">Screening stage active</div>`,
+        auditor:          `<div class="chip chip-screened">Read-only view</div>`,
+    };
+
+    return `
+    <div class="page-header">
+        <div class="page-header-row">
+            <div>
+                <h1>Dashboard</h1>
+                <p>2026 KFH Capital Innovation Competition &nbsp;·&nbsp; Stage: <strong style="color:var(--clr-accent)">Screening &amp; Shortlisting</strong></p>
+            </div>
+            ${roleWidgets[currentRole] || ''}
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom:var(--sp-lg)">
+        <div class="card-title">Competition Timeline — 2026</div>
+        <div class="stage-bar">${stagesHtml}</div>
+    </div>
+
+    <div class="card-grid grid-4" style="margin-bottom:var(--sp-lg)">
+        <div class="stat-card">
+            <div class="stat-icon">📋</div>
+            <div class="stat-label">Total Submissions</div>
+            <div class="stat-value">12</div>
+            <div class="stat-sub">Across 9 categories</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-label">Eligible / Screened</div>
+            <div class="stat-value">8</div>
+            <div class="stat-sub">4 pending review</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-label">Finalists</div>
+            <div class="stat-value">5</div>
+            <div class="stat-sub">Scoring in progress</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-label">Participants</div>
+            <div class="stat-value">14</div>
+            <div class="stat-sub">Across 3 teams</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Full Dashboard Widgets</div>
+        <div class="coming-soon" style="min-height:180px">
+            <div class="coming-soon-icon">◈</div>
+            <p>Role-aware funnel chart, category breakdown bar chart, countdown timer, and per-role widgets arriving in Phase 4.</p>
+            <span class="phase-tag">Coming in Phase 4</span>
+        </div>
+    </div>`;
+}
+
+// ── PAGE: placeholder ─────────────────────────────────────────
+function renderPlaceholder(title, icon, phase) {
+    return `
+    <div class="page-header"><h1>${title}</h1></div>
+    <div class="card">
+        <div class="coming-soon">
+            <div class="coming-soon-icon">${icon}</div>
+            <h3>${title}</h3>
+            <p>This section will be built in an upcoming phase of the prototype.</p>
+            ${phase ? `<span class="phase-tag">Coming in ${phase}</span>` : ''}
+        </div>
+    </div>`;
+}
+
+// ── PAGE: access denied ───────────────────────────────────────
+function renderAccessDenied(page, allowedRoles) {
+    const pageLabel = NAV_ITEMS.find(n => n.page === page)?.label || page;
+    return `
+    <div class="access-denied">
+        <div class="access-denied-icon">🔒</div>
+        <h2>Access Denied</h2>
+        <p>The <strong>${pageLabel}</strong> page is not accessible with your current role
+           (<strong>${ROLES[currentRole].label}</strong>).</p>
+        <p style="margin-top:4px">This view is limited to:</p>
+        <div class="allowed-roles">
+            ${allowedRoles.map(r => `<span class="allowed-role-pill">${r}</span>`).join('')}
+        </div>
+        <button class="btn btn-secondary" style="margin-top:12px" onclick="navigate('dashboard')">
+            ← Back to Dashboard
+        </button>
+    </div>`;
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(msg, type = 'info') {
+    const ICONS = { success:'✓', error:'✕', warning:'⚠', info:'ℹ' };
+    const TYPES = { success:'toast-success', error:'toast-error', warning:'toast-warning', info:'' };
+    const t = document.createElement('div');
+    t.className = `toast ${TYPES[type] || ''}`;
+    t.innerHTML = `<span class="toast-icon">${ICONS[type] || 'ℹ'}</span><span class="toast-msg">${msg}</span>`;
+    document.getElementById('toast-container').appendChild(t);
+    setTimeout(() => {
+        t.classList.add('removing');
+        t.addEventListener('animationend', () => t.remove());
+    }, 3200);
+}
+
+// ── MOBILE SIDEBAR ────────────────────────────────────────────
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('visible');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('visible');
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+(function init() {
+    document.getElementById('role-select').value = currentRole;
+    renderRoleBadge();
+    renderNav();
+    renderPage();
+})();
+</script>
+</body>
+</html>
