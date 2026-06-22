@@ -693,6 +693,80 @@
         .screening-feedback strong { color: #92400e; }
         .idea-card-actions { display: flex; gap: var(--sp-sm); margin-top: var(--sp-md); }
 
+        /* ── PHASE 6 · SCREENING / COACHING / MANAGE TEAM ── */
+        .queue-section-title { font-size: var(--fs-sm); font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .06em; margin: var(--sp-lg) 0 var(--sp-sm); }
+        .queue-card { border: 1px solid var(--clr-border); border-radius: var(--radius); background: #fff; margin-bottom: var(--sp-sm); overflow: hidden; }
+        .queue-card-header { display: flex; align-items: center; gap: var(--sp-sm); padding: var(--sp-md) var(--sp-lg); cursor: pointer; user-select: none; }
+        .queue-card-header:hover { background: var(--clr-bg); }
+        .queue-card-ref { font-size: 11px; color: var(--clr-muted); font-weight: 600; flex-shrink: 0; width: 130px; }
+        .queue-card-title { flex: 1; font-size: var(--fs-sm); font-weight: 600; color: var(--clr-text); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .queue-card-meta { font-size: 11px; color: var(--clr-muted); flex-shrink: 0; }
+        .queue-card-chevron { color: var(--clr-muted); font-size: 12px; flex-shrink: 0; transition: transform .2s; }
+        .queue-card.open .queue-card-chevron { transform: rotate(90deg); }
+        .queue-card-body { display: none; padding: var(--sp-md) var(--sp-lg) var(--sp-lg); border-top: 1px solid var(--clr-border); }
+        .queue-card.open .queue-card-body { display: block; }
+        .queue-idea-fields { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-sm); margin-bottom: var(--sp-md); }
+        @media (max-width:700px) { .queue-idea-fields { grid-template-columns: 1fr; } }
+        .scrn-note-label { font-size: var(--fs-sm); font-weight: 600; color: var(--clr-text); margin-bottom: 4px; }
+        .scrn-note-area { width: 100%; padding: 8px 12px; border: 1px solid var(--clr-border); border-radius: var(--radius); font-size: var(--fs-sm); font-family: inherit; resize: vertical; min-height: 70px; box-sizing: border-box; outline: none; }
+        .scrn-note-area:focus { border-color: var(--clr-primary); box-shadow: 0 0 0 3px rgba(14,92,74,.08); }
+        .verdict-bar { display: flex; gap: var(--sp-sm); margin-top: var(--sp-md); flex-wrap: wrap; align-items: center; }
+        .verdict-btn { padding: 7px 18px; border-radius: var(--radius); border: 1px solid; font-size: var(--fs-sm); font-weight: 600; cursor: pointer; transition: all .15s; }
+        .verdict-btn.eligible   { border-color: var(--clr-eligible); color: var(--clr-eligible); background: var(--clr-eligible-bg); }
+        .verdict-btn.eligible:hover   { background: var(--clr-eligible); color: #fff; }
+        .verdict-btn.needs-review { border-color: #d97706; color: #d97706; background: #fffbeb; }
+        .verdict-btn.needs-review:hover { background: #d97706; color: #fff; }
+        .verdict-btn.ineligible  { border-color: var(--clr-ineligible); color: var(--clr-ineligible); background: var(--clr-ineligible-bg); }
+        .verdict-btn.ineligible:hover  { background: var(--clr-ineligible); color: #fff; }
+        .verdict-btn:disabled { opacity: .5; cursor: not-allowed; }
+        .scrn-done-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius); padding: var(--sp-sm) var(--sp-md); font-size: var(--fs-sm); color: #166534; margin-top: var(--sp-sm); }
+        .scrn-done-box.needs-review { background: #fffbeb; border-color: #fcd34d; color: #92400e; }
+        .scrn-done-box.ineligible { background: var(--clr-ineligible-bg); border-color: var(--clr-ineligible); color: var(--clr-ineligible); }
+        .scrn-who { font-size: 11px; color: var(--clr-muted); margin-top: var(--sp-sm); }
+
+        /* Coaching */
+        .coaching-card { border: 1px solid var(--clr-border); border-radius: var(--radius); background: #fff; margin-bottom: var(--sp-sm); overflow: hidden; }
+        .coaching-card-header { display: flex; align-items: center; gap: var(--sp-sm); padding: var(--sp-md) var(--sp-lg); cursor: pointer; user-select: none; }
+        .coaching-card-header:hover { background: var(--clr-bg); }
+        .coaching-card-ref { font-size: 11px; color: var(--clr-muted); font-weight: 600; flex-shrink: 0; }
+        .coaching-card-title { flex: 1; font-size: var(--fs-sm); font-weight: 600; color: var(--clr-text); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .coaching-card-sessions { font-size: 11px; color: var(--clr-muted); flex-shrink: 0; }
+        .coaching-card-chevron { color: var(--clr-muted); font-size: 12px; flex-shrink: 0; transition: transform .2s; }
+        .coaching-card.open .coaching-card-chevron { transform: rotate(90deg); }
+        .coaching-card-body { display: none; padding: var(--sp-md) var(--sp-lg) var(--sp-lg); border-top: 1px solid var(--clr-border); }
+        .coaching-card.open .coaching-card-body { display: block; }
+        .session-log { display: flex; flex-direction: column; gap: var(--sp-sm); margin-bottom: var(--sp-md); }
+        .session-entry { background: var(--clr-bg); border-radius: var(--radius); padding: var(--sp-sm) var(--sp-md); font-size: var(--fs-sm); }
+        .session-entry-header { display: flex; gap: var(--sp-sm); align-items: center; margin-bottom: 4px; }
+        .session-date { font-weight: 700; color: var(--clr-primary); }
+        .session-dur { color: var(--clr-muted); font-size: 11px; }
+        .session-notes { color: var(--clr-text); margin-bottom: 4px; }
+        .session-next { color: var(--clr-muted); font-size: 11px; font-style: italic; }
+        .log-session-form { border: 1px dashed var(--clr-border); border-radius: var(--radius); padding: var(--sp-md); background: #fafafa; }
+        .log-session-title { font-size: var(--fs-sm); font-weight: 700; color: var(--clr-primary); margin-bottom: var(--sp-md); }
+        .log-session-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-sm); margin-bottom: var(--sp-sm); }
+        @media (max-width:640px) { .log-session-row { grid-template-columns: 1fr; } }
+
+        /* Manage Team */
+        .team-info-bar { display: flex; gap: var(--sp-lg); align-items: flex-start; margin-bottom: var(--sp-lg); flex-wrap: wrap; }
+        .team-stat { text-align: center; }
+        .team-stat-num { font-size: 2rem; font-weight: 800; color: var(--clr-primary); line-height: 1; }
+        .team-stat-label { font-size: 11px; color: var(--clr-muted); margin-top: 2px; }
+        .member-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+        .member-table th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 700; color: var(--clr-muted); text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--clr-border); }
+        .member-table td { padding: 10px 12px; border-bottom: 1px solid var(--clr-border); vertical-align: middle; }
+        .member-table tr:last-child td { border-bottom: none; }
+        .member-avatar-sm { width: 30px; height: 30px; border-radius: 50%; background: var(--clr-primary); color: #fff; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .prize-input { width: 72px; padding: 5px 8px; border: 1px solid var(--clr-border); border-radius: var(--radius); font-size: var(--fs-sm); text-align: right; }
+        .prize-input:focus { border-color: var(--clr-primary); outline: none; }
+        .prize-bar-wrap { height: 6px; background: var(--clr-border); border-radius: 3px; width: 100px; display: inline-block; vertical-align: middle; margin-left: 8px; }
+        .prize-bar-fill { height: 100%; background: var(--clr-primary); border-radius: 3px; transition: width .3s; }
+        .split-total-row { font-size: var(--fs-sm); font-weight: 700; padding: var(--sp-sm) 0; }
+        .split-total-row.over { color: #dc2626; }
+        .split-total-row.ok { color: var(--clr-eligible); }
+        .no-team-msg { text-align: center; padding: var(--sp-xl) 0; color: var(--clr-muted); font-size: var(--fs-sm); }
+        .no-team-msg .nt-icon { font-size: 2.5rem; margin-bottom: var(--sp-sm); }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -1527,9 +1601,6 @@ function renderPage() {
     }
 
     const placeholderPages = {
-        manage_team: ['Manage Team',       '⬡', 'Phase 6'],
-        screening:   ['Screening Queue',   '◫', 'Phase 6'],
-        coaching:    ['Coaching',          '❋', 'Phase 6'],
         scoring:     ['Scoring',           '★', 'Phase 7'],
         leaderboard: ['Leaderboard',       '▲', 'Phase 8'],
         excom:       ['ExCom Selection',   '◆', 'Phase 8'],
@@ -1543,6 +1614,12 @@ function renderPage() {
         main.innerHTML = ctx + renderSubmitIdea();
     } else if (currentPage === 'my_ideas') {
         main.innerHTML = ctx + renderMyIdeas();
+    } else if (currentPage === 'screening') {
+        main.innerHTML = ctx + renderScreening();
+    } else if (currentPage === 'coaching') {
+        main.innerHTML = ctx + renderCoaching();
+    } else if (currentPage === 'manage_team') {
+        main.innerHTML = ctx + renderManageTeam();
     } else if (placeholderPages[currentPage]) {
         const [title, icon, phase] = placeholderPages[currentPage];
         main.innerHTML = ctx + renderPlaceholder(title, icon, phase);
@@ -2375,6 +2452,426 @@ function renderMyIdeas() {
     <div class="filter-tabs">${tabsHtml}</div>
 
     <div class="ideas-list">${listHtml}</div>`;
+}
+
+// ── PAGE: Screening Queue ─────────────────────────────────────
+function toggleScreeningCard(refCode) {
+    const el = document.getElementById('scrn-card-' + refCode);
+    if (el) el.classList.toggle('open');
+}
+
+function applyScreeningVerdict(refCode, verdict) {
+    if (!can('screenIdeas')) return;
+    const idea = IDEAS.find(i => i.refCode === refCode);
+    if (!idea) return;
+    const noteEl = document.getElementById('scrn-note-' + refCode);
+    const notes  = noteEl ? noteEl.value.trim() : '';
+    const me     = currentUser();
+    const now    = new Date(PROTO_NOW).toISOString();
+
+    idea.status        = verdict;
+    idea.screeningNotes = notes || idea.screeningNotes || null;
+    idea.screenedBy    = me.id;
+    idea.screenedAt    = now;
+    idea.updatedAt     = now;
+
+    const actionLabel = verdict === 'eligible' ? 'IDEA_SCREENED_ELIGIBLE'
+                      : verdict === 'ineligible' ? 'IDEA_SCREENED_INELIGIBLE'
+                      : 'IDEA_SCREENED_NEEDS_REVIEW';
+    appendAudit(actionLabel, refCode, `Marked ${verdict.replace('_',' ')}. ${notes ? 'Note: ' + notes : ''}`);
+    renderPage();
+}
+
+function shortlistIdea(refCode) {
+    if (!can('screenIdeas')) return;
+    const idea = IDEAS.find(i => i.refCode === refCode);
+    if (!idea || idea.status !== 'eligible') return;
+    const me  = currentUser();
+    const now = new Date(PROTO_NOW).toISOString();
+    idea.status    = 'shortlisted';
+    idea.updatedAt = now;
+    appendAudit('IDEA_SHORTLISTED', refCode, 'Advanced to Shortlisted from Eligible.');
+    renderPage();
+}
+
+function renderScreeningIdeaFields(idea) {
+    const row = (label, val) => val ? `
+        <div class="idea-field">
+            <div class="idea-field-label">${label}</div>
+            <div class="idea-field-value">${val}</div>
+        </div>` : '';
+    return `
+    <div class="queue-idea-fields">
+        ${row('Problem Statement', idea.problemStatement)}
+        ${row('Proposed Solution', idea.proposedSolution)}
+        ${row('Expected Benefits', idea.expectedBenefits)}
+        ${row('Baseline Metric', idea.baselineMetric)}
+        ${row('Improvement Target', idea.improvementTarget)}
+        ${row('Resources Required', idea.resourcesRequired)}
+    </div>`;
+}
+
+function renderScreeningCard(idea) {
+    const me       = currentUser();
+    const isReadOnly = !can('screenIdeas');
+    const alreadyDone = ['eligible','ineligible','needs_review','shortlisted','finalist','winner'].includes(idea.status) && idea.screenedBy;
+    const statusCls   = idea.status.replace('_','-');
+
+    const doneBg = idea.status === 'eligible' || idea.status === 'shortlisted' ? '' : idea.status === 'ineligible' ? 'ineligible' : 'needs-review';
+    const doneBox = alreadyDone ? `
+        <div class="scrn-done-box ${doneBg}">
+            Verdict: <strong>${statusLabel(idea.status)}</strong>
+            ${idea.screeningNotes ? ` — "${idea.screeningNotes}"` : ''}
+        </div>
+        <div class="scrn-who">Screened by ${userName(idea.screenedBy)} on ${fmtTs(idea.screenedAt)}</div>` : '';
+
+    const showNoteAndButtons = !isReadOnly && idea.status === 'submitted';
+    const showEligibleActions = !isReadOnly && (idea.status === 'eligible');
+
+    const noteBlock = showNoteAndButtons ? `
+        <div class="form-group" style="margin-top:var(--sp-md)">
+            <div class="scrn-note-label">Screener Notes <span style="font-weight:400;color:var(--clr-muted)">(optional — visible to admin and auditor)</span></div>
+            <textarea id="scrn-note-${idea.refCode}" class="scrn-note-area" placeholder="Note any concerns, missing data, or reasons for your decision…">${idea.screeningNotes || ''}</textarea>
+        </div>
+        <div class="verdict-bar">
+            <button class="verdict-btn eligible"    onclick="applyScreeningVerdict('${idea.refCode}','eligible')">Mark Eligible</button>
+            <button class="verdict-btn needs-review" onclick="applyScreeningVerdict('${idea.refCode}','needs_review')">Needs Review</button>
+            <button class="verdict-btn ineligible"  onclick="applyScreeningVerdict('${idea.refCode}','ineligible')">Mark Ineligible</button>
+        </div>` : '';
+
+    const eligibleActions = showEligibleActions ? `
+        <div class="verdict-bar" style="margin-top:var(--sp-md)">
+            <button class="verdict-btn eligible" onclick="shortlistIdea('${idea.refCode}')">Advance to Shortlisted</button>
+        </div>` : '';
+
+    const submitterName = userName(idea.submittedBy);
+    const teamObj = idea.teamId ? TEAMS.find(t => t.id === idea.teamId) : null;
+    const teamLabel = teamObj ? ` · ${teamObj.name}` : '';
+
+    return `
+    <div class="queue-card" id="scrn-card-${idea.refCode}">
+        <div class="queue-card-header" onclick="toggleScreeningCard('${idea.refCode}')">
+            <span class="queue-card-ref">${idea.refCode}</span>
+            <span class="queue-card-title">${idea.title}</span>
+            <span class="status-badge status-${statusCls}">${statusLabel(idea.status)}</span>
+            <span class="queue-card-meta">${idea.category}</span>
+            <span class="queue-card-meta">${submitterName}${teamLabel}</span>
+            <span class="queue-card-chevron">&#9658;</span>
+        </div>
+        <div class="queue-card-body">
+            ${renderScreeningIdeaFields(idea)}
+            ${doneBox}
+            ${noteBlock}
+            ${eligibleActions}
+        </div>
+    </div>`;
+}
+
+function renderScreening() {
+    const queue    = IDEAS.filter(i => i.status === 'submitted');
+    const reviewed = IDEAS.filter(i => ['eligible','ineligible','needs_review'].includes(i.status) && i.screenedBy);
+
+    const queueHtml = queue.length
+        ? queue.map(renderScreeningCard).join('')
+        : `<div class="empty-state" style="text-align:center;padding:var(--sp-xl);color:var(--clr-muted)">
+               <div style="font-size:2rem;margin-bottom:var(--sp-sm)">◫</div>
+               <p>No ideas awaiting screening.</p>
+           </div>`;
+
+    const reviewedHtml = reviewed.length
+        ? reviewed.map(renderScreeningCard).join('')
+        : `<div style="color:var(--clr-muted);font-size:var(--fs-sm);padding:var(--sp-sm) 0">None yet.</div>`;
+
+    const totalScreened = IDEAS.filter(i => i.screenedBy).length;
+    const totalPending  = queue.length;
+
+    return `
+    <div class="page-header">
+        <div>
+            <h1>Screening Queue</h1>
+            <p class="page-sub">${totalPending} pending · ${totalScreened} screened</p>
+        </div>
+    </div>
+
+    <div class="card-grid grid-4" style="margin-bottom:var(--sp-lg)">
+        ${statCard('Pending','◫',totalPending,'','var(--clr-accent)')}
+        ${statCard('Eligible',   '✓', IDEAS.filter(i=>i.status==='eligible').length,   '', 'var(--clr-eligible)')}
+        ${statCard('Needs Review','!',IDEAS.filter(i=>i.status==='needs_review').length,'', '#d97706')}
+        ${statCard('Ineligible', '✗', IDEAS.filter(i=>i.status==='ineligible').length, '', 'var(--clr-ineligible)')}
+    </div>
+
+    <div class="queue-section-title">Pending Screening (${totalPending})</div>
+    ${queueHtml}
+
+    <div class="queue-section-title" style="margin-top:var(--sp-xl)">Already Screened (${reviewed.length})</div>
+    ${reviewedHtml}`;
+}
+
+// ── PAGE: Coaching ─────────────────────────────────────────────
+function toggleCoachingCard(ideaId) {
+    const el = document.getElementById('coach-card-' + ideaId);
+    if (el) el.classList.toggle('open');
+}
+
+function logCoachingSession(ideaId) {
+    if (!can('logCoaching')) return;
+    const me = currentUser();
+    const g  = id => (document.getElementById(id)?.value || '').trim();
+    const dateVal  = g('cs-date-' + ideaId);
+    const durVal   = g('cs-dur-' + ideaId);
+    const notesVal = g('cs-notes-' + ideaId);
+    const nextVal  = g('cs-next-' + ideaId);
+
+    if (!dateVal || !notesVal) {
+        alert('Session date and notes are required.');
+        return;
+    }
+    const newId = 'cs-' + String(COACHING_SESSIONS.length + 1).padStart(2, '0');
+    COACHING_SESSIONS.push({
+        id:          newId,
+        ideaId:      ideaId,
+        coachId:     me.id,
+        sessionDate: dateVal,
+        durationMins: parseInt(durVal, 10) || 0,
+        notes:       notesVal,
+        nextSteps:   nextVal,
+    });
+    appendAudit('COACHING_SESSION_LOGGED', ideaId, `Session logged. ${parseInt(durVal,10)||0} min. ${notesVal.slice(0,80)}${notesVal.length>80?'…':''}`);
+    renderPage();
+}
+
+function renderCoachingCard(idea) {
+    const sessions = COACHING_SESSIONS.filter(s => s.ideaId === idea.refCode);
+    const statusCls = idea.status.replace('_','-');
+    const sessionCount = sessions.length;
+
+    const sessionsHtml = sessions.length ? `
+        <div class="session-log">
+            ${sessions.map(s => `
+            <div class="session-entry">
+                <div class="session-entry-header">
+                    <span class="session-date">${s.sessionDate}</span>
+                    ${s.durationMins ? `<span class="session-dur">${s.durationMins} min</span>` : ''}
+                    <span style="color:var(--clr-muted);font-size:11px">Coach: ${userName(s.coachId)}</span>
+                </div>
+                <div class="session-notes">${s.notes}</div>
+                ${s.nextSteps ? `<div class="session-next">Next steps: ${s.nextSteps}</div>` : ''}
+            </div>`).join('')}
+        </div>` : `<p style="color:var(--clr-muted);font-size:var(--fs-sm);margin-bottom:var(--sp-md)">No sessions logged yet.</p>`;
+
+    const logForm = can('logCoaching') ? `
+        <div class="log-session-form">
+            <div class="log-session-title">Log New Session</div>
+            <div class="log-session-row">
+                <div class="form-group" style="margin:0">
+                    <label style="font-size:11px;font-weight:600">Session Date <span class="req">*</span></label>
+                    <input type="date" id="cs-date-${idea.refCode}" class="form-input" value="${new Date(PROTO_NOW).toISOString().slice(0,10)}">
+                </div>
+                <div class="form-group" style="margin:0">
+                    <label style="font-size:11px;font-weight:600">Duration (minutes)</label>
+                    <input type="number" id="cs-dur-${idea.refCode}" class="form-input" min="15" max="240" step="15" placeholder="e.g. 60">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:var(--sp-sm)">
+                <label style="font-size:11px;font-weight:600">Session Notes <span class="req">*</span></label>
+                <textarea id="cs-notes-${idea.refCode}" class="form-textarea" rows="3" placeholder="Key discussion points, advice given, concerns raised…"></textarea>
+            </div>
+            <div class="form-group" style="margin-top:var(--sp-sm)">
+                <label style="font-size:11px;font-weight:600">Next Steps</label>
+                <input id="cs-next-${idea.refCode}" class="form-input" placeholder="Action items for the submitter before next session or final evaluation…">
+            </div>
+            <div style="display:flex;justify-content:flex-end;margin-top:var(--sp-sm)">
+                <button class="btn btn-primary btn-sm" onclick="logCoachingSession('${idea.refCode}')">Save Session</button>
+            </div>
+        </div>` : '';
+
+    const teamObj = idea.teamId ? TEAMS.find(t => t.id === idea.teamId) : null;
+    const teamLabel = teamObj ? ` · ${teamObj.name}` : '';
+
+    return `
+    <div class="coaching-card" id="coach-card-${idea.refCode}">
+        <div class="coaching-card-header" onclick="toggleCoachingCard('${idea.refCode}')">
+            <span class="coaching-card-ref">${idea.refCode}</span>
+            <span class="coaching-card-title">${idea.title}</span>
+            <span class="status-badge status-${statusCls}">${statusLabel(idea.status)}</span>
+            <span class="coaching-card-sessions">${sessionCount} session${sessionCount !== 1 ? 's' : ''}</span>
+            <span style="font-size:11px;color:var(--clr-muted);flex-shrink:0">${userName(idea.submittedBy)}${teamLabel}</span>
+            <span class="coaching-card-chevron">&#9658;</span>
+        </div>
+        <div class="coaching-card-body">
+            <div style="font-size:var(--fs-sm);color:var(--clr-muted);margin-bottom:var(--sp-md)">${idea.category}</div>
+            <div style="font-size:var(--fs-sm);margin-bottom:var(--sp-md)"><strong>Proposed Solution:</strong> ${idea.proposedSolution || '—'}</div>
+            ${sessionsHtml}
+            ${logForm}
+        </div>
+    </div>`;
+}
+
+function renderCoaching() {
+    const coachableStatuses = ['shortlisted', 'finalist'];
+    const ideas = IDEAS.filter(i => coachableStatuses.includes(i.status));
+    const totalSessions = COACHING_SESSIONS.length;
+
+    const listHtml = ideas.length
+        ? ideas.map(renderCoachingCard).join('')
+        : `<div class="empty-state" style="text-align:center;padding:var(--sp-xl);color:var(--clr-muted)">
+               <div style="font-size:2rem;margin-bottom:var(--sp-sm)">❋</div>
+               <p>No shortlisted or finalist ideas available for coaching.</p>
+           </div>`;
+
+    return `
+    <div class="page-header">
+        <div>
+            <h1>Coaching</h1>
+            <p class="page-sub">${ideas.length} idea${ideas.length !== 1 ? 's' : ''} assigned · ${totalSessions} session${totalSessions !== 1 ? 's' : ''} logged</p>
+        </div>
+    </div>
+
+    <div class="card-grid grid-4" style="margin-bottom:var(--sp-lg)">
+        ${statCard('Assigned Ideas','❋', ideas.length, '', 'var(--clr-primary)')}
+        ${statCard('Sessions Logged','◉', totalSessions, '', 'var(--clr-accent)')}
+        ${statCard('Shortlisted','◈', IDEAS.filter(i=>i.status==='shortlisted').length, '', '#7c3aed')}
+        ${statCard('Finalists','▲', IDEAS.filter(i=>i.status==='finalist').length, '', 'var(--clr-eligible)')}
+    </div>
+
+    ${listHtml}`;
+}
+
+// ── PAGE: Manage Team ─────────────────────────────────────────
+function savePrizeSplit(teamId) {
+    const team = TEAMS.find(t => t.id === teamId);
+    if (!team || !can('manageTeam')) return;
+    const newSplit = {};
+    let total = 0;
+    for (const memberId of team.members) {
+        const el = document.getElementById('prize-' + teamId + '-' + memberId);
+        const val = parseInt(el?.value || '0', 10);
+        newSplit[memberId] = isNaN(val) ? 0 : val;
+        total += newSplit[memberId];
+    }
+    if (total !== 100) {
+        document.getElementById('split-total-' + teamId).textContent = `Total: ${total}% — must equal 100%`;
+        document.getElementById('split-total-' + teamId).className = 'split-total-row over';
+        return;
+    }
+    team.prizeSplit = newSplit;
+    appendAudit('PRIZE_SPLIT_UPDATED', teamId, `Prize split updated. Members: ${team.members.map(id => userName(id) + ' ' + newSplit[id] + '%').join(', ')}`);
+    document.getElementById('split-total-' + teamId).textContent = 'Saved ✓ — total 100%';
+    document.getElementById('split-total-' + teamId).className = 'split-total-row ok';
+}
+
+function updateSplitTotal(teamId, memberId) {
+    const team = TEAMS.find(t => t.id === teamId);
+    if (!team) return;
+    let total = 0;
+    for (const mid of team.members) {
+        const val = parseInt(document.getElementById('prize-' + teamId + '-' + mid)?.value || '0', 10);
+        total += isNaN(val) ? 0 : val;
+    }
+    const lbl = document.getElementById('split-total-' + teamId);
+    if (lbl) {
+        lbl.textContent = `Total: ${total}%${total === 100 ? ' ✓' : ' (must equal 100%)'}`;
+        lbl.className   = 'split-total-row ' + (total === 100 ? 'ok' : 'over');
+    }
+}
+
+function renderTeamCard(team) {
+    const me = currentUser();
+    const isReadOnly = !can('manageTeam');
+    const myTeamIdeas = IDEAS.filter(i => i.teamId === team.id);
+    const split = team.prizeSplit || {};
+
+    const membersHtml = team.members.map(memberId => {
+        const user = USERS.find(u => u.id === memberId);
+        if (!user) return '';
+        const pct = split[memberId] ?? 0;
+        const isLead = memberId === team.leadId;
+        return `
+        <tr>
+            <td>
+                <div style="display:flex;align-items:center;gap:var(--sp-sm)">
+                    <div class="member-avatar-sm">${user.avatar}</div>
+                    <div>
+                        <div style="font-weight:600">${user.name}${isLead ? ' <span class="chip chip-shortlisted" style="font-size:10px">Lead</span>' : ''}</div>
+                        <div style="font-size:11px;color:var(--clr-muted)">${user.dept} · ${ROLES[user.role]?.label || user.role}</div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                ${isReadOnly
+                    ? `<strong>${pct}%</strong>`
+                    : `<input type="number" id="prize-${team.id}-${memberId}" class="prize-input" min="0" max="100" value="${pct}"
+                              oninput="updateSplitTotal('${team.id}','${memberId}')">`}
+                <span class="prize-bar-wrap"><span class="prize-bar-fill" id="pbar-${team.id}-${memberId}" style="width:${pct}%"></span></span>
+            </td>
+        </tr>`;
+    }).join('');
+
+    const currentTotal = team.members.reduce((s, id) => s + (split[id] ?? 0), 0);
+
+    return `
+    <div class="card" style="margin-bottom:var(--sp-lg)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp-md);flex-wrap:wrap;gap:var(--sp-sm)">
+            <div>
+                <div class="card-title" style="margin-bottom:2px">${team.name}</div>
+                <div style="font-size:11px;color:var(--clr-muted)">Lead: ${userName(team.leadId)} · ${team.members.length} member${team.members.length!==1?'s':''} · ${myTeamIdeas.length} idea${myTeamIdeas.length!==1?'s':''}</div>
+            </div>
+        </div>
+        <table class="member-table">
+            <thead><tr><th>Member</th><th>Prize Share</th></tr></thead>
+            <tbody>${membersHtml}</tbody>
+        </table>
+        ${!isReadOnly ? `
+        <div style="display:flex;align-items:center;gap:var(--sp-md);margin-top:var(--sp-md);flex-wrap:wrap">
+            <div id="split-total-${team.id}" class="split-total-row ${currentTotal===100?'ok':'over'}">Total: ${currentTotal}%${currentTotal===100?' ✓':' (must equal 100%)'}</div>
+            <button class="btn btn-primary btn-sm" onclick="savePrizeSplit('${team.id}')">Save Split</button>
+        </div>` : `<div class="split-total-row ok" style="margin-top:var(--sp-md)">Total: ${currentTotal}%</div>`}
+    </div>`;
+}
+
+function renderManageTeam() {
+    const me      = currentUser();
+    const myTeams = TEAMS.filter(t => t.members.includes(me.id));
+
+    if (!myTeams.length) {
+        return `
+        <div class="page-header"><h1>Manage Team</h1></div>
+        <div class="card">
+            <div class="no-team-msg">
+                <div class="nt-icon">⬡</div>
+                <p>You are not currently a member of any team.</p>
+                <p style="margin-top:4px">Contact the Innovation Admin to be added to a team.</p>
+            </div>
+        </div>`;
+    }
+
+    return `
+    <div class="page-header">
+        <div>
+            <h1>Manage Team</h1>
+            <p class="page-sub">${myTeams.length > 1 ? myTeams.length + ' teams' : myTeams[0].name}</p>
+        </div>
+    </div>
+    ${myTeams.map(renderTeamCard).join('')}
+
+    <div class="card">
+        <div class="card-title">Team Ideas</div>
+        ${IDEAS.filter(i => myTeams.some(t => t.id === i.teamId)).length === 0
+            ? `<p class="text-muted">No ideas submitted by your team yet.</p>`
+            : `<div class="ideas-list" style="margin-top:var(--sp-md)">
+                ${IDEAS.filter(i => myTeams.some(t => t.id === i.teamId)).map(i => {
+                    const statusCls = i.status.replace('_','-');
+                    return `<div class="idea-card">
+                        <div class="idea-card-header" style="cursor:default">
+                            <span class="idea-card-ref">${i.refCode}</span>
+                            <span class="idea-card-title">${i.title}</span>
+                            <span class="status-badge status-${statusCls}">${statusLabel(i.status)}</span>
+                            <span style="font-size:11px;color:var(--clr-muted)">${userName(i.submittedBy)}</span>
+                        </div>
+                    </div>`;
+                }).join('')}
+               </div>`}
+    </div>`;
 }
 
 // ── PAGE: placeholder ─────────────────────────────────────────
